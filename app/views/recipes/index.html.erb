@@ -1,0 +1,15 @@
+<%= link_to 'New Recipe', new_recipe_path %>
+<table>
+  <tbody>
+    <% @recipes.each do |recipe| %>
+      <tr>
+        <td><%= link_to recipe.name, recipe %></td>
+        <td><%= link_to recipe.author.user_name, recipe.author %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

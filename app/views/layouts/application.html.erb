@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bunny</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div id="nav">
+    <div class="logo_block">
+      <%= link_to root_url do %>
+         <div class="main_logo">
+           <div><%= image_tag("tuzi-logo-placeholder.png") %> </div>
+         </div>
+         <div class="main_logo_side">
+           <div id="main_logo_text">tuzi</div>
+           <div id="main_logo_text">chef</div>
+         </div>
+      <% end  %>
+    </div>
+    <div class="nav_nav">
+      <div class="nav_top_row">
+        <div class="nav_secondary_links">
+  	<ul class="nav_sec_menu">
+            <li id="leaf_link"><%= link_to "have" %></li>
+            <li id="leaf_link"><%= link_to "a" %></li>
+            <li id="leaf_link"><%= link_to "wonderful" %></li>
+            <li id="leaf_link"><%= link_to "day" %></li>
+            <li id="leaf_link"><%= link_to "*" %></li>
+            <li id="leaf_link"><%= link_to "**" %></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav_main_links">
+        <ul class="nav_menu">
+          <li id="nav_link"><%= link_to "Home", root_url %></li>
+          <li id="nav_link"><%= link_to "Recipes", recipes_path %></li>
+          <li id="nav_link"><%= link_to "Hacks" %></li>
+          <li id="nav_link"><%= link_to "Feed" %></li>
+        </ul>
+      </div>
+    </div>
+    <div class="nav_util">
+      <div class="nav_login">
+        <ul>
+          <% if member_signed_in? %>
+            <li><%= link_to "Sign out", members_logout_path %></li>
+            <li><%= link_to "Your Account", members_edit_account_path %></li>
+          <% else %>
+            <li><%= link_to "*ALPHAs", members_login_path %></li>
+            <li><%= link_to "Invites", members_register_path %></li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="nav_search">
+        <form><input type="text"></form>
+      </div>
+    </div>
+  </div>
+  <div class="main_content">
+    <%= yield %>
+  </div>
+<div id="footer">
+  <div class="site-map">
+    <div id="footer_box1">
+      <div id="footer_heading">About Us</div>
+      <ul id="footer_list">
+        <li><%= link_to "Vision", vision_path %></li>
+        <li><%= link_to "Company", about_path %></li>
+      </ul>
+    </div>
+    <div id="footer_box1">
+      <div id="footer_heading">Support</div>
+      <ul id="footer_list">
+        <li><%= link_to "Terms and Privacy"%></li>
+        <li><%= link_to "Help" %></li>
+        <li><%= link_to "Suggestions" %></li>
+      </ul>
+    </div>
+    <div id="footer_box1"></div>
+    <div id="footer_box1">We're based in sunny Los Angeles!</div>
+  </div>
+  <div class="copyrights">
+    All rights reserved to Tuzi Chef LLC.
+  </div>
+</div>
+</body>
+</html>
