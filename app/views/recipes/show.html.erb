@@ -1,10 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
   <%= @recipe.name %>
 </p>
 
+<p>
+  <strong>Authored by:</strong>
+  <%= link_to @recipe.author.user_name, @recipe.author %>
+</p>
 <p>
   <strong>About:</strong>
   <%= @recipe.about %>
@@ -20,10 +23,6 @@
   <%= @recipe.steps %>
 </p>
 
-<p>
-  <strong>Author:</strong>
-  <%= @recipe.author_id %>
-</p>
 
 <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
 <%= link_to 'Back', recipes_path %>

@@ -1,3 +1,25 @@
+<script>
+function post(node){
+  var hiddenIngreds = document.createElement("input");
+  hiddenIngreds.setAttribute("type", "hidden");
+  hiddenIngreds.setAttribute("id", "recipe_j_ingreds");
+  hiddenIngreds.setAttribute("name", "recipe[j_ingreds]");
+  hiddenIngreds.setAttribute("value", node.recipe_ingreds.value);
+  node.appendChild(hiddenIngreds);
+  
+  var hiddenSteps = document.createElement("input");
+  hiddenSteps.setAttribute("type", "hidden");
+  hiddenSteps.setAttribute("id", "recipe_j_steps");
+  hiddenSteps.setAttribute("name", "recipe[j_steps]");
+  hiddenSteps.setAttribute("value", node.recipe_steps.value);
+  node.appendChild(hiddenSteps);
+
+  node.submit();
+  /* For testing purposes*/
+
+} 
+</script>
+<div id="demo"></div>
 <%= form_for(@recipe) do |f| %>
   <% if @recipe.errors.any? %>
     <div id="error_explanation">
@@ -10,7 +32,6 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
@@ -29,6 +50,6 @@
   </div>
   <%= f.hidden_field :author_id, :value => current_member.id %>
   <div class="actions">
-    <%= f.submit %>
+    <button type="button" onclick="post(this.form)">Submit</button>
   </div>
 <% end %>

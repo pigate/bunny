@@ -20,9 +20,12 @@
   <%= @member.occupation %>
 </p>
 
+<% if current_member == @member || current_member.try(admin) %>
 <%= link_to 'Edit', edit_member_path(@member) %> |
-<%= link_to 'Back', members_path %>
+<% end %>
+<%= link_to 'View Other Members', members_path %>
 
+<h2>Recipes</h2>
 <% @member.recipes.each do |recipe| %>
   <div>
     <%= link_to recipe.name, recipe %>
