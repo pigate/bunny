@@ -17,16 +17,49 @@ function post(node){
   node.submit();
   /* For testing purposes*/
 
+}
+
+function test_addBox(id){
+  //add a textarea child element to element with id
+  var newChild = document.createElement('div');
+  newChild.className="listed_text_item";
+  var textArea = document.createElement('textarea');
+  textArea.className= 'ingred_text';
+  textArea.placeholder = 'Add ingredient';
+  textArea.type= "text";
+  textArea.maxlength="1000";
+  newChild.appendChild(textArea);
+  var parentElement = document.getElementById(id);
+  parentElement.appendChild(newChild); 
+  
 } 
-/*
-Event driven
-async
-append
-*/
-
-
 </script>
-<div id="demo"></div>
+<style>
+  .ingred_text {
+    background: #E0F0FF;
+  }
+</style>
+<div class="demo">
+  <div id="ingred_list">
+    <div class="listed_text_item">
+      <textarea class="ingred_text" placeholder="eg. 2 tsp flakes"></textarea>
+    </div>
+    <div class="listed_text_item">
+      <textarea class="ingred_text" placeholder="eg. 2 tsp flakes"></textarea>
+    </div>
+    <div class="listed_text_item">
+      <textarea class="ingred_text" placeholder="eg. 2 tsp flakes"></textarea>
+    </div>
+  </div>
+  <button type="button" onclick='test_addBox("ingred_list")'>+</button>
+</div>
+
+<script>
+var ingred_texts = document.getElementsByClassName("ingred_text");
+var lastChild= ingred_texts[ingred_texts.length - 1];
+lastChild.addEventListener("onkeydown", test_addBox("ingred_list"));
+</script>
+
 <%= form_for(@recipe) do |f| %>
   <% if @recipe.errors.any? %>
     <div id="error_explanation">
