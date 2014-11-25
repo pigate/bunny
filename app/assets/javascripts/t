@@ -1,4 +1,3 @@
-<script>
 function post(node){
   var hiddenIngreds = document.createElement("input");
   hiddenIngreds.setAttribute("type", "hidden");
@@ -17,7 +16,7 @@ function post(node){
     ingreds_array = "\""+ingreds_array.slice(0, -1) + ']';
   }
   hiddenIngreds.setAttribute("value", ingreds_array);
-  hiddenIngreds.value = hiddenIngreds.value.slice(1); /*for the extra that is inserted when assigning value */
+  hiddenIngreds.value = hiddenIngreds.value.slice(1); //for the extra \" that is inserted when assigning value
   node.appendChild(hiddenIngreds);
   
   var hiddenSteps = document.createElement("input");
@@ -35,10 +34,11 @@ function post(node){
   if (steps[steps.length - 1].innerHTML.search(/A-Za-z/) != -1){
     steps_array += steps[steps.length - 1] + "]";
   } else {
-    steps_array = "\""+steps_array.slice(0, -1) + ']';
+    steps_array = "\""+ steps_array.slice(0, -1) + ']';
   }
   hiddenSteps.setAttribute("value", steps_array);
-  hiddenSteps.value = hiddenSteps.value.slice(1); //for the extra \" that is inserted when assigning value
+  hiddenSteps.value = hiddenSteps.value.slice(1); //for the extr
+a \" that is inserted when assigning value
   node.appendChild(hiddenSteps);
   node.submit();
   /* For testing purposes*/
@@ -94,70 +94,4 @@ function addBox(e, i){
   e.removeAttribute("onkeyup"); 
   test_addRow(i);
 };
-</script>
-
-<%= form_for(@recipe) do |f| %>
-  <% if @recipe.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
-
-      <ul>
-      <% @recipe.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :about %><br>
-    <%= f.text_area :about %>
-  </div>
-  <h2>Ingredients</h2>
-  <div class="demo">
-    <div id="ingred_list">
-      <div class="listed_text_item">
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes"></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
-      <div class="listed_text_item">
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes"></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
-      <div class="listed_text_item">
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes" onkeyup='addBox(this, "ingred_list")'></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
-    </div>
-    <button class="button_row_add" type="button" onclick='test_addRow("ingred_list")'>+</button>
-  </div>
-  <h2>Steps</h2>
-  <div class="demo">
-    <div id="steps_list">
-      <div class="listed_text_item">
-        <div class="round_number">1</div>
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes"></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
-      <div class="listed_text_item">
-        <div class="round_number">2</div>
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes"></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
-      <div class="listed_text_item">
-        <div class="round_number">3</div>
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes" onkeyup='addBox(this, "steps_list")'></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
-    </div>
-    <button class="button_row_add" type="button" onclick='test_addRow("steps_list")'>+</button>
-  </div>
-  <%= f.hidden_field :author_id, :value => current_member.id %>
-  <div class="actions">
-    <button type="button" onclick="post(this.form)">Submit</button>
-  </div>
-<% end %>
 
