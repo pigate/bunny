@@ -24,7 +24,6 @@ function post(node){
   hiddenSteps.setAttribute("type", "hidden");
   hiddenSteps.setAttribute("id", "recipe_j_steps");
   hiddenSteps.setAttribute("name", "recipe[j_steps]");
-  hiddenSteps.setAttribute("value", node.recipe_steps.value);
   node.appendChild(hiddenSteps);
   var steps_array = '[';
   var recipe_steps = document.getElementById("steps_list");
