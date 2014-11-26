@@ -14,7 +14,7 @@
 <p>
   <h3>Ingreds:</h3>
   <% destringify(@recipe.j_ingreds).each do |ingred| %>
-   <%= ingred %><br>
+   <%= simple_format h ingred %><br>
   <% end %>
 </p>
 
@@ -22,7 +22,7 @@
   <h3>Steps:</h3>
   <% i = 1 %>
   <% destringify(@recipe.j_steps).each do |step| %>
-   <%="#{i}. #{step}" %><br>
+   <%= simple_format h "#{i}. #{step}" %><br>
    <% i+= 1 %>
   <% end %>
 </p>

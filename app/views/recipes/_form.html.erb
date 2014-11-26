@@ -1,4 +1,45 @@
+<% 
+#dependent on ruby variable integer 'create'.
+#  if create == 1, we are on new page
+#  else if create == 0, we are on edit page
+%>
+<% create_ingreds = 1 %>
+<% create_steps = 1 %>
+<% if @recipe.j_steps != ""  
+    create_steps = 0
+   end
+   if @recipe.j_ingreds != ""
+    create_ingreds = 0
+   end
+%>
+<%= javascript_tag do %>
+  var i = <%= j "#{create_ingreds}"%>;
+  alert('create ingreds'+i);
+  <% if true %>
+      alert('yay!');
+  <% end %>
+  var id_ingred_list = "ingred_list";
+  var id_steps_list = "steps_list";
+  <% if create_ingreds == 1 %>
+    var elem = undefined;
+    <% 2.times do %>
+      elem = addBox(elem, id_ingred_list);
+    <% end %>
+  <% else %>
+    <% destringify(@recipe.j_ingreds).each do |ingred| %>
+
+    <% end %>
+  <% end %>
+  <% if create_steps == 1 %>
+
+  <% else %>
+
+  <% end %>
+<% end %>
 <script>
+/*
+Posts element = "" if no content
+*/
 function post(node){
   var hiddenIngreds = document.createElement("input");
   hiddenIngreds.setAttribute("type", "hidden");
@@ -9,12 +50,21 @@ function post(node){
   var recipe_ingreds = document.getElementById("ingred_list");
   var ingreds = recipe_ingreds.getElementsByClassName("text_element");
   for(var i = 0; i < ingreds.length - 1; i++){
-    ingreds_array +=  "\""+ingreds[i].value + "\",";
+    if (ingreds[i].value.search(/[A-Za-z]/)!= -1)
+    ingreds_array +=  "\""+ingreds[i].value.replace(/[^A-Za-z0-9,\(\)*\'\ ]/g, "") + "\",";
+    
   }
-  if (ingreds[ingreds.length - 1].innerHTML.search(/A-Za-z/) != -1){
+
+  var test_string = "\n\r";
+  //  test_string.replace(/[\\]/g, "\\"); //no effect
+  var another_another_test = JSON.stringify(test_string);
+  var a_test = test_string.replace(/\n/g, "\\\\n");
+
+  if (ingreds[ingreds.length - 1].innerHTML.search(/[A-Za-z]/) != -1){
     ingreds_array += ingreds[ingreds.length - 1] + "]";
   } else {
-    ingreds_array = "\""+ingreds_array.slice(0, -1) + ']';
+    if (ingreds_array.slice(-1) != '[')
+      ingreds_array = "\""+ingreds_array.slice(0, -1) + ']';
   }
   hiddenIngreds.setAttribute("value", ingreds_array);
   hiddenIngreds.value = hiddenIngreds.value.slice(1); /*for the extra that is inserted when assigning value */
@@ -29,11 +79,13 @@ function post(node){
   var recipe_steps = document.getElementById("steps_list");
   var steps = recipe_steps.getElementsByClassName("text_element");
   for(var i = 0; i < steps.length - 1; i++){
-    steps_array += "\""+steps[i].value + "\",";
+    if (steps[i].value.search(/[A-Za-z]/) != -1)
+      steps_array += "\""+steps[i].value.replace(/[^A-Za-z0-9,\(\)*\r\n\'\ ]/g, "").replace(/[\n]/g,"\\n") + "\",";
   }
-  if (steps[steps.length - 1].innerHTML.search(/A-Za-z/) != -1){
+  if (steps[steps.length - 1].innerHTML.search(/[A-Za-z]/) != -1){
     steps_array += steps[steps.length - 1] + "]";
   } else {
+    if (steps_array.slice(-1) != '[')
     steps_array = "\""+steps_array.slice(0, -1) + ']';
   }
   hiddenSteps.setAttribute("value", steps_array);
@@ -67,8 +119,9 @@ function test_addBox(id){
   var parentElement = document.getElementById(id);
   parentElement.appendChild(newChild); 
 }; 
-function test_addRow(id){
-  var i = id.length;
+function test_addRow(id, defaultText){
+  if (defaultText== undefined)
+    defaultText = "";
   var newChild = document.createElement('div');
   newChild.draggable = true;
   newChild.className="listed_text_item";
@@ -79,19 +132,21 @@ function test_addRow(id){
   var newNumRows = numSiblingRows + 1;
   if (id.search("ingred") == -1) {
     //adding steps
-    newChild.innerHTML = '<div class="round_number">'+newNumRows+'</div><textarea class="text_element" placeholder="eg. Boil an egg" onkeyup="addBox(this, \''+id+'\')"></textarea><a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>';
+    newChild.innerHTML = '<div class="round_number">'+newNumRows+'</div><textarea class="text_element" placeholder="eg. Boil an egg" onkeyup="addBox(this, \''+id+'\')">'+defaultText+'</textarea><a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>';
 
   } else {
-    newChild.innerHTML = '<textarea class="text_element" placeholder="eg. 2 tsp flakes" onkeyup="addBox(this, \''+id+'\')"></textarea><a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>';
+    newChild.innerHTML = '<textarea class="text_element" placeholder="eg. 2 tsp flakes" onkeyup="addBox(this, \''+id+'\')">'+defaultText+'</textarea><a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>';
   };
   for(var i = 0; i < numSiblingRows; i++){
     siblingRows[i].removeAttribute("onkeyup");
   };
   parentElement.appendChild(newChild); 
+  return newChild;
 };
-function addBox(e, i){
-  e.removeAttribute("onkeyup"); 
-  test_addRow(i);
+function addBox(e, i, defaultText){
+  if (e != undefined)
+    e.removeAttribute("onkeyup"); 
+  return test_addRow(i, defaultText);
 };
 </script>
 
@@ -114,6 +169,10 @@ function addBox(e, i){
   <div class="field">
     <%= f.label :about %><br>
     <%= f.text_area :about %>
+  </div>
+  <div>
+  Illegal characters: " [ ]<br>
+  Stick to the good ones: Alphabetical, Numeric...
   </div>
   <h2>Ingredients</h2>
   <div class="demo">

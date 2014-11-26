@@ -14,3 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require json2.js
+//= require json_parse.js
+//= require json_parse_state.js

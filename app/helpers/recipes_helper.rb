@@ -1,7 +1,7 @@
 require 'json'
 module RecipesHelper
   def destringify(string_json)
-    if (string_json)
+    if (string_json && /[A-Za-z]/.match(string_json))
       JSON.parse(string_json)
     else
       []
