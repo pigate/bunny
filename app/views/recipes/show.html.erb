@@ -1,26 +1,30 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <%= @recipe.name %>
+  <h3><%= @recipe.name %></h3>
 </p>
 
 <p>
-  <strong>Authored by:</strong>
-  <%= link_to @recipe.author.user_name, @recipe.author %>
+  Cooked up by:  <%= link_to @recipe.author.user_name, @recipe.author %>
 </p>
 <p>
-  <strong>About:</strong>
-  <%= @recipe.about %>
+  <i><%= @recipe.about %></i>
 </p>
 
 <p>
-  <strong>Ingreds:</strong>
-  <%= @recipe.ingreds %>
+  <h3>Ingreds:</h3>
+  <% destringify(@recipe.j_ingreds).each do |ingred| %>
+   <%= ingred %><br>
+  <% end %>
 </p>
 
 <p>
-  <strong>Steps:</strong>
-  <%= @recipe.steps %>
+  <h3>Steps:</h3>
+  <% i = 1 %>
+  <% destringify(@recipe.j_steps).each do |step| %>
+   <%="#{i}. #{step}" %><br>
+   <% i+= 1 %>
+  <% end %>
 </p>
 
 
