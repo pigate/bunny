@@ -5,37 +5,6 @@
 %>
 <% create_ingreds = 1 %>
 <% create_steps = 1 %>
-<% if @recipe.j_steps != ""  
-    create_steps = 0
-   end
-   if @recipe.j_ingreds != ""
-    create_ingreds = 0
-   end
-%>
-<%= javascript_tag do %>
-  var i = <%= j "#{create_ingreds}"%>;
-  alert('create ingreds'+i);
-  <% if true %>
-      alert('yay!');
-  <% end %>
-  var id_ingred_list = "ingred_list";
-  var id_steps_list = "steps_list";
-  <% if create_ingreds == 1 %>
-    var elem = undefined;
-    <% 2.times do %>
-      elem = addBox(elem, id_ingred_list);
-    <% end %>
-  <% else %>
-    <% destringify(@recipe.j_ingreds).each do |ingred| %>
-
-    <% end %>
-  <% end %>
-  <% if create_steps == 1 %>
-
-  <% else %>
-
-  <% end %>
-<% end %>
 <script>
 /*
 Posts element = "" if no content
@@ -123,7 +92,6 @@ function test_addRow(id, defaultText){
   if (defaultText== undefined)
     defaultText = "";
   var newChild = document.createElement('div');
-  newChild.draggable = true;
   newChild.className="listed_text_item";
   var parentElement = document.getElementById(id);
   var otherChildRows = parentElement.childNodes;
@@ -133,7 +101,6 @@ function test_addRow(id, defaultText){
   if (id.search("ingred") == -1) {
     //adding steps
     newChild.innerHTML = '<div class="round_number">'+newNumRows+'</div><textarea class="text_element" placeholder="eg. Boil an egg" onkeyup="addBox(this, \''+id+'\')">'+defaultText+'</textarea><a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>';
-
   } else {
     newChild.innerHTML = '<textarea class="text_element" placeholder="eg. 2 tsp flakes" onkeyup="addBox(this, \''+id+'\')">'+defaultText+'</textarea><a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>';
   };
@@ -149,7 +116,6 @@ function addBox(e, i, defaultText){
   return test_addRow(i, defaultText);
 };
 </script>
-
 <%= form_for(@recipe) do |f| %>
   <% if @recipe.errors.any? %>
     <div id="error_explanation">
@@ -177,39 +143,12 @@ function addBox(e, i, defaultText){
   <h2>Ingredients</h2>
   <div class="demo">
     <div id="ingred_list">
-      <div class="listed_text_item">
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes"></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
-      <div class="listed_text_item">
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes"></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
-      <div class="listed_text_item">
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes" onkeyup='addBox(this, "ingred_list")'></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
     </div>
     <button class="button_row_add" type="button" onclick='test_addRow("ingred_list")'>+</button>
   </div>
   <h2>Steps</h2>
   <div class="demo">
     <div id="steps_list">
-      <div class="listed_text_item">
-        <div class="round_number">1</div>
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes"></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
-      <div class="listed_text_item">
-        <div class="round_number">2</div>
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes"></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
-      <div class="listed_text_item">
-        <div class="round_number">3</div>
-        <textarea class="text_element" placeholder="eg. 2 tsp flakes" onkeyup='addBox(this, "steps_list")'></textarea>
-        <a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>
-      </div>
     </div>
     <button class="button_row_add" type="button" onclick='test_addRow("steps_list")'>+</button>
   </div>
@@ -217,5 +156,45 @@ function addBox(e, i, defaultText){
   <div class="actions">
     <button type="button" onclick="post(this.form)">Submit</button>
   </div>
+<% end %>
+<% create_ingreds = 1 %>
+<% create_steps = 1 %>
+<% if @recipe.j_steps != ""
+    create_steps = 0
+   end
+   if @recipe.j_ingreds != ""
+    create_ingreds = 0
+   end
+%>
+<%= javascript_tag do %>
+  var i = <%= j "#{create_ingreds}"%>;
+  var id_ingred_list = "ingred_list";
+  var id_steps_list = "steps_list";
+  <% if create_ingreds == 1 %>
+    var elem = undefined;
+    <% 3.times do %>
+      elem = addBox(elem, id_ingred_list);
+    <% end %>
+  <% else %>
+    var elem = undefined;
+    <% destringify(@recipe.j_ingreds).each do |ingred| %>
+      var default_text = '<%= ingred %>';
+      elem = addBox(elem, id_ingred_list, default_text);
+    <% end %>
+    addBox(elem, id_ingred_list);
+  <% end %>
+  <% if create_steps == 1 %>
+    var elem = undefined;
+    <% 3.times do %>
+      elem = addBox(elem, id_steps_list);
+    <% end %>
+  <% else %>
+    var elem = undefined;
+    <% destringify(@recipe.j_steps).each do |ingred| %>
+      var default_text = '<%= raw ingred %>';
+      elem = addBox(elem, id_steps_list, default_text);
+    <% end %>
+    addBox(elem, id_steps_list);
+  <% end %>
 <% end %>
 
