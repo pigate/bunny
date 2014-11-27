@@ -22,7 +22,7 @@ class RecipesController < ApplicationController
 
   def edit
     if !is_signed_in 
-      format.html { redirect_to members_login_path, notice: "Please sign in" }
+      redirect_to members_login_path
     elsif !can_destroy
       raise Exceptions::NotAuthorizedError
     end
