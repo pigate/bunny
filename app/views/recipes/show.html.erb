@@ -28,5 +28,7 @@
 </p>
 
 
+<% if member_signed_in? && current_member == @recipe.author %>
 <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+<% end %>
 <%= link_to 'Back', recipes_path %>
