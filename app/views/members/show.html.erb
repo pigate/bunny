@@ -20,7 +20,7 @@
   <%= @member.occupation %>
 </p>
 
-<% if current_member == @member || current_member.try(admin) %>
+<% if current_member == @member || current_member.try(:admin) %>
 <%= link_to 'Edit', edit_member_path(@member) %> |
 <% end %>
 <%= link_to 'View Other Members', members_path %>

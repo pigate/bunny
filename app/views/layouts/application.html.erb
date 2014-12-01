@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bunny</title>
+  <title>Tuzi Chef</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -34,12 +34,12 @@
       </div>
       <div class="nav_main_links">
         <ul class="nav_menu">
-          <% if member_signed_in? %>
-          <li id="nav_link"><%= link_to "Profile", current_member %></li>
-          <% end %>
           <li id="nav_link"><%= link_to "Recipes", recipes_path %></li>
           <li id="nav_link"><%= link_to "Hacks" %></li>
           <li id="nav_link"><%= link_to "Feed" %></li>
+          <% if member_signed_in? %>
+          <li id="nav_link"><%= link_to "Profile", current_member %></li>
+          <% end %>
         </ul>
       </div>
     </div>
@@ -56,7 +56,10 @@
         </ul>
       </div>
       <div class="nav_search">
-        <form><input type="text"></form>
+        <%= form_tag recipes_path, :method => :get do %>
+          <%= text_field_tag :search, params[:search], :placeholder => "Something Awesome!" %>
+          <%= submit_tag "OK", :name => nil %>
+        <% end %>
       </div>
     </div>
   </div>

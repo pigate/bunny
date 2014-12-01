@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+#gem 'tire'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem 'devise'

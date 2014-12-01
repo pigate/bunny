@@ -7,4 +7,8 @@ class StaticPagesController < ApplicationController
 
   def vision
   end
+
+  def recipe_search
+    @recipe_results = Recipe.search(params[:search])
+  end
 end

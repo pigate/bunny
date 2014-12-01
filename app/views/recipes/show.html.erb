@@ -30,5 +30,6 @@
 
 <% if member_signed_in? && current_member == @recipe.author %>
 <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+<%= link_to 'Remove', @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } %> |
 <% end %>
 <%= link_to 'Back', recipes_path %>

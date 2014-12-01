@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   root 'static_pages#home'
-
   get 'about' => 'static_pages#about'
   get 'vision' => 'static_pages#vision'
   resources :recipes
