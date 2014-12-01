@@ -17,7 +17,7 @@ class Recipe < ActiveRecord::Base
         query: {
           multi_match: {
             query: parse_params(query),
-            fields: ['name^10', 'text']
+            fields: ['name^2', 'j_ingreds']
           }
         }
       }
