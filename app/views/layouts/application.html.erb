@@ -35,8 +35,8 @@
       <div class="nav_main_links">
         <ul class="nav_menu">
           <li id="nav_link"><%= link_to "Recipes", recipes_path %></li>
-          <li id="nav_link"><%= link_to "Hacks" %></li>
-          <li id="nav_link"><%= link_to "Feed" %></li>
+          <li id="nav_link"><%= link_to "Hacks", root_url %></li>
+          <li id="nav_link"><%= link_to "Feed", root_url %></li>
           <% if member_signed_in? %>
           <li id="nav_link"><%= link_to "Profile", current_member %></li>
           <% end %>
