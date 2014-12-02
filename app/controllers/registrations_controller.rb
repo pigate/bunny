@@ -1,7 +1,35 @@
 class RegistrationsController < Devise::RegistrationsController
+  @@debug = false
+  @@default_names = ["chilibean", "sweetpea", "greenbean", "baconator", "happybaker", "cookie"]
+
   def create
     build_resource(registration_params)
+    if !@@debug
+      i = rand(30000000)
+      name_base = @@default_names[rand(@@default_names.length)]
+      anoth = Member.find_by_user_name(name_base + i.to_s)
+      tries = 10
+      while(anoth != nil && tries >= 0)
+       i = rand(30000000)
+       tries = tries - 1
+       anoth = User.find_by_chosen_name(name_base+i.to_s)
+      end
+      resource.update_attributes("user_name" => name_base + i.to_s)
+    elsif @@debug == true
+      name_base = "Mimi"
+      resource.update_attributes("user_name" => name_base)
+    end
     resource_saved = resource.save
+    if !resource_saved
+      if resource.errors[:email]
+      elsif resource.errors[:user_name] != nil
+        while(!resource_saved)
+          name_base = name_base + rand(10).to_s
+          resource.update_attributes("user_name" => name_base+i.to_s)
+          resource_saved = resource.save
+        end
+      end
+    end
     yield resource if block_given?
     if resource_saved
       if resource.active_for_authentication?
@@ -22,15 +50,21 @@ class RegistrationsController < Devise::RegistrationsController
       respond_with resource
     end
   end
+  
   protected
+
   def after_sign_up_path_for(resource)
     edit_member_path(resource)
   end
+
   def after_inactive_sign_up_path_for(resource)
     edit_member_path(resource)
   end
+
   private
+
   def registration_params
     params.require(:member).permit(:email, :first, :last, :password, :password_confirmation)
   end
+
 end

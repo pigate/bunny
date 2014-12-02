@@ -45,13 +45,13 @@ div {
 
 .field_with_errors {
   padding: 2px;
-  background-color: red;
+  background-color: #CC3300;
   display: table;
 }
 
 #error_explanation {
   width: 450px;
-  border: 2px solid red;
+  border: 2px solid #CC3300;
   padding: 7px;
   padding-bottom: 0;
   margin-bottom: 20px;
@@ -63,11 +63,15 @@ div {
     font-size: 12px;
     margin: -7px;
     margin-bottom: 0px;
-    background-color: #c00;
+    background-color: #CC3300;
     color: #fff;
   }
   ul li {
     font-size: 12px;
     list-style: square;
   }
+}
+
+label {
+  color: black;
 }

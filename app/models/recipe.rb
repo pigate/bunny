@@ -3,6 +3,9 @@ class Recipe < ActiveRecord::Base
   belongs_to :author, :class_name => "Member"
   has_many :comments, :as => :commentable
   has_many :commenters, :through => :comments, :source => :commenter
+  validates :name, presence: true
+  validates :j_ingreds, presence: true
+  validates :j_steps, presence: true
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks

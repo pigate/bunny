@@ -1,8 +1,8 @@
 <%= link_to 'New Recipe', new_recipe_path %>
 <% @recipes.each do |recipe| %>
-  <div class="recipe_search">
-    <h2><%= link_to recipe.name, recipe, class: "search_result" %><h2>
-    <h3><%= link_to recipe.author.user_name, recipe.author %></h3>
+  <div class="search_result_recipe">
+    <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
+    <%= link_to "> "+recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %>
   </div>
 <% end %>
 
