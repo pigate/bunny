@@ -1,23 +1,14 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>User name:</strong>
-  <%= @member.user_name %>
+  <%= image_tag @member.photo.url(:original) %>
+</p>
+  <strong><%= @member.user_name %></strong><br>
+  <%= "#{@member.first} #{ @member.last}" %>
 </p>
 
 <p>
-  <strong>First:</strong>
-  <%= @member.first %>
-</p>
-
-<p>
-  <strong>Last:</strong>
-  <%= @member.last %>
-</p>
-
-<p>
-  <strong>Occupation:</strong>
-  <%= @member.occupation %>
+  Goes by <%= @member.occupation %> by day
 </p>
 
 <% if current_member == @member || current_member.try(:admin) %>

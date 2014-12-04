@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem "aws-sdk"
+gem 'paperclip'
 #gem 'tire'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
