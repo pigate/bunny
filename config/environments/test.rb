@@ -1,16 +1,16 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-#  config.paperclip_defaults = {
-#    :storage => :s3,
-#    :s3_protocol => 'http',
-#    :s3_credentials => {
-#      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-#      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-#      :bucket => ENV['AWS_BUCKET']
-#    },
-#    :url => ':s3_domain_url',
-#    :path => '/:class/:attachment/:id_partition/:style/:filename'
-#  }
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_protocol => 'http',
+    :s3_credentials => {
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      :bucket => ENV['AWS_BUCKET']
+    },
+    :url => ':s3_domain_url',
+    :path => '/:class/:attachment/:id_partition/:style/:filename'
+  }
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
