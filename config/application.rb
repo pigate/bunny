@@ -8,17 +8,17 @@ Bundler.require(*Rails.groups)
 
 module Bunny
   class Application < Rails::Application
-#  config.paperclip_defaults = {
-#    :storage => :s3,
-#    :s3_protocol => 'http',
-#    :s3_credentials => {
-#      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-#      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-#      :bucket => ENV['AWS_BUCKET']
-#    },
-#    :url => ':s3_domain_url',
-#    :path => '/:class/:attachment/:id_partition/:style/:filename'
-#  }
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_protocol => 'http',
+    :s3_credentials => {
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      :bucket => ENV['AWS_BUCKET']
+    },
+    :url => ':s3_domain_url',
+    :path => '/:class/:attachment/:id_partition/:style/:filename'
+  }
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
