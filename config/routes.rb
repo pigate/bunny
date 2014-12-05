@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :tag_types
+  get 'categories' => 'tag_types#index'
   root 'static_pages#home'
   get 'about' => 'static_pages#about'
   get 'vision' => 'static_pages#vision'

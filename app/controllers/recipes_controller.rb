@@ -3,6 +3,7 @@ class RecipesController < ApplicationController
   respond_to :html, :json
 
   def index
+    @tag_types = TagType.all
     if (params[:search].present?)
       @recipes = Recipe.search(params[:search]).records.to_a
     else

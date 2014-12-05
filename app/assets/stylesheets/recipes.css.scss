@@ -70,6 +70,53 @@ div.round_number {
     margin-right: 4px;
 }
 
+div#recipes_index {
+  width: 100%;
+}
+
+div#left_filter_options {
+  width: 30%;
+  float: left;
+}
+
+div#right_recipes_results {
+  width: 65%;
+}
+
+div#recipes_index {
+
+  div#left_filter_options {
+    padding-right: 20px;
+    margin-right: 20px; 
+    overflow: auto-scroll;
+
+    div#filter_title {
+      color: black;
+      font-size: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    div.filter_tag_type {
+      padding-top: 10px;
+
+      div.tag_type_name {
+        color: black;
+      }
+
+      div.tag_type_description {
+        font-size: 10px;
+        line-height: 15px;
+      }
+
+      div.tag_type_description:before {
+        content: "♣";
+      }
+    }
+  }
+}
+
+
+
 a.search_result_recipe_name {
   font-size: 15px;
   color: green;
@@ -85,4 +132,5 @@ div.search_result_recipe {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
 

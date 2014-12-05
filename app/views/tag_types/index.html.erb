@@ -1,0 +1,16 @@
+<h1>Categories</h1>
+
+<table>
+  <tbody>
+    <% @tag_types.each do |tag_type| %>
+      <tr>
+        <td><%= link_to tag_type.name, tag_type %></td>
+        <td><%= tag_type.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tag type', new_tag_type_path %>
