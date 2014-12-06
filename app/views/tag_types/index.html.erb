@@ -1,16 +1,14 @@
+<div id="categories_index">
 <h1>Categories</h1>
 
-<table>
-  <tbody>
-    <% @tag_types.each do |tag_type| %>
-      <tr>
-        <td><%= link_to tag_type.name, tag_type %></td>
-        <td><%= tag_type.description %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
+<% @tag_types.each do |tag_type| %>
+<div class="category">
+  <div class="tag_type_name"><%= tag_type.name %></div>
+  <div class="tag_type_description"><%= tag_type.description %></div>
+  <% tag_type.tags.each do |tag| %>
+    <%= link_to tag.name %>
+  <% end %>
+</div>
+<% end %>
+</div>
 <%= link_to 'New Tag type', new_tag_type_path %>

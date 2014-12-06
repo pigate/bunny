@@ -17,6 +17,9 @@
 <%= link_to 'View Other Members', members_path %>
 
 <h2>Recipes</h2>
+<% if @member.recipes.count == 0 %>
+no recipes
+<% end %>
 <% @member.recipes.each do |recipe| %>
   <div>
     <%= link_to recipe.name, recipe %>

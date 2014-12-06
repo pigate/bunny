@@ -1,4 +1,3 @@
-class TagType < ActiveRecord::Base
-  has_many :tags
+class Tag < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
 end
