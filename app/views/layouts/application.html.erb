@@ -49,6 +49,7 @@
           <% if member_signed_in? %>
             <li><%= link_to "Sign out", members_logout_path %></li>
             <li><%= link_to "Your Account", members_edit_account_path %></li>
+            <li><%= link_to raw"&#x2709;&#x2728;" %></li>
           <% else %>
             <li><%= link_to "*ALPHAs", members_login_path %></li>
             <li><%= link_to "Invites", members_register_path %></li>
