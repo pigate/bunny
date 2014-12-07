@@ -9,6 +9,8 @@
 /*
 Posts element = "" if no content
 */
+
+
 function post(node){
   var hiddenIngreds = document.createElement("input");
   hiddenIngreds.setAttribute("type", "hidden");
@@ -20,14 +22,9 @@ function post(node){
   var ingreds = recipe_ingreds.getElementsByClassName("text_element");
   for(var i = 0; i < ingreds.length - 1; i++){
     if (ingreds[i].value.search(/[A-Za-z]/)!= -1)
-    ingreds_array +=  "\""+ingreds[i].value.replace(/[^A-Za-z0-9,\(\)*\'\ ]/g, "") + "\",";
+    ingreds_array +=  "\""+ingreds[i].value.replace(/\n/g,' ').replace(/\"/g,"U+022") + "\",";
     
   }
-
-  var test_string = "\n\r";
-  //  test_string.replace(/[\\]/g, "\\"); //no effect
-  var another_another_test = JSON.stringify(test_string);
-  var a_test = test_string.replace(/\n/g, "\\\\n");
 
   if (ingreds[ingreds.length - 1].innerHTML.search(/[A-Za-z]/) != -1){
     ingreds_array += ingreds[ingreds.length - 1] + "]";
@@ -49,7 +46,7 @@ function post(node){
   var steps = recipe_steps.getElementsByClassName("text_element");
   for(var i = 0; i < steps.length - 1; i++){
     if (steps[i].value.search(/[A-Za-z]/) != -1)
-      steps_array += "\""+steps[i].value.replace(/[^A-Za-z0-9,\(\)*\r\n\'\ ]/g, "").replace(/[\n]/g,"\\n") + "\",";
+      steps_array += "\""+steps[i].value.replace(/[\n]/g,"\\n").replace(/\"/g,"U+022") + "\",";
   }
   if (steps[steps.length - 1].innerHTML.search(/[A-Za-z]/) != -1){
     steps_array += steps[steps.length - 1] + "]";
@@ -61,7 +58,6 @@ function post(node){
   hiddenSteps.value = hiddenSteps.value.slice(1); //for the extra \" that is inserted when assigning value
   node.appendChild(hiddenSteps);
   node.submit();
-  /* For testing purposes*/
 
 }
 
@@ -70,7 +66,6 @@ function removeParentOf(e, list){
   list.removeChild(e.parentNode);
   var siblings = list.getElementsByClassName('text_element');
   //give last sibling 'onkeyup' property
-//  siblings[siblings.length - 1].onkeyup = 'addBox(this, \""+list.id+"\")';
   siblings[siblings.length - 1].setAttribute('onkeyup', 'addBox(this, "'+list.id+'")');
   if (list.id.search("step") != -1) { 
     //redo numbering for steps
@@ -81,13 +76,6 @@ function removeParentOf(e, list){
     }
   } else {};
 };
-function test_addBox(id){
-  var newChild = document.createElement('div');
-  newChild.className="listed_text_item";
-  newChild.innerHTML = '<textarea class="text_element" placeholder="eg. 2 tsp flakes" onkeyup="addBox(this, \''+id+'\')"></textarea><a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>';
-  var parentElement = document.getElementById(id);
-  parentElement.appendChild(newChild); 
-}; 
 function test_addRow(id, defaultText){
   if (defaultText== undefined)
     defaultText = "";
@@ -170,6 +158,7 @@ function addBox(e, i, defaultText){
     create_ingreds = 0
    end
 %>
+
 <%= javascript_tag do %>
   var i = <%= j "#{create_ingreds}"%>;
   var id_ingred_list = "ingred_list";
@@ -182,7 +171,8 @@ function addBox(e, i, defaultText){
   <% else %>
     var elem = undefined;
     <% destringify(@recipe.j_ingreds).each do |ingred| %>
-      var default_text = '<%= ingred %>';
+      var default_text = "<%= ingred %>";
+      default_text = default_text.replace(/U\+022/g, '\"');
       elem = addBox(elem, id_ingred_list, default_text);
     <% end %>
     addBox(elem, id_ingred_list);
@@ -194,8 +184,9 @@ function addBox(e, i, defaultText){
     <% end %>
   <% else %>
     var elem = undefined;
-    <% destringify(@recipe.j_steps).each do |ingred| %>
-      var default_text = '<%= raw ingred %>';
+    <% destringify(@recipe.j_steps).each do |step| %>
+      var default_text = "<%= step %>";
+      default_text = default_text.replace(/U\+022/g,'\"');
       elem = addBox(elem, id_steps_list, default_text);
     <% end %>
     addBox(elem, id_steps_list);
