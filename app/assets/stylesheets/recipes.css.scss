@@ -1,6 +1,11 @@
 // Place all the styles related to the Recipes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#new_recipe {
+  textarea#recipe_about {
+    width: 590px;
+  }
+}
 .ingred_text {
     background: #E0F0FF;
 }
@@ -20,14 +25,14 @@
 div.listed_text_item {
   width: 590px;
   backface-visibility: hidden;
-  background: none repeat scroll 0% 0% #F9F9F9;
+  background: none repeat scroll 0% 0% 	#FFCC66;
   opacity: 1;
   transition: all 0.4s cubic-bezier(0.215, .61, .355, 1) 0s;
   transform: perspective(250px);
   transform-origin: center top 0px;
 }
 .listed_text_item:nth-child(2n) {
-  background: none repeat scroll 0% 0% #FDFDFD;
+  background: none repeat scroll 0% 0% #FFFFC2;
 }
 .round_button {
     display: inline-block;
@@ -140,7 +145,6 @@ div.search_result_recipe {
 
 /* Recipe show page*/
 div#recipe_show_body {
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 600px;
+  margin-left: 50px;
 }
