@@ -25,7 +25,7 @@
 div.listed_text_item {
   width: 590px;
   backface-visibility: hidden;
-  background: none repeat scroll 0% 0% 	#FFCC66;
+  background: none repeat scroll 0% 0% #B5DA47;
   opacity: 1;
   transition: all 0.4s cubic-bezier(0.215, .61, .355, 1) 0s;
   transform: perspective(250px);
@@ -111,11 +111,13 @@ div#recipes_index {
       div.tag_type_description {
         font-size: 14px;
         line-height: 15px;
-        color: #4C0000;
+        color: #87AC19;
+        margin-left: 10px;
+        line-height: 20px;
       }
 
       div.tag_type_description:before {
-        content: "♣";
+        content: "♣ ";
       }
     }
   }
@@ -125,7 +127,7 @@ div#recipes_index {
 
 a.search_result_recipe_name {
   font-size: 15px;
-  color: green;
+  color: #669900;
 }
 
 a.search_result_recipe_author {
