@@ -1,4 +1,7 @@
 <div id="recipes_index">
+ <table class="wholesome_grid">
+  <tr style="vertical-align: top;">
+    <td>
   <div id="left_filter_options">
     <div id="filter_title">
       Filter for search
@@ -16,12 +19,16 @@
     </div>
     <% end %>
   </div>
+  </td>
+  <td>
   <div id="right_recipes_results">
     <%= link_to 'New Recipe', new_recipe_path %>
     <% @recipes.each do |recipe| %>
       <div class="search_result_recipe">
+        <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
         <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
-        <%= "Servings: #{recipe.servings}" %> <%= "Prep time: #{recipe.prep_time}" %>min <%= " Cook time: #{recipe.cook_time} min" %>
+        <%= "Servings: #{recipe.servings}" %><br>
+        <%= "Prep time: #{recipe.prep_time}" %>min <%= " Cook time: #{recipe.cook_time} min" %>
         <br>
         <div class="search_result_recipe_credit">
           <% if recipe.author != nil %>
@@ -36,6 +43,8 @@
       </div>
     <% end %>
   </div>
-<br>
+  </td>
+ </tr>
+</table>
 </div>
 

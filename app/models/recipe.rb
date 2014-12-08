@@ -7,6 +7,29 @@ class Recipe < ActiveRecord::Base
   validates :j_ingreds, presence: true
   validates :j_steps, presence: true
 
+
+  has_attached_file :main_photo,
+    :default_url => "missing-recipe/:style.png",
+    :styles => {
+      :original => "590x405#",
+      :cropped_square_thumb => {:geometry => "230x230#", :jcrop => true }
+    },
+    :convert_options => {
+      :thumb => "-quality 75 -strip"
+    },
+#    :storage => :s3,
+    :bucket => ENV['AWS_BUCKET']
+#    :s3_credentials => {
+#      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+#      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+#      :bucket => ENV['AWS_BUCKET']
+#    },
+#    :url => ':s3_domain_url',
+#    :path => '/:class/:attachment/:id_partition/:style/:filename'
+
+  validates_attachment_content_type :main_photo, :content_type => /\Aimage/
+  validates_attachment_file_name :main_photo, :matches => [/png\Z/, /PNG\Z/, /jpe?g\Z/, /JPE?G\Z/]
+
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 #  include Tire::Model::Search

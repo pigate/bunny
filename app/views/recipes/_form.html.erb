@@ -122,7 +122,12 @@ function addBox(e, i, defaultText){
     </div>
     <%= f.text_area :about, :placeholder => "Introduce us to your creation. What inspired you? Who passed on the recipe to you? Suggestions, modifications? Add some hot sauce?" %>
   </div>
-  <div class="section_header">Ingredients
+  <div class="recipe_add_photo">
+    <%= image_tag("ic_action_picture.png") %><br>
+    <%= f.file_field :main_photo %>
+  </div>
+  <div class="recipe_form_field">
+    <div class="section_header">Ingredients</div>
     <div class="section_header_right">SERVINGS <%= f.text_field :servings, :value => 3 %>
     </div>
   </div>
