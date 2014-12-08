@@ -21,6 +21,8 @@
     <% @recipes.each do |recipe| %>
       <div class="search_result_recipe">
         <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
+        <%= "Servings: #{recipe.servings}" %> <%= "Prep time: #{recipe.prep_time}" %>min <%= " Cook time: #{recipe.cook_time} min" %>
+        <br>
         <%= link_to recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %>
       </div>
     <% end %>
