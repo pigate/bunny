@@ -4,8 +4,12 @@
   <tbody>
     <% @members.each do |member| %>
       <tr>
-        <td><%= link_to member.user_name, member %></td>
-        <td><%= member.occupation %></td>
+        <td>
+          <%= link_to member do %>
+            <%= image_tag member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
+            <span class="tiny_thumb_text"><%= member.user_name %></span>
+            <span class="tiny_thumb_text"><%= member.occupation %></span></td>
+          <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -96,3 +96,18 @@ img.rounded_tiny_thumb_lower {
   margin-left: 5px;
   margin-right: 5px;
 }
+.rounded_original {
+  position: relative;
+  border: 2px solid #dddddd;
+  border-radius: 140px;
+  -moz-border-radius: 140px;
+  -khtml-border-radius: 140px;
+  -webkit-border-radius: 140px;
+
+}
+.tiny_thumb_text {
+  position: relative;
+  top: -13px;
+  margin-left: 15px;
+}
+
