@@ -20,9 +20,11 @@
       </p>
     </div>
   </div>
-  Tags: 
-  <% @recipe.s_tags.split.each do |tag| %>
-    <%= link_to tag, "/recipes?utf8=✓&search=#{tag}" %>
+  <% if @recipe.s_tags != nil %>
+    Tags: 
+    <% @recipe.s_tags.split.each do |tag| %>
+      <%= link_to tag, "/recipes?utf8=✓&search=#{tag}" %>
+    <% end %>
   <% end %>
   <p>
   Time to make: <%= @recipe.prep_time + @recipe.try(:cook_time)||0 %> minutes<br>
