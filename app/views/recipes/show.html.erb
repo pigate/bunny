@@ -22,8 +22,8 @@
   </div>
   <% if @recipe.s_tags != nil %>
     Tags: 
-    <% @recipe.s_tags.split.each do |tag| %>
-      <%= link_to tag, "/recipes?utf8=✓&search=#{tag}" %>
+    <% @recipe.s_tags.split(',').each do |tag| %>
+      <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_recipe_search" %>
     <% end %>
   <% end %>
   <p>
