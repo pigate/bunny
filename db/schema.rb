@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141207011615) do
+ActiveRecord::Schema.define(version: 20141208000453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,7 +63,9 @@ ActiveRecord::Schema.define(version: 20141207011615) do
     t.datetime "updated_at"
     t.text     "j_ingreds"
     t.text     "j_steps"
-    t.integer  "totalTime",  default: 10
+    t.integer  "prep_time",  default: 10
+    t.integer  "cook_time",  default: 10
+    t.integer  "servings",   default: 3
   end
 
   create_table "tag_types", force: true do |t|

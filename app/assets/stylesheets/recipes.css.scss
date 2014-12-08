@@ -23,7 +23,7 @@ textarea#recipe_about {
 div.listed_text_item {
   width: 590px;
   backface-visibility: hidden;
-  background: none repeat scroll 0% 0% #B5DA47;
+  background: none repeat scroll 0% 0% #C2E066;
   opacity: 1;
   transition: all 0.4s cubic-bezier(0.215, .61, .355, 1) 0s;
   transform: perspective(250px);
@@ -31,6 +31,21 @@ div.listed_text_item {
 }
 .listed_text_item:nth-child(2n) {
   background: none repeat scroll 0% 0% #FFFFC2;
+}
+div.recipe_form_field { 
+  line-height: 40px;
+  a.add_another {
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    cursor: hand;
+    img {
+      height: 15px;
+    }
+  }
+  a.add_another:hover {
+    color: red;
+  }
 }
 .round_button {
     display: inline-block;

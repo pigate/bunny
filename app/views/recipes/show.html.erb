@@ -8,12 +8,16 @@
     Cooked up by:  <%= link_to @recipe.author.user_name, @recipe.author %>
   </p>
   <p>
-  Time to make: <%= @recipe.totalTime %> minutes
+  Time to make: <%= @recipe.prep_time + @recipe.try(:cook_time)||0 %> minutes<br>
+  Prep: <%= @recipe.prep_time %> min<br>
+  Cook: <%= @recipe.cook_time %> min
   </p>
   <p>
     <i><%= @recipe.about %></i>
   </p>
-  
+  <p>
+  Makes <%= @recipe.servings %> servings. 
+  </p>
   <p>
     <h3>Ingreds:</h3>
     <% destringify(@recipe.j_ingreds).each do |ingred| %>

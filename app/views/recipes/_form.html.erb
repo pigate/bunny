@@ -3,8 +3,6 @@
 #  if create == 1, we are on new page
 #  else if create == 0, we are on edit page
 %>
-<% create_ingreds = 1 %>
-<% create_steps = 1 %>
 <script>
 /*
 Posts element = "" if no content
@@ -116,53 +114,44 @@ function addBox(e, i, defaultText){
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="recipe_form_field">
+    <%= f.text_field :name, :placeholder => "TITLE", :class => "recipe_form_title_field" %>
   </div>
-  <div class="field">
-    <%= f.label :about %><br>
-    <%= f.text_area :about %>
+  <div class="recipe_form_field">
+    <div class="section_header">DESCRIPTION
+    </div>
+    <%= f.text_area :about, :placeholder => "Introduce us to your creation. What inspired you? Who passed on the recipe to you? Suggestions, modifications? Add some hot sauce?" %>
   </div>
-  <div class="field">
-    <%= f.label "total time" %>(min)<br>
-    <%= f.text_field :totalTime %>
+  <div class="section_header">Ingredients
+    <div class="section_header_right">SERVINGS <%= f.text_field :servings, :value => 3 %>
+    </div>
   </div>
-  <h2>Ingredients</h2>
-  <div class="demo">
+  <div class="recipe_form_field">
     <div id="ingred_list">
     </div>
-    <button class="button_row_add" type="button" onclick='test_addRow("ingred_list")'>+</button>
+    <a onclick='test_addRow("ingred_list")' class="add_another"><img src="/assets/ic_action_new.png"/>Add new Ingred</a>
   </div>
-  <h2>Steps</h2>
-  <div class="demo">
+  <div class="recipe_form_field">
+    <div class="section_header">STEPS
+      <div class="section_header_right">Prep Time(min)<%= f.text_field :prep_time %> Cook Time(min)<%= f.text_field :cook_time, :value => 0 %>
+      </div>
+    </div>
     <div id="steps_list">
     </div>
-    <button class="button_row_add" type="button" onclick='test_addRow("steps_list")'>+</button>
+    <a onclick='test_addRow("steps_list")' class="add_another"><img src="/assets/ic_action_new.png"/>Add new step</a>
   </div>
   <%= f.hidden_field :author_id, :value => current_member.id %>
   <div class="actions">
     <button type="button" onclick="post(this.form)">Submit</button>
   </div>
 <% end %>
-<% create_ingreds = 1 %>
-<% create_steps = 1 %>
-<% if @recipe.j_steps != ""
-    create_steps = 0
-   end
-   if @recipe.j_ingreds != ""
-    create_ingreds = 0
-   end
-%>
-
 <%= javascript_tag do %>
-  var i = <%= j "#{create_ingreds}"%>;
   var id_ingred_list = "ingred_list";
   var id_steps_list = "steps_list";
-  <% if create_ingreds == 1 %>
+  <% if @recipe.j_ingreds == "" || @recipe.j_ingreds == nil %>
     var elem = undefined;
     <% 3.times do %>
-      elem = addBox(elem, id_ingred_list);
+      elem = addBox(elem, id_ingred_list, "e.g. 2 tsp");
     <% end %>
   <% else %>
     var elem = undefined;
@@ -173,7 +162,7 @@ function addBox(e, i, defaultText){
     <% end %>
     addBox(elem, id_ingred_list);
   <% end %>
-  <% if create_steps == 1 %>
+  <% if @recipe.j_ingreds == "" || @recipe.j_ingreds == nil %>
     var elem = undefined;
     <% 3.times do %>
       elem = addBox(elem, id_steps_list);
