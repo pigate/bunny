@@ -11,6 +11,7 @@ class Member < ActiveRecord::Base
   validates :user_name, :presence => true, uniqueness: { case_sensitive: false }
   #devise checks email and password/
   has_attached_file :photo,
+    :default_url => "missing/:style.png",
     :styles => {
       :original => "140x140#",
       :cropped_thumb => {:geometry => "100x100#", :jcrop => true },

@@ -78,3 +78,21 @@ div.nav_search {
   input#search {
   }
 }
+
+/*
+Showing rounded images
+*/
+
+img[class^="rounded_tiny_thumb"] {
+  border: 2px solid #dddddd;
+  border-radius: 32px;
+  -moz-border-radius: 32px;
+  -khtml-border-radius: 32px;
+  -webkit-border-radius: 32px;
+}
+img.rounded_tiny_thumb_lower {
+  position: relative;
+  top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}

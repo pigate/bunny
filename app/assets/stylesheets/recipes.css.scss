@@ -137,6 +137,7 @@ div#recipes_index {
 a.search_result_recipe_name {
   font-size: 15px;
   color: #669900;
+  line-height: 12px;
 }
 
 a.search_result_recipe_author {
@@ -152,6 +153,10 @@ a.search_result_recipe_author::before {
 div.search_result_recipe {
   padding-top: 10px;
   padding-bottom: 10px;
+  span.search_result_credit_text { 
+    position: relative;
+    top: -13px;
+  }
 }
 
 /* Recipe show page*/
