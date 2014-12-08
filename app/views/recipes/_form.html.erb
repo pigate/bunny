@@ -145,6 +145,17 @@ function addBox(e, i, defaultText){
     </div>
     <a onclick='test_addRow("steps_list")' class="add_another"><img src="/assets/ic_action_new.png"/>Add new step</a>
   </div>
+
+  <div class="recipe_form_field">
+    <div class="section_header">TAGS
+      <span style="color: #585858; margin-left: 20px;"><em>Enter your tags seperated by commas</em></span>
+    </div> 
+    <div class="tag-editor validation-error" style="width: 666px; height: 35px; opacity: 1, z-index: 1, position: relative; cursor: text; background-color: #FFF; overflow: hidden; white-space: nowrap;">
+      <span style=""></span>
+      <%= f.text_field :s_tags, :class => "tag_input" %>
+      <span></span>
+    </div>
+  </div>
   <%= f.hidden_field :author_id, :value => current_member.id %>
   <div class="actions">
     <button type="button" onclick="post(this.form)">Submit</button>

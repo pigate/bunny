@@ -67,7 +67,7 @@ class RecipesController < ApplicationController
     end
 
     def recipe_params
-      params.require(:recipe).permit(:name, :about, :ingreds, :j_ingreds, :steps, :j_steps, :author_id, :prep_time, :cook_time, :servings, :main_photo)
+      params.require(:recipe).permit(:name, :about, :ingreds, :j_ingreds, :steps, :j_steps, :author_id, :prep_time, :cook_time, :servings, :main_photo, :s_tags)
     end
     def is_signed_in
      current_member != nil
