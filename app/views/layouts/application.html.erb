@@ -10,63 +10,63 @@
   <div class="navbar">
     <div class="logo">
       <%= link_to root_url do %>
-         <div class="main_logo">
-           <div id="logo"><%= image_tag("tuzi-logo.png") %> </div>
-         </div>
+         
+           <div id="logo"><%= image_tag("white_bunny.png") %> </div>
+         
          <div class="logo-title">
-           TUZI CHEF
+           Tuzi Chef
          </div>
       <% end  %>
     </div>
     
     <div class="nav_top_row">
       <div class="nav_secondary_links">
-  	      <ul class="nav_sec_menu">
-            <li id="leaf_link"><%= link_to "have" %></li>
-            <li id="leaf_link"><%= link_to "a" %></li>
-            <li id="leaf_link"><%= link_to "wonderful" %></li>
-            <li id="leaf_link"><%= link_to "day" %></li>
-            <li id="leaf_link"><%= link_to "**" %></li>
-            <li id="leaf_link"><%= link_to "Community", members_path %></li>
-          </ul>
-        </div>
+        <ul class="nav_sec_menu">
+          <li id="leaf_link"><%= link_to "have" %></li>
+          <li id="leaf_link"><%= link_to "a" %></li>
+          <li id="leaf_link"><%= link_to "wonderful" %></li>
+          <li id="leaf_link"><%= link_to "day" %></li>
+          <li id="leaf_link"><%= link_to "**" %></li>
+          <li id="leaf_link"><%= link_to "Community", members_path %></li>
+        </ul>
+      </div>
     </div>
     
     <div class="mid-bar">
-		  <div class="navbar-links">
+      <div class="navbar-links">
         <ul>
           <li class="dropdown-reveal"><%= link_to "Recipes", recipes_path %>
             <div class="dropdown">
-    					<ul>
-    						<li><a href="">Recipe Category 1</a></li>
-    						<li><a href="">Recipe Category 1</a></li>
-    						<li><a href="">Recipe Category 1</a></li>
-    					</ul>
-    				</div>
+              <ul>
+                <li><a href="">Recipe Category 1</a></li>
+                <li><a href="">Recipe Category 1</a></li>
+                <li><a href="">Recipe Category 1</a></li>
+              </ul>
+            </div>
           </li>
           <li><%= link_to "Hacks", root_url %></li>
           <li><%= link_to "Feed", root_url %></li>
         </ul>  
       </div>  
       <div class="search">
-        <%= form_tag recipes_path, :method => :get do, id="search" %>
-          <%= text_field_tag :search, params[:search], :placeholder => "Something Awesome!", id="search-box" %>
-          <%= submit_tag "OK", :name => nil, id="search-bttn" %>
+        <%= form_tag recipes_path, :class => "search_form", :method => :get do %>
+          <%= text_field_tag :search, params[:search], :placeholder => "Something Awesome!", :class => "search-box" %>
+          <%= submit_tag "", :name => nil, :class =>"search-bttn" %>
         <% end %>
       </div> 
       <div class="action-links">
-  			<button id="pot"></button>
-  			<button id="upload">UPLOAD +</button>
-		  </div>
+        <button id="pot"></button>
+        <button id="upload">UPLOAD +</button>
+      </div>
     </div>    
     
     <div class="account-links">
-  		<ul>
-  			<% if member_signed_in? %>
+      <ul>
+        <% if member_signed_in? %>
           <li><%= link_to "Profile", current_member %></li>
         <% end %>
-  		</ul>	
-  	</div>
+      </ul>  
+    </div>
           
       
     

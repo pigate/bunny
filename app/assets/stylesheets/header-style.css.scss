@@ -2,260 +2,243 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Lato', arial, tahoma;
+  font-size: 18px;
 }
 
-a 
+a {
+  text-decoration: none;
+}
+.navbar {
+  width: 100%;
+  height: 90px;
+  background: white;
+  border-bottom: 1px solid black;
+  font-size: 16px;
+
+  .logo 
+  {
+    width: 100px;
+    height: 50px;
+    margin-top: 10px;
+    
+    img 
+    {
+      width: 3em;
+      float: left;
+      margin-left: 10px;
+      position: absolute;
+    }
+    
+    .logo-title 
+    {
+      color: black;
+      font-size: 1.2em;
+      width: 2.5em;
+      float: left;
+      position: absolute;
+      left: 3.5em;
+    }
+  }
+ 
+  .nav_top_row
+  {
+    position: absolute;
+    top: 0em;
+    left: 9em;
+ 
+    ul {
+      li {
+        list-style-type: none;
+  display: inline-block;
+      }
+    }
+  }  
+ 
+  .mid-bar {
+    height: 40px;
+    width: 100%;
+
+   .navbar-links {
+     width: 33%;
+     float: left;
+     height: 40px;
+     margin-left: 60px;
+
+     ul {
+       width: 100%;
+       height: 40px;
+       text-align: center;
+       padding: 0;
+       margin-top: 0;
+
+       li {
+         list-style-type: none;
+         display: inline-block;
+         width: 25%;
+         max-width: 122px;
+         height: 40px;
+         position: relative;
+         font-size: 18px;  
+         text-transform: uppercase;    
+        
+         &:hover {
+           background: #dddddd;
+         }
+         &:nth-child(1) {
+           &:hover>.dropdown {
+            display: block;
+           }
+         }     
+         a {
+           display: block;
+           height: 40px;
+           line-height: 39px;
+           color: black;
+         }
+         
+         .dropdown {
+           width: 202px;
+           position: absolute;
+           left: -46%;
+           display: none;
+                     
+           ul {
+             display: block;
+             width: 100%;
+             height: auto;
+             li {
+               width: 100%;
+               display: block;
+               :hover {
+                 background: #dddddd;
+               }
+               a {
+                 background: white;
+                 width: 153px;
+                 border: 1px solid #dddddd;
+                 width: 202px;                  
+               }
+             }
+           }
+         }
+        }
+      }
+    }
+  }  
+}
+
+
+
+.search 
 {
-	text-decoration: none;
-	
-}
-
-.navbar 
-{
-	width: 100%;
-	height: 90px;
-	background: white;
-	border-bottom: 1px solid black;
-	
-	.logo 
-	{
-		width: 100px;
-		height: 50px;
-		margin-top: 10px;
-		
-		
-		img 
-		{
-			width: 3em;
-			float: left;
-			margin-left: 10px;
-			position: absolute;
-		}
-		
-		.logo-title {
-			color: black;
-			font-size: 1.2em;
-			width: 2.5em;
-			float: left;
-			position: absolute;
-			left: 3em;
-		}
-	}
-	
-	.mid-bar
-	{
-		height: 40px;
-		width: 100%;
-		
-		.navbar-links {
-			width: 33%;
-			float: left;
-			height: 40px;
-			margin-left: 60px;
-			
-			ul
-			{
-				width: 100%;
-				height: 40px;
-				text-align: center;
-				padding: 0;
-				margin-top: 0;
-				
-				li 
-				{
-					list-style-type: none;
-					display: inline-block;
-					width: 25%;
-					max-width: 122px;
-					height: 40px;
-					position: relative;
-					
-					
-					&:hover 
-					{
-						background: #dddddd;
-					}
-					
-					&:last-child
-					{
-						&:hover>.dropdown 
-						{
-						 display: block;
-						}
-					  
-					}
-					
-					a 
-					{
-						display: block;
-						height: 40px;
-						line-height: 39px;
-						color: black;
-					
-					}
-					
-					.dropdown 
-					{
-						width: 153px;
-						position: absolute;
-						left: -15%;
-						display: none;
-											
-						ul 
-						{
-							display: block;
-							width: 100%;
-							height: auto;
-							
-												
-							li 
-							{
-								width: 100%;
-								display: block;
-								
-								:hover 
-								{
-									background: #dddddd;
-								}
-								
-								
-								a 
-								{
-									background: white;
-									width: 153px;
-									border: 1px solid #dddddd;
-									
-								}
-							}
-						}
-					}
-					
-					
-					
-					
-				}
-				
-				
-				
-			}
-		}
-	}	
-	
-}
-
-
-
-.search {
-	float: left;
-	height: 40px;
-	width: 31%;
-	position: relative;
-	
-	form#search
-	{
-		width: 202px;
-		margin: auto;
-		position: relative;
-	
-		#search-box 
-		{
-			padding: 8px 1px 10px 8px;
-			border-radius: .6em;
-			border: 1px solid #dddddd;
-			width: 189px;
-		}
-		
-		#search-bttn 
-		{
-			position: absolute;
-			top: 3px;
-			left: 167px;
-			background: url('../images/search-bttn.png');
-			width: 30px;
-			height: 30px;
-			background-size: 100%;
-			border: none;
-			cursor: pointer;
-		}
-	}	
+  float: left;
+  height: 40px;
+  width: 31%;
+  position: relative;
+  
+  .search_form
+  {
+    width: 202px;
+    margin: auto;
+    position: relative;
+  
+    .search-box 
+    {
+      padding: 8px 1px 10px 8px;
+      border-radius: .6em;
+      border: 1px solid #dddddd;
+      width: 189px;
+    }
+    
+    .search-bttn 
+    {
+      position: absolute;
+      top: 3px;
+      left: 167px;
+      background: url('/assets/search-bttn.png');
+      width: 30px;
+      height: 30px;
+      background-size: 100%;
+      border: none;
+      cursor: pointer;
+    }
+  }  
 }
 
 .action-links 
 {
-	float: right;
-	height: 40px;
-	width: 25%;
-	position:relative;
-	
-	#pot 
-	{
-		background: url('../images/pot.png');
-		height: 37px;
-		width: 39px;
-		background-size: 100%;
-		border: none;
-		cursor: pointer;
-		margin-right: 1.5em;
-		position: absolute;
-		right: 16em;
-		top: -.1em;
-		
-		&:hover 
-		{
-			width: 44px;
-			top: -.1em;
-		}
-	}
-	#upload 
-	{
-		background: red;
-		color: white;
-		cursor: pointer;
-		border: none;
-		font-size: 1.3em;
-		height: 33px;
-		position: absolute;
-		top: .1em;
-		right: 26%;
-		
-		&:hover 
-		{
-			font-size: 1.4em;
-			height: 35px;
-		}
-	}
+  float: right;
+  height: 40px;
+  width: 25%;
+  position:relative;
+  
+  button#pot 
+  {
+    background: url('/assets/pot.png');
+    height: 37px;
+    width: 39px;
+    background-size: 100%;
+    border: none;
+    cursor: pointer;
+    margin-right: 1.5em;
+    position: absolute;
+    right: 16em;
+    top: -.1em;
+    
+    &:hover 
+    {
+      width: 44px;
+      top: -.1em;
+    }
+  }
+  #upload 
+  {
+    background: red;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-size: 1.3em;
+    height: 33px;
+    position: absolute;
+    top: .1em;
+    right: 26%;
+    
+    &:hover 
+    {
+      font-size: 1.4em;
+      height: 35px;
+    }
+  }
 }
 
 .account-links 
 {
-	float: right;
-	position:absolute;
-	top: 0em;
-	right: 1em;
-	
-	
-	ul  
-	{
-		li
-		{
-			list-style-type: none;
-			display: inline;
-			margin-left: .7em;
-		}
-	}
+  float: right;
+  position:absolute;
+  top: 0em;
+  right: 1em;
+  
+  
+  ul  
+  {
+    li
+    {
+      list-style-type: none;
+      display: inline;
+      margin-left: .7em;
+    }
+  }
 }
 
-.big 
-
-{
+.big {
   height: 200vh;
 }
 
 @media (max-width:791px)
 
 {
-	.navbar .mid-bar .navbar-links ul li .dropdown
-	{
-		left: -40px;
-	}
+  .navbar .mid-bar .navbar-links ul li .dropdown
+  {
+    left: -40px;
+  }
 }
