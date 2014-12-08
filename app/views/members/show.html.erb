@@ -11,7 +11,7 @@
   Goes by <%= @member.occupation %> by day
 </p>
 
-<% if current_member == @member  %>
+<% if current_member == @member || current_member.admin %>
 <%= link_to 'Edit', edit_member_path(@member) %> |
 <% end %>
 <%= link_to 'View Other Members', members_path %>

@@ -1,7 +1,8 @@
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
-  before_action :is_signed_in, only: [:update, :destroy]
-  before_action :can_destroy, only: [:destroy]
+  before_action :is_signed_in, only: [:edit, :update, :destroy]
+  before_action :can_edit, only: [:edit, :update, :destroy]
+  before_action :can_destroy, only: [:update, :destroy]
   # GET /members
   # GET /members.json
   def index
@@ -70,7 +71,9 @@ class MembersController < ApplicationController
     def member_params
       params.require(:member).permit(:first, :last, :user_name, :occupation, :email, :photo)
     end
-
+    def can_edit
+      current_member.admin || current_member.id == params[:id]
+    end
     def is_signed_in
       redirect_to new_member_session_path unless current_member  
     end

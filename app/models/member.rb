@@ -12,8 +12,9 @@ class Member < ActiveRecord::Base
   #devise checks email and password/
   has_attached_file :photo,
     :styles => {
-      :original => "200x200#",
-      :cropped_thumb => {:geometry => "100x100#", :jcrop => true }
+      :original => "140x140#",
+      :cropped_thumb => {:geometry => "100x100#", :jcrop => true },
+      :tiny_thumb => {:geometry => "32x32#", :jcrop => true}
     },
     :convert_options => {
       :thumb => "-quality 75 -strip"
