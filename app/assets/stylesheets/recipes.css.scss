@@ -197,3 +197,11 @@ input.tag_input {
 #recipe_show_tags {
   padding-top: 30px;
 }
+
+div.new_recipe_link {
+  margin-top: 20px;
+  a {
+    color: #800000;
+    font-weight: bold;
+  }
+}

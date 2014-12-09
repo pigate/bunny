@@ -21,9 +21,18 @@
   </div>
   </td>
   <td>
+  <div class="result_announcer">
+    <% if @recipes == [] %>
+      <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
+    <% else %>
+      <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
+  
+    <% end %>
+  </div>
+  <div class="new_recipe_link">
+    <%= link_to "Add your recipe!", new_recipe_path %>
+  </div>
   <div id="right_recipes_results">
-    <div><%= link_to 'New Recipe', new_recipe_path %>
-    </div>
     <% @recipes.each do |recipe| %>
       <div class="search_result_recipe">
         <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
