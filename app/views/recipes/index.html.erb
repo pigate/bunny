@@ -24,7 +24,7 @@
   <div class="result_announcer">
     <% if @recipes == [] %>
       <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
-    <% else %>
+    <% elsif params["search"] != nil%>
       <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
   
     <% end %>
