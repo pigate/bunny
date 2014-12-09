@@ -87,6 +87,11 @@
     </div>
   </div>
   
+<% if !member_signed_in? %>
+<div id="wanna_join">
+  Wanna join? <%= link_to "Sign up here!", members_register_path %> 
+</div>
+<% end %>
   
   
   <div class="main_content">

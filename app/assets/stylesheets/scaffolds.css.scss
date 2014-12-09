@@ -27,6 +27,11 @@ pre {
   font-size: 11px;
 }
 
+span.page_title {
+  font-size: 20px;
+   
+}
+
 a {
   text-decoration: none;
   &:visited {
@@ -129,4 +134,18 @@ span.result_announcer {
   background-color: #E0F0FF;
   border-radius: 10px;
   margin-bottom: 10px;
+}
+
+/* Want to join?*/
+div#wanna_join {
+  background-color: #E0F0FF;
+  border-radius: 10px;
+  padding: 10px 10px 10px 10px;
+  width: 300px;
+  margin-left: 20px;
+  margin-top: 15px;  
+  a {
+    font-weight: bold;
+    color: red;
+  }
 }
