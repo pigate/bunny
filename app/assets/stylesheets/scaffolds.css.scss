@@ -32,6 +32,9 @@ span.page_title {
    
 }
 
+span.left_margin_10 {
+  margin-left: 10px;
+}
 a {
   text-decoration: none;
   &:visited {
@@ -147,5 +150,22 @@ div#wanna_join {
   a {
     font-weight: bold;
     color: red;
+  }
+}
+
+/* buttons */
+button.button_round_blue {
+  border-style: none;
+  background-color: #f8f8f8;
+  color: black;
+  padding: 8px 8px 8px 8px;
+  display: block;
+  border-radius: 5px;
+  cursor: pointer;
+  cursor: hand;
+}
+button {
+  img.button_img {
+    height: 20px;
   }
 }

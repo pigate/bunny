@@ -160,35 +160,50 @@ div.search_result_recipe {
 }
 
 /* Recipe show page*/
-div#recipe_show_body {
-  width: 600px;
-  margin-left: 50px;
-  div.recipe_main_photo {
-    height: 400px;
-    width: 500px;
-    background-color: #585858;
-    img.recipe_main_img {
+div #recipe_show_whole_body {
+  width: 100%;
+  div#recipe_show_body {
+    width: 60%;
+    float: left;
+    div.recipe_main_photo {
       height: 400px;
       width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    div.recipe_main_meta_data, div.recipe_main_meta_data_underlay {
-      position: relative;
-      top: -130px;
-      height: 130px;
-      background-color: rgba(255, 255, 255,0.5);
-      width: 100%;
-      p {
-        padding: 10px 10px 10px 10px;
+      background-color: #585858;
+      img.recipe_main_img {
+        height: 400px;
+        width: 500px;
+        margin-left: auto;
+        margin-right: auto;
       }
-    }
-    div.recipe_main_meta_data_underlay {
-      background: white;
-      opacity: 0.7;
+      div.recipe_main_meta_data, div.recipe_main_meta_data_underlay {
+        position: relative;
+        top: -130px;
+        height: 130px;
+        background-color: rgba(255, 255, 255,0.5);
+        width: 100%;
+        p {
+          padding: 10px 10px 10px 10px;
+        }
+      }
+      div.recipe_main_meta_data_underlay {
+        background: white;
+        opacity: 0.7;
+        
+      }
       
     }
-    
+  }
+  div#recipe_show_chat_body {
+    width: 35%;
+    float: left;
+    textarea {
+      width: 80%;
+      border-style: none;
+      height: 150px;
+      background-color: #E0F0FF;
+      border-radius: 10px;
+      padding: 10px 10px 10px 10px;
+    }
   }
 }
 input.tag_input {

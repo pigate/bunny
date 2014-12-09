@@ -1,64 +1,71 @@
-<p id="notice"><%= notice %></p>
-<div id="recipe_show_body">
-  <div class="recipe_main_photo">
-    <%= image_tag @recipe.main_photo(:original), :class => "recipe_main_img" %>
-    <div class="recipe_main_meta_data">
-      <p>
-        <%= @recipe.name %>
-      </p>
-      <p>
-        Cooked up by:  
-        <% if @recipe.author %>
-          <%= link_to @recipe.author do %>
-            <%=image_tag @recipe.author.photo(:tiny_thumb), :class => "rounded_tiny_thumb_lower" %>
+<div id="recipe_show_whole_body">
+  <p id="notice"><%= notice %></p>
+  <div id="recipe_show_body">
+    <div class="recipe_main_photo">
+      <%= image_tag @recipe.main_photo(:original), :class => "recipe_main_img" %>
+      <div class="recipe_main_meta_data">
+        <p>
+          <%= @recipe.name %>
+        </p>
+        <p>
+          Cooked up by:  
+          <% if @recipe.author %>
+            <%= link_to @recipe.author do %>
+              <%=image_tag @recipe.author.photo(:tiny_thumb), :class => "rounded_tiny_thumb_lower" %>
+            <% end %>
+            <%= link_to @recipe.author.user_name, @recipe.author %>
+          <% else %> 
+            <%= image_tag("missing/tiny_thumb.png", :class => "rounded_tiny_thumb_lower") %>
+            anonymous 
           <% end %>
-          <%= link_to @recipe.author.user_name, @recipe.author %>
-        <% else %> 
-          <%= image_tag("missing/tiny_thumb.png", :class => "rounded_tiny_thumb_lower") %>
-          anonymous 
-        <% end %>
-      </p>
+        </p>
+      </div>
     </div>
+    <div id="recipe_show_tags">
+    <% if @recipe.s_tags != nil %>
+      Tags: 
+      <% @recipe.s_tags.split(',').each do |tag| %>
+        <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_recipe_search" %>
+      <% end %>
+    <% end %>
+    </div>
+    <p>
+    Time to make: <%= @recipe.prep_time + @recipe.try(:cook_time)||0 %> minutes<br>
+    Prep: <%= @recipe.prep_time %> min<br>
+    Cook: <%= @recipe.cook_time %> min
+    </p>
+    <p>
+      <i><%= @recipe.about %></i>
+    </p>
+    <p>
+    Makes <%= @recipe.servings %> servings. 
+    </p>
+    <p>
+      <h3>Ingreds:</h3>
+      <% destringify(@recipe.j_ingreds).each do |ingred| %>
+       <%= ingred.gsub(/U\+022/,'"') %><br>
+      <% end %>
+    </p>
+    
+    <p>
+      <h3>Steps:</h3>
+      <% i = 1 %>
+      <% destringify(@recipe.j_steps).each do |step| %>
+       <%= simple_format h "#{i}. #{step.gsub(/U\+022/, '"')}" %><br>
+       <% i+= 1 %>
+      <% end %>
+    </p>
+    
+    
+    <% if member_signed_in? && current_member == @recipe.author %>
+    <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+    <%= link_to 'Remove', @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } %> |
+    <% end %>
+    <%= link_to 'Back', recipes_path %>
   </div>
-  <div id="recipe_show_tags">
-  <% if @recipe.s_tags != nil %>
-    Tags: 
-    <% @recipe.s_tags.split(',').each do |tag| %>
-      <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_recipe_search" %>
-    <% end %>
-  <% end %>
+  <div id="recipe_show_chat_body">
+    <span class="left_margin_10">Discuss, chat, leave a message!</span>
+    <textarea style="width: 80%;" placeholder="A text box that does not work yet! Mimi says hi :)"></textarea><br>
+    <button type="button" class="button_round_blue">Let it fly! <%= image_tag("ic_action_fly.png", :class => "button_img") %></button>
   </div>
-  <p>
-  Time to make: <%= @recipe.prep_time + @recipe.try(:cook_time)||0 %> minutes<br>
-  Prep: <%= @recipe.prep_time %> min<br>
-  Cook: <%= @recipe.cook_time %> min
-  </p>
-  <p>
-    <i><%= @recipe.about %></i>
-  </p>
-  <p>
-  Makes <%= @recipe.servings %> servings. 
-  </p>
-  <p>
-    <h3>Ingreds:</h3>
-    <% destringify(@recipe.j_ingreds).each do |ingred| %>
-     <%= ingred.gsub(/U\+022/,'"') %><br>
-    <% end %>
-  </p>
-  
-  <p>
-    <h3>Steps:</h3>
-    <% i = 1 %>
-    <% destringify(@recipe.j_steps).each do |step| %>
-     <%= simple_format h "#{i}. #{step.gsub(/U\+022/, '"')}" %><br>
-     <% i+= 1 %>
-    <% end %>
-  </p>
-  
-  
-  <% if member_signed_in? && current_member == @recipe.author %>
-  <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
-  <%= link_to 'Remove', @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } %> |
-  <% end %>
-  <%= link_to 'Back', recipes_path %>
 </div>
