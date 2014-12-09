@@ -4,10 +4,6 @@
 #  else if create == 0, we are on edit page
 %>
 <script>
-/*
-Posts element = "" if no content
-*/
-
 
 function post(node){
   var hiddenIngreds = document.createElement("input");
@@ -20,7 +16,7 @@ function post(node){
   var ingreds = recipe_ingreds.getElementsByClassName("text_element");
   for(var i = 0; i < ingreds.length - 1; i++){
     if (ingreds[i].value.search(/[A-Za-z]/)!= -1)
-    ingreds_array +=  "\""+ingreds[i].value.replace(/\n/g,' ').replace(/\"/g,"U+022") + "\",";
+    ingreds_array +=  "\""+ingreds[i].value.replace(/\n/g,'U+2424').replace(/\"/g,"U+022") + "\",";
     
   }
 
@@ -44,7 +40,7 @@ function post(node){
   var steps = recipe_steps.getElementsByClassName("text_element");
   for(var i = 0; i < steps.length - 1; i++){
     if (steps[i].value.search(/[A-Za-z]/) != -1)
-      steps_array += "\""+steps[i].value.replace(/[\n]/g,"\\n").replace(/\"/g,"U+022") + "\",";
+      steps_array += "\""+steps[i].value.replace(/[\n]/g,"U+2424").replace(/\"/g,"U+022") + "\",";
   }
   if (steps[steps.length - 1].innerHTML.search(/[A-Za-z]/) != -1){
     steps_array += steps[steps.length - 1] + "]";
@@ -162,18 +158,21 @@ function addBox(e, i, defaultText){
   </div>
 <% end %>
 <%= javascript_tag do %>
+  alert("hi");
   var id_ingred_list = "ingred_list";
   var id_steps_list = "steps_list";
+  alert("hi");
   <% if @recipe.j_ingreds == "" || @recipe.j_ingreds == nil %>
     var elem = undefined;
     <% 3.times do %>
-      elem = addBox(elem, id_ingred_list, "e.g. 2 tsp");
+      elem = addBox(elem, id_ingred_list);
     <% end %>
   <% else %>
     var elem = undefined;
     <% destringify(@recipe.j_ingreds).each do |ingred| %>
+      alert("hi");
       var default_text = "<%= ingred %>";
-      default_text = default_text.replace(/U\+022/g, '\"');
+      default_text = default_text.replace(/U\+022/g, '\"').replace(/U\+2424/g,'&#10;');
       elem = addBox(elem, id_ingred_list, default_text);
     <% end %>
     addBox(elem, id_ingred_list);
@@ -187,7 +186,7 @@ function addBox(e, i, defaultText){
     var elem = undefined;
     <% destringify(@recipe.j_steps).each do |step| %>
       var default_text = "<%= step %>";
-      default_text = default_text.replace(/U\+022/g,'\"');
+      default_text = default_text.replace(/U\+022/g,'\"').replace(/U\+2424/g,'&#10;');
       elem = addBox(elem, id_steps_list, default_text);
     <% end %>
     addBox(elem, id_steps_list);
