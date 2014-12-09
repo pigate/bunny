@@ -63,7 +63,8 @@ class RecipesController < ApplicationController
 
   private
     def set_recipe
-      @recipe = Recipe.find(params[:id])
+      @recipe = Recipe.find_by_id(params[:id])
+      redirect_to not_found_path unless @recipe      
     end
 
     def recipe_params

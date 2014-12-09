@@ -12,6 +12,7 @@ class MembersController < ApplicationController
   # GET /members/1
   # GET /members/1.json
   def show
+
   end
 
   # GET /members/new
@@ -64,7 +65,8 @@ class MembersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_member
-      @member = Member.find(params[:id])
+      @member = Member.find_by_id(params[:id])
+      redirect_to not_found_path unless @member
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

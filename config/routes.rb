@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
+  resources :suggestions
+
   resources :tag_types
   get 'categories' => 'tag_types#index'
   root 'static_pages#home'
   get 'about' => 'static_pages#about'
   get 'vision' => 'static_pages#vision'
+  get 'help' => 'static_pages#help'
+  get 'suggestion_added' => 'static_pages#suggestion_added'
+  get 'not_found' => 'static_pages#not_found'
   resources :recipes
 
   devise_for :members, :controllers => { :registrations => "registrations" }

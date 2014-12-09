@@ -1,0 +1,10 @@
+<div id="static_box">
+  <div style="padding-bottom: 20px;">Hello<% if member_signed_in? %><%= " #{current_member.user_name}" %><% end %>, thank you for your suggestion.<br>
+ We will get back to you on it!</div>
+  <div><%= link_to "Home", root_url %> 
+  <% if member_signed_in? %>
+    | <%= link_to "Your profile", member_path(current_member) %>
+    | <%= link_to "Your account", members_edit_account_path %>
+  <% end %>
+  </div>
+</div>

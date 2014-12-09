@@ -1,0 +1,24 @@
+<%= form_for(@suggestion) do |f| %>
+  <% if @suggestion.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@suggestion.errors.count, "error") %> prohibited this suggestion from being saved:</h2>
+
+      <ul>
+      <% @suggestion.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if member_signed_in? %>
+    <%= f.hidden_field :who_id, :value => current_member.id %>
+  <% else %>
+    <%= f.hidden_field :who_id, :value => -1 %>
+  <% end %>
+  <div class="field">
+    <%= f.text_area :description, :cols => 80, :rows => 8 %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Send" %>
+  </div>
+<% end %>
