@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   rescue_from Exceptions::AuthenticationError, with: :not_signed_in
   rescue_from Exceptions::NotAuthorizedError, with: :not_authorized
+
   private
     def not_signed_in
      #render :text => "What are you trying to do? Sign in!", status: :not_found

@@ -22,7 +22,8 @@
   </td>
   <td>
   <div id="right_recipes_results">
-    <%= link_to 'New Recipe', new_recipe_path %>
+    <div><%= link_to 'New Recipe', new_recipe_path %>
+    </div>
     <% @recipes.each do |recipe| %>
       <div class="search_result_recipe">
         <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>

@@ -93,12 +93,9 @@ div#recipes_index {
 }
 
 div#left_filter_options {
-  width: 30%;
-  float: left;
 }
 
 div#right_recipes_results {
-  width: 65%;
 }
 
 div#recipes_index {
@@ -159,7 +156,6 @@ div.search_result_recipe {
     top: -13px;
   }
   img.square_170 {
-    float: left;
   }
 }
 
@@ -173,16 +169,19 @@ div#recipe_show_body {
     background-color: #585858;
     img.recipe_main_img {
       height: 400px;
+      width: 500px;
       margin-left: auto;
       margin-right: auto;
     }
     div.recipe_main_meta_data, div.recipe_main_meta_data_underlay {
       position: relative;
       top: -130px;
-      margin-left: 20px;
+      height: 130px;
+      background-color: rgba(0,0,0,0.5);
       width: 100%;
-      padding: 5px 5px 5px 15px;
-      border-radius: 10px;
+      p {
+        padding: 10px 10px 10px 10px;
+      }
     }
     div.recipe_main_meta_data_underlay {
       background: white;
@@ -194,4 +193,7 @@ div#recipe_show_body {
 }
 input.tag_input {
   width: 658px;
+}
+#recipe_show_tags {
+  padding-top: 30px;
 }
