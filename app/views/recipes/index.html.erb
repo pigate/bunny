@@ -38,7 +38,8 @@
         <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
         <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
         <%= "Servings: #{recipe.servings}" %><br>
-        <%= "Prep time: #{recipe.prep_time}" %>min <%= " Cook time: #{recipe.cook_time} min" %>
+        <%= "Prep time: #{recipe.prep_time}" %>min<br>
+        <%= " Cook time: #{recipe.cook_time} min" %>
         <br>
         <div class="search_result_recipe_credit">
           <% if recipe.author != nil %>
