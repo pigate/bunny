@@ -1,3 +1,24 @@
+<script type="text/javascript">
+  function search_recipes_with_filters(id) {
+    var elem = document.getElementById(id);
+    var inputs = elem.getElementsByTagName("input");
+    var query_string = "";
+    var count = 0;
+    for(var i = 0; i < inputs.length; i++){
+      if (inputs[i].type == "checkbox") {
+        if (inputs[i].checked){
+          if (count > 0)
+            query_string += "+"+ inputs[i].name;
+          else
+            query_string += inputs[i].name;
+          count += 1;
+        }
+      }
+    }
+    alert(query_string);
+    window.location.href = "/recipes?utf8=✓&search="+query_string;
+  }
+</script>
 <div id="recipes_index">
  <table class="wholesome_grid">
   <tr style="vertical-align: top;">
@@ -12,12 +33,13 @@
       <div class="tag_type_description"><%= tag_type.description %></div>
       <div class="child_tags">
         <% tag_type.tags.each do |tag| %>
-          <%= check_box_tag "search[tag_type][]", tag.id %>
+          <%= check_box_tag tag.name %>
           <%= tag.name %><br>
         <% end %>
       </div>
     </div>
     <% end %>
+    <button type="button" class="button_round_blue" onclick="search_recipes_with_filters('left_filter_options')">Get Searching</button>
   </div>
   </td>
   <td>
