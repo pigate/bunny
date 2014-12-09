@@ -158,10 +158,8 @@ function addBox(e, i, defaultText){
   </div>
 <% end %>
 <%= javascript_tag do %>
-  alert("hi");
   var id_ingred_list = "ingred_list";
   var id_steps_list = "steps_list";
-  alert("hi");
   <% if @recipe.j_ingreds == "" || @recipe.j_ingreds == nil %>
     var elem = undefined;
     <% 3.times do %>
@@ -170,7 +168,6 @@ function addBox(e, i, defaultText){
   <% else %>
     var elem = undefined;
     <% destringify(@recipe.j_ingreds).each do |ingred| %>
-      alert("hi");
       var default_text = "<%= ingred %>";
       default_text = default_text.replace(/U\+022/g, '\"').replace(/U\+2424/g,'&#10;');
       elem = addBox(elem, id_ingred_list, default_text);
