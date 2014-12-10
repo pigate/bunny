@@ -159,6 +159,9 @@ div.search_result_recipe {
   padding-right: 10px;
   float: left;
   width: 182px;
+  height: 306px;
+  overflow: hidden;
+  word-wrap: break-word;
   span.search_result_credit_text { 
     position: relative;
     top: -13px;

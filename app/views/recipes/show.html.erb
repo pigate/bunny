@@ -7,19 +7,24 @@
       <p>
         <%= @recipe.name %>
       </p>
-      <p>
-        Cooked up by:  
-        <% if @recipe.author %>
-          <%= link_to @recipe.author do %>
-            <%=image_tag @recipe.author.photo(:tiny_thumb), :class => "rounded_tiny_thumb_lower" %>
-          <% end %>
-          <%= link_to @recipe.author.user_name, @recipe.author %>
-        <% else %> 
-          <%= image_tag("missing/tiny_thumb.png", :class => "rounded_tiny_thumb_lower") %>
-          anonymous 
-        <% end %>
-      </p>
+      <div class="rating">
+      <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+      </div>
     </div>
+  </div>
+  <div>
+    <p>
+      Cooked up by:  
+      <% if @recipe.author %>
+        <%= link_to @recipe.author do %>
+          <%=image_tag @recipe.author.photo(:tiny_thumb), :class => "rounded_tiny_thumb_lower" %>
+        <% end %>
+        <%= link_to @recipe.author.user_name, @recipe.author %>
+      <% else %> 
+        <%= image_tag("missing/tiny_thumb.png", :class => "rounded_tiny_thumb_lower") %>
+        anonymous 
+      <% end %>
+    </p>
   </div>
   <div id="recipe_show_tags">
   <% if @recipe.s_tags != nil %>
