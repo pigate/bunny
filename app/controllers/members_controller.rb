@@ -28,7 +28,6 @@ class MembersController < ApplicationController
   # POST /members.json
   def create
     @member = Member.new(member_params)
-
     respond_to do |format|
       if @member.save
         format.html { redirect_to @member, notice: 'Member was successfully created.' }
@@ -44,6 +43,7 @@ class MembersController < ApplicationController
   # PATCH/PUT /members/1.json
   def update
     respond_to do |format|
+      @member.update_attributes('slug' => member_params[:user_name].downcase.gsub(' ','-').gsub('\n',''))
       if @member.update(member_params)
         format.html { redirect_to @member, notice: 'Member was successfully updated.' }
         format.json { render :show, status: :ok, location: @member }
@@ -65,7 +65,12 @@ class MembersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_member
-      @member = Member.find_by_id(params[:id])
+      id = params[:id]
+      if /[A-Za-z]/.match(id)
+        @member = Member.find_by_slug(id)
+      else
+        @member = Member.find_by_id(id)
+      end
       redirect_to not_found_path unless @member
     end
 

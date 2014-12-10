@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  resources :posts
+  resources :comments
+  resources :convos
   resources :suggestions
-
   resources :tag_types
   get 'categories' => 'tag_types#index'
   root 'static_pages#home'

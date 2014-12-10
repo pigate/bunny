@@ -1,0 +1,17 @@
+<div class="comment_box_show">
+  <p>
+    <% if comment.commenter %>
+      <%= link_to comment.commenter, :class => "down_8px" do %>
+        <%= image_tag comment.commenter.photo.url(:tiny_thumb), class: "rounded_really_tiny_thumb" %><span class="span_up_10px"><%= comment.commenter.user_name %></span>
+      <% end %>
+    <% else %>
+      Anonymous:
+    <% end %>
+    : <%= comment.comment_text %>
+  </p>
+  <div id="links">
+  <% if member_signed_in? && (current_member == comment.commenter || current_member.try(:admin) == true) %>
+    <%= link_to "edit" %> | <%= link_to "delete", comment, id: comment.id, method: :delete, data: { confirm: "Are you sure?"}, remote: true %> 
+  <% end %>
+  </div>
+</div>

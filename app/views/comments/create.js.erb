@@ -1,0 +1,5 @@
+<% @convo = Convo.find(params[:comment][:commentable_id]) %>
+var html = "<%= escape_javascript render(@convo) %>";
+$(function(){
+  $("#recipe_discuss_board").html(html);
+});

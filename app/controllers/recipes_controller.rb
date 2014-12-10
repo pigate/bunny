@@ -36,8 +36,12 @@ class RecipesController < ApplicationController
   def create
     if is_signed_in
       @recipe = Recipe.new(recipe_params)
-      @recipe.save
-      respond_with(@recipe)
+      if @recipe.save
+        @recipe.convo = Convo.new(:owner_id => current_member.id)
+        respond_with(@recipe)
+      else
+        render json: {status: "fail" }
+      end
     else
       raise Exceptions::AuthenticationError
     end
@@ -63,7 +67,8 @@ class RecipesController < ApplicationController
 
   private
     def set_recipe
-      @recipe = Recipe.find_by_id(params[:id])
+      actual_id = /[0-9]+$/.match(params[:id]) #returns a MatchData type
+      @recipe = Recipe.find_by_id(actual_id[0]) 
       redirect_to not_found_path unless @recipe      
     end
 

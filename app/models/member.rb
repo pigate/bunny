@@ -6,10 +6,16 @@ class Member < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :recipes, :foreign_key => :author_id  
+  has_many :comments, :foreign_key => :commenter_id
   validates :first, :presence => true
   validates :last, :presence => true
   validates :user_name, :presence => true, uniqueness: { case_sensitive: false }
+  validates_format_of :user_name, :with => /[A-Za-z]/
   #devise checks email and password/
+
+  has_many :comments, :as => :commenter
+  has_many :posts, :as => :author
+  
   has_attached_file :photo,
     :default_url => "missing/:style.png",
     :styles => {
@@ -33,6 +39,10 @@ class Member < ActiveRecord::Base
   validates_attachment_content_type :photo, :content_type => /\Aimage/
   validates_attachment_file_name :photo, :matches => [/png\Z/, /PNG\Z/, /jpe?g\Z/, /JPE?G\Z/]
 
-
-
+  def slug
+    user_name.downcase.gsub(" ", "-")
+  end
+  def to_param
+    "#{slug}"
+  end
 end

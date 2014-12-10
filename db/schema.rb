@@ -11,19 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141209062909) do
+ActiveRecord::Schema.define(version: 20141210030259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
-    t.integer  "commenter_id"
-    t.integer  "comment_type"
-    t.string   "text"
+    t.text     "comment_text"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.integer  "commenter_id",     default: -1
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "commentable_id"
-    t.integer  "commentable_type"
+  end
+
+  create_table "convos", force: true do |t|
+    t.integer  "conversable_id"
+    t.string   "conversable_type"
+    t.integer  "write_access_level", default: 2
+    t.integer  "owner_id",           default: -1
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "members", force: true do |t|
@@ -48,10 +56,20 @@ ActiveRecord::Schema.define(version: 20141209062909) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.string   "slug"
   end
 
   add_index "members", ["email"], name: "index_members_on_email", unique: true, using: :btree
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
+  add_index "members", ["slug"], name: "index_members_on_slug", using: :btree
+
+  create_table "posts", force: true do |t|
+    t.integer  "author_id"
+    t.text     "post_text"
+    t.text     "s_tags"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "recipes", force: true do |t|
     t.string   "name"

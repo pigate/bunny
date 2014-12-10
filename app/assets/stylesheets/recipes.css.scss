@@ -204,10 +204,17 @@ div #recipe_show_whole_body {
   div#recipe_show_chat_body {
     width: 35%;
     float: left;
+    /* recipe discuss board : convo and comments in the convo */
+    div#recipe_discuss_board {
+      background-color: #dddddd;
+      padding: 2px 10px 10px 10px;
+      width: 80%;
+      border-radius: 10px;      
+    }
     textarea {
       width: 80%;
       border-style: none;
-      height: 150px;
+      height: 60px;
       background-color: #E0F0FF;
       border-radius: 10px;
       padding: 10px 10px 10px 10px;

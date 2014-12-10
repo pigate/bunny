@@ -1,11 +1,12 @@
 require 'elasticsearch/model'
 class Recipe < ActiveRecord::Base
   belongs_to :author, :class_name => "Member"
-  has_many :comments, :as => :commentable
-  has_many :commenters, :through => :comments, :source => :commenter
   validates :name, presence: true
   validates :j_ingreds, presence: true
   validates :j_steps, presence: true
+  has_many :comments, :through => :convo
+  has_many :commenters, :through => :comments, :source => :commenter
+  has_one :convo, :as => :conversable, :dependent => :destroy
 
 
   has_attached_file :main_photo,
@@ -29,6 +30,14 @@ class Recipe < ActiveRecord::Base
 
   validates_attachment_content_type :main_photo, :content_type => /\Aimage/
   validates_attachment_file_name :main_photo, :matches => [/png\Z/, /PNG\Z/, /jpe?g\Z/, /JPE?G\Z/]
+
+  def slug
+    name.downcase.gsub(" ", "-")
+  end
+  def to_param
+    "#{slug}-#{id}"
+  end
+
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks

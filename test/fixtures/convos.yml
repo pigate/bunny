@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  conversable_id: 1
+  conversable_type: MyString
+  write_access_level: 1
+  owner_id: 1
+
+two:
+  conversable_id: 1
+  conversable_type: MyString
+  write_access_level: 1
+  owner_id: 1

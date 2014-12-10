@@ -14,10 +14,10 @@ class RegistrationsController < Devise::RegistrationsController
        tries = tries - 1
        anoth = User.find_by_chosen_name(name_base+i.to_s)
       end
-      resource.update_attributes("user_name" => name_base + i.to_s)
+      resource.update_attributes("user_name" => name_base + i.to_s, "slug" => "#{name_base + i.to_s}".downcase.gsub(' ','-'))
     elsif @@debug == true
       name_base = "Mimi"
-      resource.update_attributes("user_name" => name_base)
+      resource.update_attributes("user_name" => name_base, "slug" => name_base.downcase.gsub(' ','-'))
     end
     resource_saved = resource.save
     if !resource_saved
@@ -25,7 +25,7 @@ class RegistrationsController < Devise::RegistrationsController
       elsif resource.errors[:user_name] != nil
         while(!resource_saved)
           name_base = name_base + rand(10).to_s
-          resource.update_attributes("user_name" => name_base+i.to_s)
+          resource.update_attributes("user_name" => name_base+i.to_s, "slug" => "#{name_base + i.to_s}".downcase.gsub(' ','-'))
           resource_saved = resource.save
         end
       end

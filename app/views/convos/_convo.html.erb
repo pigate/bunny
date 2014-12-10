@@ -1,0 +1,7 @@
+<% if convo.comments == [] %>
+Nothing here yet...
+<% else %>
+<% convo.comments.each do |comment| %>
+  <%= render comment %>
+<% end %>
+<% end %>
