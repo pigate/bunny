@@ -10,22 +10,16 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <%= f.label :author_id %><br>
-    <%= f.number_field :author_id %>
+    <%= image_tag("ic_action_picture.png") %><br>
+    <%= f.file_field :photo %>
   </div>
-  <div class="field">
-    <%= f.label :feed_id %><br>
-    <%= f.number_field :feed_id %>
+  <div class="field_text">
+    <%= f.text_area :post_text, :placeholder => "Somewhere across the world, an apple fell from a tree into a pot. The pot was moved under another tree and a lemon fell into it." %>
   </div>
-  <div class="field">
-    <%= f.label :post_text %><br>
-    <%= f.text_area :post_text %>
-  </div>
-  <div class="field">
-    <%= f.label :s_tags %><br>
-    <%= f.text_area :s_tags %>
+  <div class="field_tags">
+    <label>Feeds to include your post in.<br>Type feed names, separate with commas.</label><br>
+    <%= f.text_area :s_tags, :value => @post.s_tags || "public, whatsforlunch"  %>
   </div>
   <div class="actions">
     <%= f.submit %>

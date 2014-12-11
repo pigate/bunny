@@ -72,6 +72,15 @@
             <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
           <% end %>
         </div>
+        <div id="show_tags">
+        <% if recipe.s_tags != nil %>
+          Tags:
+          <% recipe.s_tags.split(',').each do |tag| %>
+            <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
+          <% end %>
+        <% end %>
+        </div>
+
       </div>
     <% end %>
   </div>

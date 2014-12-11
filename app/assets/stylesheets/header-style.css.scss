@@ -12,11 +12,10 @@ a {
   width: 100%;
   height: 90px;
   background: white;
-  border-bottom: 1px solid black;
   font-size: 16px;
 
-  .logo 
-  {
+  .logo {
+    float: left;
     width: 100px;
     height: 50px;
     margin-top: 10px;
@@ -42,10 +41,12 @@ a {
  
   .nav_top_row
   {
-    position: absolute;
+    position: relative;
     top: 0em;
-    left: 9em;
- 
+    .nav_secondary_links {
+      width: 300px;
+      float: left;
+    } 
     ul {
       li {
         list-style-type: none;
@@ -59,6 +60,7 @@ a {
     width: 100%;
 
    .navbar-links {
+     clear: both;
      width: 33%;
      float: left;
      height: 40px;
@@ -94,7 +96,7 @@ a {
          a {
            display: block;
            height: 40px;
-           line-height: 39px;
+           line-height: 30px;
            color: black;
          }
          
@@ -140,40 +142,90 @@ a {
   
   .search_form
   {
-    width: 202px;
     margin: auto;
     position: relative;
   
-    .search-box 
+    div.search-box 
     {
       padding: 8px 1px 10px 8px;
       border-radius: .6em;
       border: 1px solid #dddddd;
-      width: 189px;
+      width: 100%;
+
+      input#search {
+        border-style: none;
+        width: 80%;
+      }
     }
     
-    .search-bttn 
+    button 
     {
-      position: absolute;
-      top: 3px;
-      left: 167px;
+      //position: absolute;
+      //top: 3px;
+      //right: 0px;
       background: url('/assets/search-bttn.png');
       width: 30px;
       height: 30px;
       background-size: 100%;
       border: none;
       cursor: pointer;
+      float: right;
+      position: relative;
+      top: -4px;
     }
   }  
 }
 
+@media (max-width: 795px) {
+  .action-links {
+    top: -35px;
+    font-size: 18px;
+    a {
+      display: none;
+    }
+    a.tiny {
+      visibility: visible;
+    }
+  }
+  .search {
+    float: none;
+    /*clear: both;*/
+  }
+  .search, .search-box, .search-form {
+    /*clear: both;*/
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+  .navbar .mid-bar .navbar-links {
+    width: 260px;
+    float: none;
+  }
+  .navbar .mid-bar .navbar-links ul li .dropdown
+  {
+    left: -40px;
+  }
+  .nav_sec_menu {
+    display: none;
+  }
+
+}
 .action-links 
 {
   float: right;
   height: 40px;
-  width: 25%;
+  //width: 25%;
+  margin-right: 2em;
   position:relative;
-  
+  a {
+    background-color: red;
+    margin: 8px 8px 8px 8px;
+    border-radius: 3px;
+  }
+  a.tiny {
+    visibility: hidden;
+  }  
   button#pot 
   {
     background: url('/assets/pot.png');
@@ -202,9 +254,9 @@ a {
     font-size: 1.3em;
     height: 33px;
     position: absolute;
-    top: .1em;
+    top: -5px;
     right: 26%;
-    
+    border-radius: 5px;  
     &:hover 
     {
       font-size: 1.4em;
@@ -213,34 +265,7 @@ a {
   }
 }
 
-.account-links 
-{
-  float: right;
-  position:absolute;
-  top: 0em;
-  right: 1em;
-  
-  
-  ul  
-  {
-    li
-    {
-      list-style-type: none;
-      display: inline;
-      margin-left: .7em;
-    }
-  }
-}
-
 .big {
   height: 200vh;
 }
 
-@media (max-width:791px)
-
-{
-  .navbar .mid-bar .navbar-links ul li .dropdown
-  {
-    left: -40px;
-  }
-}

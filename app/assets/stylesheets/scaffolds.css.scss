@@ -137,10 +137,10 @@ img.square_170 {
 }
 
 /* tag */
-a.tag_recipe_search {
+a.tag_search {
   background: #99CCFF;
   padding: 3px 3px 3px 3px;
-  border-radius: 10px;
+  border-radius: 8px;
   &:hover {
     
   }
@@ -151,7 +151,9 @@ span.result_announcer {
   border-radius: 10px;
   margin-bottom: 10px;
 }
-
+div#show_tags {
+  padding: 5px 3px 5px 3px;
+}
 /* Want to join?*/
 div#wanna_join {
   background-color: #E0F0FF;

@@ -8,88 +8,75 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="navbar">
-    <div class="logo">
-      <%= link_to root_url do %>
-         
-           <div id="logo"><%= image_tag("white_bunny.png") %> </div>
-         
-         <div class="logo-title">
-           Tuzi Chef
-         </div>
-      <% end  %>
+<div class="navbar">
+  <div class="logo">
+    <%= link_to root_url do %>
+     <div id="logo"><%= image_tag("white_bunny.png") %> </div>
+     <div class="logo-title">Tuzi Chef</div>
+    <% end  %>
+  </div>
+  <div class="nav_top_row">
+    <div class="nav_secondary_links">
+      <ul class="nav_sec_menu">
+        <li id="leaf_link"><%= link_to "have" %></li>
+        <li id="leaf_link"><%= link_to "a" %></li>
+        <li id="leaf_link"><%= link_to "wonderful" %></li>
+        <li id="leaf_link"><%= link_to "day" %></li>
+        <li id="leaf_link"><%= link_to "**" %></li>
+        <li id="leaf_link"><%= link_to "Community", members_path %></li>
+      </ul>
     </div>
-    
-    <div class="nav_top_row">
-      <div class="nav_secondary_links">
-        <ul class="nav_sec_menu">
-          <li id="leaf_link"><%= link_to "have" %></li>
-          <li id="leaf_link"><%= link_to "a" %></li>
-          <li id="leaf_link"><%= link_to "wonderful" %></li>
-          <li id="leaf_link"><%= link_to "day" %></li>
-          <li id="leaf_link"><%= link_to "**" %></li>
-          <li id="leaf_link"><%= link_to "Community", members_path %></li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="mid-bar">
-      <div class="navbar-links">
-        <ul>
-          <li class="dropdown-reveal"><%= link_to "Recipes", recipes_path %>
-            <div class="dropdown">
-              <ul>
-                <li><%= link_to "All Recipes", recipes_path %></li>
-                <li><%= link_to "New Recipe", new_recipe_path %></li>
-                <li><a href="/recipes?utf8=✓&search=Chinese">Chinese</a></li>
-                <li><a href="/recipes?utf8=✓&search=dim+sum">Dim Sum/Snacks</a></li>
-                <li><a href="/recipes?utf8=✓&search=easy">Easy</a></li>
-              </ul>
-            </div>
-          </li>
-          <li><%= link_to "Hacks", "/recipes?utf8=✓&search=hack" %></li>
-          <li><%= link_to "Feed", root_url %></li>
-        </ul>  
-      </div>  
-      <div class="search">
-        <%= form_tag recipes_path, :class => "search_form", :method => :get do %>
-          <%= text_field_tag :search, params[:search], :placeholder => "Something Awesome!", :class => "search-box" %>
-          <%= submit_tag "", :name => nil, :class =>"search-bttn" %>
-        <% end %>
-      </div> 
-      <div class="action-links">
-        <button id="pot"></button>
-        <button id="upload">UPLOAD +</button>
-      </div>
-    </div>    
-    
-    <div class="account-links">
-      <ul>
-        <% if member_signed_in? %>
-          <li><%= link_to "Profile", current_member %></li>
-        <% end %>
-      </ul>  
-    </div>
-          
-      
-    
     <div class="nav_util">
       <div class="nav_login">
         <ul>
           <% if member_signed_in? %>
-            <li><%= link_to "Sign out", members_logout_path %></li>
-            <li><%= link_to current_member.user_name, members_edit_account_path %></li>
-            <li><%= link_to raw"&#x2709;&#x2728;" %></li>
+          <li><%= link_to "Sign out", members_logout_path %></li>
+          <li><%= link_to "Basket"%></li>
+          <li><%= link_to current_member.user_name, current_member %></li>
+          <li><%= link_to raw"&#x2709;&#x2728;" %></li>
           <% else %>
-            <li><%= link_to "*ALPHAs", members_login_path %></li>
-            <li><%= link_to "Invites", members_register_path %></li>
+          <li><%= link_to "*ALPHASLOGIN", members_login_path %></li>
+          <li><%= link_to "Invites", members_register_path %></li>
+          <li><%= link_to "Basket"%></li>
           <% end %>
         </ul>
       </div>
-      
     </div>
   </div>
   
+  <div class="mid-bar">
+    <div class="navbar-links">
+      <ul>
+        <li class="dropdown-reveal"><%= link_to "Recipes"%>
+          <div class="dropdown">
+            <ul>
+              <li><%= link_to "All Recipes", recipes_path %></li>
+              <li><%= link_to "New Recipe", new_recipe_path %></li>
+              <li><a href="/recipes?utf8=✓&search=Chinese">Chinese</a></li>
+              <li><a href="/recipes?utf8=✓&search=dim+sum">Dim Sum/Snacks</a></li>
+              <li><a href="/recipes?utf8=✓&search=easy">Easy</a></li>
+            </ul>
+          </div>
+        </li>
+        <li><%= link_to "Hacks", "/recipes?utf8=✓&search=hack" %></li>
+        <li><%= link_to "Feed", posts_path %></li>
+      </ul>  
+    </div>  
+    <div class="action-links">
+      <%= link_to "UPLOAD+", new_post_path %>
+      <%= link_to "+", new_post_path, :class => "tiny" %>
+    </div>
+    <div class="search">
+      <%= form_tag recipes_path, :class => "search_form", :method => :get do %>
+        <div class="search-box"><%= text_field_tag :search, params[:search], :placeholder => "Something Awesome!"%>
+        <%= button_tag name="" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>    
+</div>
+
 <% if !member_signed_in? %>
 <div id="wanna_join">
   Wanna join? <%= link_to "Sign up here!", members_register_path %> 

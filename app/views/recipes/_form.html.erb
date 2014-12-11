@@ -154,7 +154,12 @@ function addBox(e, i, defaultText){
   </div>
   <%= f.hidden_field :author_id, :value => current_member.id %>
   <div class="actions">
-    <button type="button" onclick="post(this.form)">Submit</button>
+    <button type="button" onclick="post(this.form)">Submit</button><br>
+    <% if @recipe.id == nil %>
+      <%= link_to "Cancel", root_url, data: { confirm: "Are you sure?" } %>
+    <% else %>
+      <%= link_to "Remove", @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } %>
+    <% end %>
   </div>
 <% end %>
 <%= javascript_tag do %>

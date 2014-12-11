@@ -70,10 +70,17 @@ div.nav_links {
   display: inline-block; 
 }
 div.nav_util {
-  float: right;
-  line-height: 3em;
-  width: 270px;
+  /*
+   position: relative;
+   top: 0px;
+   right: 0px;
+   */
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  //line-height: 3em;
   display: inline-block;
+  width: 300px;
   div.nav_login {
     display: inline-block;
     float: right;

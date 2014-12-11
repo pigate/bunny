@@ -5,7 +5,7 @@
         <%= image_tag comment.commenter.photo.url(:tiny_thumb), class: "rounded_really_tiny_thumb" %><span class="span_up_10px"><%= comment.commenter.user_name %></span>
       <% end %>
     <% else %>
-      Anonymous:
+      Anonymous
     <% end %>
     : <%= comment.comment_text %>
   </p>

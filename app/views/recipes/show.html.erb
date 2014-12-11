@@ -2,35 +2,31 @@
 <p id="notice"><%= notice %></p>
 <div id="recipe_show_body">
   <div class="recipe_main_photo">
-    <%= image_tag @recipe.main_photo(:original), :class => "recipe_main_img" %>
+    <%= image_tag @recipe.main_photo.url(:original) %>
     <div class="recipe_main_meta_data">
-      <p>
-        <%= @recipe.name %>
-      </p>
-      <div class="rating">
-      <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-      </div>
+        <%= @recipe.name %><br>
+        <div class="rating">
+          <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+        </div>
     </div>
   </div>
-  <div>
-    <p>
-      Cooked up by:  
-      <% if @recipe.author %>
-        <%= link_to @recipe.author do %>
-          <%=image_tag @recipe.author.photo(:tiny_thumb), :class => "rounded_tiny_thumb_lower" %>
-        <% end %>
-        <%= link_to @recipe.author.user_name, @recipe.author %>
-      <% else %> 
-        <%= image_tag("missing/tiny_thumb.png", :class => "rounded_tiny_thumb_lower") %>
-        anonymous 
+  <div id="recipe_author_info">
+    Cooked up by:  
+    <% if @recipe.author %>
+      <%= link_to @recipe.author do %>
+        <%=image_tag @recipe.author.photo(:tiny_thumb), :class => "rounded_tiny_thumb_lower" %>
       <% end %>
-    </p>
+      <%= link_to @recipe.author.user_name, @recipe.author %>
+    <% else %> 
+      <%= image_tag("missing/tiny_thumb.png", :class => "rounded_tiny_thumb_lower") %>
+      anonymous 
+    <% end %>
   </div>
-  <div id="recipe_show_tags">
+  <div id="show_tags">
   <% if @recipe.s_tags != nil %>
     Tags: 
     <% @recipe.s_tags.split(',').each do |tag| %>
-      <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_recipe_search" %>
+      <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
     <% end %>
   <% end %>
   </div>

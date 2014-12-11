@@ -1,6 +1,17 @@
 // Place all the styles related to the Recipes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+form#recipe_form_page {
+  width: 800px;
+  max-width: 99%;
+  margin-left: auto;
+  margin-right: auto;
+  span#recipe_page_header {
+    color: #585858;
+    font-size: 20px;
+  }
+}
+
 textarea#recipe_about {
     width: 590px;
 }
@@ -52,6 +63,10 @@ div.recipe_form_field {
   a.add_another:hover {
     color: red;
   }
+  textarea, .listed_text_item {
+    max-width: 100%;
+  }
+  
 }
 .round_button {
     display: inline-block;
@@ -159,7 +174,7 @@ div.search_result_recipe {
   padding-right: 10px;
   float: left;
   width: 182px;
-  height: 306px;
+  height: 350px;
   overflow: hidden;
   word-wrap: break-word;
   span.search_result_credit_text { 
@@ -177,31 +192,23 @@ div #recipe_show_whole_body {
     width: 60%;
     float: left;
     div.recipe_main_photo {
-      height: 400px;
-      width: 500px;
-      background-color: #585858;
-      img.recipe_main_img {
-        height: 400px;
-        width: 500px;
-        margin-left: auto;
-        margin-right: auto;
+      max-width: 90%;
+      //height: 400px;
+      //width: 500px;
+      img {
+        width: 100%;
       }
       div.recipe_main_meta_data, div.recipe_main_meta_data_underlay {
         position: relative;
-        top: -130px;
-        height: 130px;
         background-color: rgba(255, 255, 255,0.5);
         width: 100%;
         p {
           padding: 10px 10px 10px 10px;
         }
       }
-      div.recipe_main_meta_data_underlay {
-        background: white;
-        opacity: 0.7;
-        
-      }
-      
+    }
+    div#recipe_author_info {
+      clear: both; 
     }
   }
   div#recipe_show_chat_body {
