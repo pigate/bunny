@@ -92,7 +92,7 @@ div.nav_search {
 }
 
 /*
-Showing rounded images
+Images image
 */
 
 img[class^="rounded_tiny_thumb"] {
@@ -136,6 +136,14 @@ img.square_170 {
   height: 170px;
 }
 
+.main_photo {
+      max-width: 90%;
+      //height: 400px;
+      //width: 500px;
+      img {
+        width: 100%;
+      }
+}
 /* tag */
 a.tag_search, .bubble_link {
   background: #99CCFF;
