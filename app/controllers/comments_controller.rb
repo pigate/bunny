@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
   #POST /comments
   #POST /comments.json
   def index
+    redirect_to not_found_path
     @comments = Comment.all
   end
   def new

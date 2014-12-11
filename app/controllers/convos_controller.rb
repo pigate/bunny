@@ -26,7 +26,7 @@ class ConvosController < ApplicationController
   #PATCH/PUT  /convos/1
   def update
     if current_member.try(:admin?)
-      if @convo.update(convo_prams)
+      if @convo.update(convo_params)
        
         format.json { status: :ok }
       end

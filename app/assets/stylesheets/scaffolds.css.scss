@@ -137,10 +137,12 @@ img.square_170 {
 }
 
 /* tag */
-a.tag_search {
+a.tag_search, .bubble_link {
   background: #99CCFF;
-  padding: 3px 3px 3px 3px;
-  border-radius: 8px;
+  padding: 1px 10px;
+  margin: 2px 3px 2px 3px;
+  display: inline-block;
+  border-radius: 6px;
   &:hover {
     
   }
@@ -156,6 +158,7 @@ div#show_tags {
 }
 /* Want to join?*/
 div#wanna_join {
+  clear: both;
   background-color: #E0F0FF;
   border-radius: 10px;
   padding: 10px 10px 10px 10px;

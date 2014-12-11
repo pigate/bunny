@@ -33,7 +33,6 @@
           <li><%= link_to "Sign out", members_logout_path %></li>
           <li><%= link_to "Basket"%></li>
           <li><%= link_to current_member.user_name, current_member %></li>
-          <li><%= link_to raw"&#x2709;&#x2728;" %></li>
           <% else %>
           <li><%= link_to "*ALPHASLOGIN", members_login_path %></li>
           <li><%= link_to "Invites", members_register_path %></li>
