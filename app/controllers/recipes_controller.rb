@@ -7,8 +7,8 @@ class RecipesController < ApplicationController
     if (params[:search].present?)
       @recipes = Recipe.search(params[:search]).records.to_a
     else
-      @recipes = Recipe.all
-      respond_with(@recipes)
+      @recipes = Recipe.all.reverse
+      respond_with(@recipes.reverse)
     end
   end
 
