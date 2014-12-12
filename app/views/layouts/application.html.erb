@@ -18,10 +18,10 @@
   <div class="nav_top_row">
     <div class="nav_secondary_links">
       <ul class="nav_sec_menu">
-        <li id="leaf_link"><%= link_to "have" %></li>
-        <li id="leaf_link"><%= link_to "a" %></li>
-        <li id="leaf_link"><%= link_to "wonderful" %></li>
-        <li id="leaf_link"><%= link_to "day" %></li>
+        <li id="leaf_link"><%= link_to "it's" %></li>
+        <li id="leaf_link"><%= link_to "pouring" %></li>
+        <li id="leaf_link"><%= link_to "rabbits" %></li>
+        <li id="leaf_link"><%= link_to "*" %></li>
         <li id="leaf_link"><%= link_to "**" %></li>
         <li id="leaf_link"><%= link_to "Community", members_path %></li>
       </ul>
@@ -30,13 +30,17 @@
       <div class="nav_login">
         <ul>
           <% if member_signed_in? %>
-          <li><%= link_to "Sign out", members_logout_path %></li>
-          <li><%= link_to "Basket"%></li>
-          <li><%= link_to current_member.user_name, current_member %></li>
+          <li><%= link_to "logout", members_logout_path %></li>
+          <li><%= link_to "box", :class => "box_link" %></li>
+          <li>
+          <%= link_to current_member do %>
+            <%= image_tag current_member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
+          <% end %>
+          </li>
           <% else %>
-          <li><%= link_to "*ALPHASLOGIN", members_login_path %></li>
+          <li><%= link_to "*LOGIN", members_login_path %></li>
           <li><%= link_to "Invites", members_register_path %></li>
-          <li><%= link_to "Basket"%></li>
+          <li><%= link_to "Box", :class => "box_link" %></li>
           <% end %>
         </ul>
       </div>

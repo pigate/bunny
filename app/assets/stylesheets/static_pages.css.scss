@@ -84,13 +84,16 @@ div.nav_util {
   div.nav_login {
     display: inline-block;
     float: right;
-    margin-right: 2em;
+    margin-right: 1em;
+    img.rounded_tiny_thumb {
+      position: relative;
+      top: -8px;
+    }
     ul {
       padding-left: 0px;
       padding-bottom: .7em;
       list-style: none;
       li {
-        margin-left: 0.4em;
         float: right;
         font-family: serif;
         display: inline-block;
