@@ -51,7 +51,11 @@
     <% end %>
   </div>
   <div class="new_recipe_link">
-    <%= link_to "Add your recipe!", new_recipe_path %>
+    <%= link_to new_recipe_path do %>
+        <%= button_tag :class=> "button_round_blue" do %>Add Your Recipe<% end %>
+      <% end %>
+
+
   </div>
   <div id="right_recipes_results">
     <% @recipes.each do |recipe| %>

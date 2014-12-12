@@ -59,10 +59,16 @@
   
   
   <% if member_signed_in? && current_member == @recipe.author %>
-  <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
-  <%= link_to 'Remove', @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } %> |
+    <%= link_to edit_recipe_path(@recipe) do %> 
+      <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
+    <% end %>
+    <%= link_to @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } do %>
+      <%= button_tag :class=> "button_round_blue" do %>Cancel<% end %>
+    <% end %>
   <% end %>
-  <%= link_to 'Back', recipes_path %>
+  <%= link_to recipes_path do %>
+     <%= button_tag :class => "button_round_blue" do%>Back to All Recipes<% end %>
+  <% end %>
   <div id="recipe_review">
     Reviews (0)<br>
     No reviews yet.

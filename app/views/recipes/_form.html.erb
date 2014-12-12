@@ -146,7 +146,7 @@ function addBox(e, i, defaultText){
     <div class="section_header">TAGS
       <span style="color: #585858; margin-left: 20px;"><em>Enter your tags seperated by commas</em></span>
     </div> 
-    <div class="tag-editor validation-error" style="width: 666px; height: 35px; opacity: 1, z-index: 1, position: relative; cursor: text; background-color: #FFF; overflow: hidden; white-space: nowrap;">
+    <div class="tag-editor validation-error" style="width: 666px; max-width: 90%; height: 35px; opacity: 1, z-index: 1, position: relative; cursor: text; background-color: #FFF; overflow: hidden; white-space: nowrap;">
       <span style=""></span>
       <%= f.text_field :s_tags, :class => "tag_input" %>
       <span></span>
@@ -154,11 +154,15 @@ function addBox(e, i, defaultText){
   </div>
   <%= f.hidden_field :author_id, :value => current_member.id %>
   <div class="actions">
-    <button type="button" onclick="post(this.form)">Submit</button><br>
+    <button type="button" onclick="post(this.form)" class="button_round_blue">Submit</button><br>
     <% if @recipe.id == nil %>
-      <%= link_to "Cancel", root_url, data: { confirm: "Are you sure?" } %>
+      <%= link_to root_url, data: { confirm: "Are you sure?" } do %>
+        <%= button_tag :class=> "button_round_blue" do %>Cancel<% end %>
+      <% end %>
     <% else %>
-      <%= link_to "Remove", @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } %>
+      <%= link_to @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } do %>
+        <%= button_tag :class=> "button_round_blue" do %>Remove Recipe<% end %>
+      <% end %>
     <% end %>
   </div>
 <% end %>

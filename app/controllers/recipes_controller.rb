@@ -79,6 +79,6 @@ class RecipesController < ApplicationController
      current_member != nil
     end
     def can_destroy
-      current_member.admin || current_member.id == Recipe.find(params[:id]).author_id
+      current_member.admin || current_member.id == @recipe.author_id
     end
 end

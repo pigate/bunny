@@ -1,7 +1,9 @@
 <div id="post_index_page">
-<h1>See Everyone's Post!</h1>
-<%= link_to 'Post something. Share something!', new_post_path %><br><br>
-
+<h1>Cloudy with a Chance of Meatballs</h1>
+<%= link_to new_post_path do %>
+  <%= button_tag :class=> "button_round_blue" do %>Share a post<% end %>
+<% end %>
+<br>
 <% @posts.each do |post| %>
   <div class="post_indiv">
   <%= link_to post do %>
@@ -21,8 +23,12 @@
 
   <%= post.post_text %><br>
   <% if current_member.try(:id) == post.author_id %>
-  <%= link_to 'Edit', edit_post_path(post) %>
-  <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to edit_post_path(post) do %>
+      <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
+    <% end %>
+    <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' } do %>
+      <%= button_tag :class => "button_round_blue" do %>Remove Post<% end %>
+    <% end %>
   <% end %>
   </div>
 <% end %>

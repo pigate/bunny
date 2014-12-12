@@ -185,12 +185,13 @@ button.button_round_blue {
   background-color: #f8f8f8;
   color: black;
   padding: 8px 8px 8px 8px;
-  display: block;
+  display: inline-block;
   border-radius: 5px;
   cursor: pointer;
   cursor: hand;
   border: 2px solid #CAD8E6; 
   margin-top: 10px; 
+  margin-bottom: 10px;
 }
 button {
   img.button_img {

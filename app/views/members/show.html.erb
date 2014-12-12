@@ -12,9 +12,14 @@
 </p>
 
 <% if member_signed_in? && (current_member == @member || current_member.admin) %>
-<%= link_to 'Edit', edit_member_path(@member) %> |
+<%= link_to edit_member_path(@member) do %> 
+  <%= button_tag :class => "button_round_blue" do %>Edit<% end %>
 <% end %>
-<%= link_to 'View Other Members', members_path %>
+<% end %>
+<%= link_to members_path do %> 
+  <%= button_tag :class => "button_round_blue" do %>View Other Members<% end %>
+<% end %>
+
 
 <h2>Recipes</h2>
 <% if @member.recipes.count == 0 %>
