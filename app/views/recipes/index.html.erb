@@ -60,8 +60,10 @@
   <div id="right_recipes_results">
     <% @recipes.each do |recipe| %>
       <div class="search_result_recipe">
+        <%= link_to recipe do %>
         <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
         <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
+        <% end %>
         <%= "Servings: #{recipe.servings}" %><br>
         <%= "Prep time: #{recipe.prep_time}" %>min<br>
         <%= " Cook time: #{recipe.cook_time} min" %>

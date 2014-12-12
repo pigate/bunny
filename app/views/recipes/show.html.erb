@@ -24,16 +24,13 @@
   </div>
   <div id="show_tags">
   <% if @recipe.s_tags != nil %>
-    Tags: 
     <% @recipe.s_tags.split(',').each do |tag| %>
       <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
     <% end %>
   <% end %>
   </div>
   <p>
-  Time to make: <%= @recipe.prep_time + @recipe.try(:cook_time)||0 %> minutes<br>
-  Prep: <%= @recipe.prep_time %> min<br>
-  Cook: <%= @recipe.cook_time %> min
+  Total time: <%= @recipe.prep_time + @recipe.try(:cook_time)||0 %> minutes<br>
   </p>
   <p>
     <i><%= @recipe.about %></i>
@@ -42,14 +39,15 @@
   Makes <%= @recipe.servings %> servings. 
   </p>
   <p>
-    <h3>Ingreds:</h3>
+    <h3>Ingreds</h3>
     <% destringify(@recipe.j_ingreds).each do |ingred| %>
      <%= ingred.gsub(/U\+022/,'"').gsub(/U\+2424/, "\n") %><br>
     <% end %>
   </p>
   
   <p>
-    <h3>Steps:</h3>
+    <h3>Steps</h3>
+  Prep: <%= @recipe.prep_time %> min |  Cook: <%= @recipe.cook_time %> min
     <% i = 1 %>
     <% destringify(@recipe.j_steps).each do |step| %>
      <%= simple_format h "#{i}. #{step.gsub(/U\+022/, '"').gsub(/U\+2424/,"\n")}" %><br>
