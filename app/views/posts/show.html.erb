@@ -1,4 +1,30 @@
 <div id="post_whole_box">
+<span style="font-size: 20px; font-weight: bold">Feeds:</span>
+<div id="show_tags">
+  <% if @post.s_tags != nil %>
+    <% @post.s_tags.split(',').each do |tag| %>
+      <%= link_to "/posts?utf8=✓&search=#{tag}" do %>
+        <%= button_tag :class => "button_round_burnt_orange" do %>
+         <%= "#{tag}" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
+  Other Popular Feeds:
+
+  <%= link_to "/posts?utf8=✓&search=whatsforlunch" do %>
+    <%= button_tag :class => "button_round_burnt_orange" do%>whatsforlunch<% end %>
+  <% end %>
+  <%= link_to "/posts?utf8=✓&search=whatsfordinner" do %>
+    <%= button_tag :class => "button_round_burnt_orange" do %>whatsfordinner<% end %>
+  <% end %>
+
+  <% end %>
+</div>
+
+<br>
+
+
 <p id="notice"><%= notice %></p>
 <div style="width: 60%; min-width: 223px;">
 <div class="main_photo">
@@ -8,19 +34,13 @@
   <%= @post.post_text %>
 </p>
 
-<div id="show_tags">
-  <% if @post.s_tags != nil %>
-    Tags:
-    <% @post.s_tags.split(',').each do |tag| %>
-      <%= link_to tag, "/posts?utf8=✓&search=#{tag}", :class => "tag_search" %>
-    <% end %>
-  <% end %>
-</div>
-
-
 <% if member_signed_in? && (current_member.id == @post.author.id || current_member.admin) %>
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Delete Post', @post, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } %>
+<%= link_to edit_post_path(@post) do %>
+  <%= button_tag :class => "button_round_blue" do %>Edit<% end %>
+<% end %> 
+<%= link_to @post, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } do %>
+  <%= button_tag :class => "button_round_blue" do %>Delete Post<% end %>
+<% end %>
 <% end %>
 
 <div id="recipe_discuss_board">
@@ -34,9 +54,9 @@
   <%= f.hidden_field :commentable_id, value: @post.convo.id %>
   <%= f.hidden_field :commentable_type, value: "Convo" %>
   <%= f.hidden_field :commenter_id, value: current_member.try(:id) %>
-  <%= f.text_area :comment_text, :placeholder => "Yum!" %>
+  <%= f.text_area :comment_text, :placeholder => "Yum!" %><br>
   <%= button_tag :type => :submit, :class => "button_round_blue" do %>
-    Let it fly! <%= image_tag("ic_action_fly.png", :class => "button_img") %>
+    Post comment<%= image_tag("ic_action_fly.png", :class => "button_img") %>
   <% end %>
 <% end %>
 </div>

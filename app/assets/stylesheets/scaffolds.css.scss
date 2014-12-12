@@ -180,7 +180,7 @@ div#wanna_join {
 }
 
 /* buttons */
-button.button_round_blue {
+.button_round_blue, .button_round_burnt_orange {
   border-style: none;
   background-color: #f8f8f8;
   color: black;
@@ -193,6 +193,10 @@ button.button_round_blue {
   margin-top: 10px; 
   margin-bottom: 10px;
 }
+button.button_round_burnt_orange {
+  border: 2px solid #FF9175;
+}
+
 button {
   img.button_img {
     height: 20px;

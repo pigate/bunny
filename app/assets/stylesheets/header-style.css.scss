@@ -226,6 +226,9 @@ a {
   a.tiny {
     visibility: hidden;
   }  
+  button.button_round_blue, button.button_round_burnt_orange {
+    margin-top: 0px;
+  }
   button#pot 
   {
     background: url('/assets/pot.png');

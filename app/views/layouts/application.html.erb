@@ -62,8 +62,9 @@
       </ul>  
     </div>  
     <div class="action-links">
-      <%= link_to "UPLOAD+", new_post_path %>
-      <%= link_to "+", new_post_path, :class => "tiny" %>
+    <%= link_to new_post_path do %>
+      <%= button_tag :class => "button_round_blue" do %>UPLOAD+<% end %>
+    <% end %>
     </div>
     <div class="search">
       <%= form_tag recipes_path, :class => "search_form", :method => :get do %>

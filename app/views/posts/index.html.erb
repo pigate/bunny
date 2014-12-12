@@ -1,5 +1,21 @@
 <div id="post_index_page">
 <h1>Cloudy with a Chance of Meatballs</h1>
+<span style="font-size: 20px; font-weight: bold;">Popular Feeds:</span>
+<%= link_to "/posts?utf8=✓&search=whatsforlunch" do %>
+  <%= button_tag :class => "button_round_burnt_orange" do%>whatsforlunch<% end %>
+<% end %>
+<%= link_to "/posts?utf8=✓&search=whatsfordinner" do %>
+  <%= button_tag :class => "button_round_burnt_orange" do %>whatsfordinner<% end %>
+<% end %>
+<%= link_to "/posts?utf8=✓&search=whatsfordinner" do %>
+  <%= button_tag :class => "button_round_burnt_orange" do %>whatsforbreakfast<% end %>
+<% end %>
+<%= link_to "/posts?utf8=✓&search=whatsfordinner" do %>
+  <%= button_tag :class => "button_round_burnt_orange" do %>public<% end %>
+<% end %>
+
+<br>
+
 <%= link_to new_post_path do %>
   <%= button_tag :class=> "button_round_blue" do %>Share a post<% end %>
 <% end %>
