@@ -43,8 +43,26 @@
   </td>
   <td>
   <div class="result_announcer">
+    <div class="popular-recipe-categories">
+       Popular Categories: <br>
+       <%= link_to "/recipes?utf8=✓&search=Chinese" do %>
+         <%= button_tag :class => "button_round_burnt_orange" do %>Chinese<%end %>
+      <% end %>
+       <%= link_to "/recipes?utf8=✓&search=dim+sum" do %>
+         <%= button_tag :class => "button_round_burnt_orange" do %>Dim Sum<%end %>
+      <% end %>
+       <%= link_to "/recipes?utf8=✓&search=Easy" do %>
+         <%= button_tag :class => "button_round_burnt_orange" do %>Easy<%end %>
+      <% end %>
+    </div>
     <% if @recipes == [] %>
       <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
+      <br><br>
+      <%= link_to recipes_path do %>
+         <%= button_tag :class => "button_round_blue" do %>All Recipes<%end %>
+      <% end %>
+
+
     <% elsif params["search"] != nil%>
       <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
   

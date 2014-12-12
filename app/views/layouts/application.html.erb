@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<% drop_down = false %>
 <html>
 <head>
   <title>Tuzi Chef</title>
@@ -50,7 +51,8 @@
   <div class="mid-bar">
     <div class="navbar-links">
       <ul>
-        <li class="dropdown-reveal"><%= link_to "Recipes"%>
+        <li class="dropdown-reveal"><%= link_to "Recipes", recipes_path %>
+          <% if drop_down %>
           <div class="dropdown">
             <ul>
               <li><%= link_to "All Recipes", recipes_path %></li>
@@ -60,8 +62,9 @@
               <li><a href="/recipes?utf8=✓&search=easy">Easy</a></li>
             </ul>
           </div>
+          <% end %>
         </li>
-        <li><%= link_to "Hacks", "/recipes?utf8=✓&search=hack" %></li>
+        <li><%= link_to new_recipe_path do %><%= image_tag("ic_action_new.png") %><% end %></li>
         <li><%= link_to "Feed", posts_path %></li>
       </ul>  
     </div>  
