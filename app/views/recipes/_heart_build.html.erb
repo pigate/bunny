@@ -3,16 +3,16 @@
 <% if recipe.likers.include? current_member %>
   <% heart = current_member.hearts.select { |x| x.liked_recipe_id == recipe.id } %>
   <%= link_to heart, method: "DELETE", action: "destroy", remote: true do %>
-    <%= image_tag("liked.png", :class => "width_30px")%>
+    <%= image_tag("liked.png", :class => "width_20px")%>
   <% end %> <%= recipe.likers.count %>
 <% else %>
   <%= form_for(current_member.hearts.build(liker_id: current_member.id), remote: true) do |f| %>
     <%= f.hidden_field :liker_id, :value => current_member.id %>
     <%= f.hidden_field :liked_recipe_id, :value => recipe.id %>
-    <%= image_submit_tag("empty_liked.png", :class => "width_30px") %><%= recipe.likers.count %>
+    <%= image_submit_tag("empty_liked.png", :class => "width_20px") %><%= recipe.likers.count %>
   <% end %>
 <% end %>
 <% else %>
-<%= image_tag("empty_liked.png", :class => "width_30px") %> <%= recipe.likers.count %>
+<%= image_tag("empty_liked.png", :class => "width_20px") %> <%= recipe.likers.count %>
 <% end %>
 </div>
