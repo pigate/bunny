@@ -4,12 +4,10 @@
   <div class="recipe_main_photo">
     <%= image_tag @recipe.main_photo.url(:original) %>
     <div class="recipe_main_meta_data">
-        <%= @recipe.name %><br>
-        <div class="rating">
-          <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-        </div>
+       <%= @recipe.name %><br>
     </div>
   </div>
+  <%= render partial: 'recipes/heart_build', locals: { recipe: @recipe } %>
   <div id="recipe_author_info">
     Cooked up by:  
     <% if @recipe.author %>
@@ -70,6 +68,9 @@
   <div id="recipe_review">
     Reviews (0)<br>
     No reviews yet.
+        <div class="rating">
+          <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+        </div>
   </div>
 </div>
 <div id="recipe_show_chat_body">

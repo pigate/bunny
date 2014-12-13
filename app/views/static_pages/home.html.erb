@@ -1,3 +1,16 @@
+<div class="popular-recipe-categories">
+   Popular Categories: <br>
+   <%= link_to "/recipes?utf8=✓&search=Chinese" do %>
+     <%= button_tag :class => "button_round_burnt_orange" do %>Chinese<%end %>
+  <% end %>
+   <%= link_to "/recipes?utf8=✓&search=dim+sum" do %>
+     <%= button_tag :class => "button_round_burnt_orange" do %>Dim Sum<%end %>
+  <% end %>
+   <%= link_to "/recipes?utf8=✓&search=Easy" do %>
+     <%= button_tag :class => "button_round_burnt_orange" do %>Easy<%end %>
+  <% end %>
+</div>
+
 <div id="hero-box">
   <div class="logo"><%= image_tag("ddmimi-rabbit.png") %></div>
   <div>TUZI CHEF</div>

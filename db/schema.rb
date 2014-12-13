@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210154708) do
+ActiveRecord::Schema.define(version: 20141212195709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "boxes", force: true do |t|
+    t.integer  "member_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", force: true do |t|
     t.text     "comment_text"
@@ -33,6 +39,25 @@ ActiveRecord::Schema.define(version: 20141210154708) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "hearts", force: true do |t|
+    t.integer  "liked_recipe_id"
+    t.integer  "liker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hearts", ["liked_recipe_id"], name: "index_hearts_on_liked_recipe_id", using: :btree
+  add_index "hearts", ["liker_id"], name: "index_hearts_on_liker_id", using: :btree
+
+  create_table "liked_rxps", force: true do |t|
+    t.integer  "liked_recipe_id"
+    t.integer  "member_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "liked_rxps", ["liked_recipe_id"], name: "index_liked_rxps_on_liked_recipe_id", using: :btree
 
   create_table "members", force: true do |t|
     t.string   "first"

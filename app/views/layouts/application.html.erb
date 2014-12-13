@@ -32,7 +32,7 @@
         <ul>
           <% if member_signed_in? %>
           <li><%= link_to "logout", members_logout_path %></li>
-          <li><%= link_to "box", :class => "box_link" %></li>
+          <li><%= link_to "box", current_member.box, :class => "box_link" %></li>
           <li>
           <%= link_to current_member do %>
             <%= image_tag current_member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
@@ -41,7 +41,6 @@
           <% else %>
           <li><%= link_to "*LOGIN", members_login_path %></li>
           <li><%= link_to "Invites", members_register_path %></li>
-          <li><%= link_to "Box", :class => "box_link" %></li>
           <% end %>
         </ul>
       </div>

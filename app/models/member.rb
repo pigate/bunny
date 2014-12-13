@@ -15,6 +15,10 @@ class Member < ActiveRecord::Base
 
   has_many :comments, :as => :commenter
   has_many :posts, :as => :author
+  has_many :hearts, :foreign_key => :liker_id
+  has_many :liked_recipes, through: :hearts
+  has_one :box
+ 
   
   has_attached_file :photo,
     :default_url => "missing/:style.png",

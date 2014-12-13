@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :boxes
+  resources :hearts
   resources :posts
   resources :comments
   resources :convos

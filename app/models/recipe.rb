@@ -7,7 +7,8 @@ class Recipe < ActiveRecord::Base
   has_many :comments, :through => :convo
   has_many :commenters, :through => :comments, :source => :commenter
   has_one :convo, :as => :conversable, :dependent => :destroy
-
+  has_many :hearts, :foreign_key => :liked_recipe_id
+  has_many :likers, :through => :hearts 
 
   has_attached_file :main_photo,
     :default_url => "missing-recipe/:style.png",

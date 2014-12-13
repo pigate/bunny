@@ -82,6 +82,7 @@
         <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
         <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
         <% end %>
+        <%= render partial: "heart_build", locals: { recipe: recipe } %>
         <%= "Servings: #{recipe.servings}" %><br>
         <%= "Prep time: #{recipe.prep_time}" %>min<br>
         <%= " Cook time: #{recipe.cook_time} min" %>
