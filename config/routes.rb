@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :boxes
   resources :hearts
   resources :posts
   resources :comments
@@ -13,6 +12,8 @@ Rails.application.routes.draw do
   get 'help' => 'static_pages#help'
   get 'suggestion_added' => 'static_pages#suggestion_added'
   get 'not_found' => 'static_pages#not_found'
+  get 'going_ons' => 'static_pages#going_ons'
+  get 'box' => 'static_pages#box'
   resources :recipes
 
   devise_for :members, :controllers => { :registrations => "registrations" }

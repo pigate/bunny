@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141212195709) do
+ActiveRecord::Schema.define(version: 20141214012708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,16 @@ ActiveRecord::Schema.define(version: 20141212195709) do
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
   add_index "members", ["slug"], name: "index_members_on_slug", using: :btree
 
+  create_table "pending_friend_requests", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "initiator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pending_friend_requests", ["initiator_id"], name: "index_pending_friend_requests_on_initiator_id", using: :btree
+  add_index "pending_friend_requests", ["member_id"], name: "index_pending_friend_requests_on_member_id", using: :btree
+
   create_table "posts", force: true do |t|
     t.integer  "author_id"
     t.text     "post_text"
@@ -119,6 +129,32 @@ ActiveRecord::Schema.define(version: 20141212195709) do
     t.datetime "main_photo_updated_at"
     t.text     "s_tags",                  default: ""
   end
+
+  create_table "relationships", force: true do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
+  add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
+  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
+  create_table "reviews", force: true do |t|
+    t.integer  "rating",             default: 1
+    t.text     "rating_text",        default: ""
+    t.text     "suggestions",        default: ""
+    t.integer  "reviewed_recipe_id"
+    t.integer  "reviewer_id"
+    t.integer  "helpful_count"
+    t.boolean  "pending",            default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reviews", ["reviewed_recipe_id"], name: "index_reviews_on_reviewed_recipe_id", using: :btree
+  add_index "reviews", ["reviewer_id"], name: "index_reviews_on_reviewer_id", using: :btree
 
   create_table "suggestions", force: true do |t|
     t.integer  "who_id"

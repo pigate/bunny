@@ -7,6 +7,12 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     @members = Member.all
+    if (params[:search_members].present?)
+      @members = Member.search(params[:search_members]).records.to_a
+    else
+      @members = []
+    end
+
   end
 
   # GET /members/1

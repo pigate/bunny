@@ -18,8 +18,21 @@ class Member < ActiveRecord::Base
   has_many :hearts, :foreign_key => :liker_id
   has_many :liked_recipes, through: :hearts
   has_one :box
+  has_many :reviews, :foreign_key => :reviewer_id
+  has_many :reviewed_recipes, :through => :reviews
+
+#  has_many :pending_friend_requests
+#  has_many :initiators, through: :pending_friend_requests
+  has_many :active_relationships, class_name: "Relationship",
+                  foreign_key: "follower_id",
+                  dependent: :destroy
+  #has_many :followers, through: :active_relationships, source: :followed   
+  has_many :following, through: :active_relationships, source: :follower 
+  has_many :passive_relationships, class_name: "Relationship",
+                  foreign_key: "followed_id",
+                  dependent: :destroy
+  has_many :followers, through: :passive_relationships, source: :followed
  
-  
   has_attached_file :photo,
     :default_url => "missing/:style.png",
     :styles => {
@@ -49,4 +62,30 @@ class Member < ActiveRecord::Base
   def to_param
     "#{slug}"
   end
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+  def self.parse_params(params)
+    params
+  end
+  def self.search(query)
+    __elasticsearch__.search(
+      {
+        query: {
+          multi_match: {
+            query: parse_params(query),
+            fields: ['user_name^2', 'email'],
+            operator: "and"
+          }
+        }
+      }
+    )
+  end
 end
+
+Member.__elasticsearch__.client.indices.delete index: Member.index_name rescue nil
+#
+Member.__elasticsearch__.client.indices.create index: Member.index_name,
+  body: { settings: Member.settings.to_hash, mappings: Member.mappings.to_hash }
+
+Member.import #to auto sync model with elastic search
+

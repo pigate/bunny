@@ -10,6 +10,9 @@ class Recipe < ActiveRecord::Base
   has_many :hearts, :foreign_key => :liked_recipe_id
   has_many :likers, :through => :hearts 
 
+  has_many :reviews, :foreign_key => :reviewed_recipe_id, dependent: :destroy
+  has_many :reviewers, :through => :reviews
+
   has_attached_file :main_photo,
     :default_url => "missing-recipe/:style.png",
     :styles => {

@@ -18,4 +18,17 @@ class StaticPagesController < ApplicationController
 
   def not_found
   end
+
+  def going_ons
+   @activities = nil
+  end
+
+  def box
+    if !member_signed_in?
+      redirect_to new_member_registration_path
+    else
+      @recommended = Recipe.where(:author_id != current_member.id, :limit => 25)
+    end
+  end
+
 end

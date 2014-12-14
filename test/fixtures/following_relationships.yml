@@ -2,6 +2,8 @@
 
 one:
   member_id: 1
+  following_id: 1
 
 two:
   member_id: 1
+  following_id: 1

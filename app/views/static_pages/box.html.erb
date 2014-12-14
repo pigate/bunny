@@ -1,0 +1,186 @@
+<style>
+ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0;}
+ul#tabs li { display: inline; }
+ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
+ul#tabs li a:hover { background-color: #f1f0ee; }
+ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight:bold; padding: 0.7em 0.3em 0.38em 0.3em; }
+div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
+div.tabContent.hide { display: none; }
+</style>
+
+<script type="text/javascript">
+var tabLinks = new Array();
+var contentDivs = new Array();
+function init(){
+var tabListItems = document.getElementById('tabs').childNodes;
+for(var i = 0; i < tabListItems.length; i++){
+  if (tabListItems[i].nodeName == "LI"){
+    var tabLink = getFirstChildWithTagName(tabListItems[i], 'A');
+    var id = getHash(tabLink.getAttribute('href'));
+    tabLinks[id] = tabLink;
+    contentDivs[id] = document.getElementById(id);
+  }
+}
+var i = 0;
+for(var id in tabLinks){
+  tabLinks[id].onclick = showTab;
+  tabLinks[id].onfocus = function() {this.blur()};
+  if (i == 0) tabLinks[id].className = 'selected';
+  i++;
+}
+var i = 0;
+for(var id in contentDivs) {
+  if (i != 0) contentDivs[id].className = 'tabContent hide';
+  i++;
+}
+}
+function showTab(){
+var selectedId = getHash(this.getAttribute('href'));
+for(var id in contentDivs){
+  if (id == selectedId){
+    tabLinks[id].className = 'selected';
+    contentDivs[id].className = 'tabContent';
+  } else {
+    tabLinks[id].className = '';
+    contentDivs[id].className = 'tabContent hide';
+  }
+}
+return false; //Stop browser following the link
+}
+function getFirstChildWithTagName(element, tagName){
+for(var i = 0; i < element.childNodes.length; i++){
+  if (element.childNodes[i].nodeName == tagName) return element.childNodes[i];
+}
+}
+function getHash(url){
+var hashPos = url.lastIndexOf('#');
+return url.substring(hashPos + 1);
+}
+</script>
+<div id="static_box" onload="init()">
+<ul id="tabs">
+    <li><a href="#page-1"><span>Your Box</span></a></li>
+    <li><a href="#page-2"><span>Your Recipes</span></a></li>
+    <li><a href="#page-3"><span>Liked/Saved</span></a></li>
+    <li><a href="#page-4"><span>Recommendations</span></a></li>
+</ul>
+
+<% if member_signed_in? %>
+<div class="tabContent" id="page-1">
+  <div>
+  The box is used to store your own recipes, saved recipes, and keep track of recipes you like. In the future, you may also make notes and annotate recipe, and also keep track of what you've been making and doing. We hope this becomes a trusted cooking helper!
+
+  -DDMM
+  </div>
+</div>
+<div class="tabContent" id="page-2">
+  <div>
+    <h2>Your Recipes</h2>
+    <% current_member.recipes.each do |recipe| %>
+    <div id="recipe_list">
+        <%= link_to recipe do %>
+        <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
+        <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
+        <% end %>
+        <%= render partial: "heart_build", locals: { recipe: recipe } %>
+        <%= "Servings: #{recipe.servings}" %><br>
+        <%= "Prep time: #{recipe.prep_time}" %>min<br>
+        <%= " Cook time: #{recipe.cook_time} min" %>
+        <div id="show_tags">
+        <% if recipe.s_tags != nil %>
+          Tags:
+          <% recipe.s_tags.split(',').each do |tag| %>
+            <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
+          <% end %>
+        <% end %>
+        </div>
+
+    </div> 
+    <% end %>
+  </div>
+</div>
+<div class="tabContent" id="page-3">
+  <div>
+    <h2>Liked Recipes</h2>
+    <% current_member.liked_recipes.each do |recipe| %>
+    <div id="recipe_list">
+        <%= link_to recipe do %>
+        <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
+        <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
+        <% end %>
+        <%= render partial: "recipes/heart_build", locals: { recipe: recipe } %>
+        <%= "Servings: #{recipe.servings}" %><br>
+        <%= "Prep time: #{recipe.prep_time}" %>min<br>
+        <%= " Cook time: #{recipe.cook_time} min" %>
+        <div class="search_result_recipe_credit">
+          <% if recipe.author != nil %>
+            <%= link_to recipe.author do %>
+              <%= image_tag recipe.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
+            <% end %>
+            <span class="search_result_credit_text"><%= link_to recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %></span>
+          <% else %>
+            <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
+          <% end %>
+        </div>
+
+        <div id="show_tags">
+        <% if recipe.s_tags != nil %>
+          Tags:
+          <% recipe.s_tags.split(',').each do |tag| %>
+            <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
+          <% end %>
+        <% end %>
+        </div>
+
+    </div>
+    <% end %>
+
+  </div>
+</div>
+<div class="tabContent" id="page-4">
+  <div>
+    <h2>Recommended Recipes</h2>
+    <% @recommended.each do |recipe| %>
+    <div id="recipe_list">
+        <%= link_to recipe do %>
+        <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
+        <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
+        <% end %>
+        <%= render partial: "recipes/heart_build", locals: { recipe: recipe } %>
+        <%= "Servings: #{recipe.servings}" %><br>
+        <%= "Prep time: #{recipe.prep_time}" %>min<br>
+        <%= " Cook time: #{recipe.cook_time} min" %>
+        <div class="search_result_recipe_credit">
+          <% if recipe.author != nil %>
+            <%= link_to recipe.author do %>
+              <%= image_tag recipe.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
+            <% end %>
+            <span class="search_result_credit_text"><%= link_to recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %></span>
+          <% else %>
+            <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
+          <% end %>
+        </div>
+
+        <div id="show_tags">
+        <% if recipe.s_tags != nil %>
+          Tags:
+          <% recipe.s_tags.split(',').each do |tag| %>
+            <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
+          <% end %>
+        <% end %>
+        </div>
+
+    </div>
+    <% end %>
+
+  </div>
+</div>
+
+<% else %>
+You've got to sign in to have your own box!<br>
+
+<% end %>
+</div>
+<script>
+init();
+</script>

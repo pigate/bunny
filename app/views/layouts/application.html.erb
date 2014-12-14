@@ -32,7 +32,7 @@
         <ul>
           <% if member_signed_in? %>
           <li><%= link_to "logout", members_logout_path %></li>
-          <li><%= link_to "box", current_member.box, :class => "box_link" %></li>
+          <li><%= link_to "box", box_path, :class => "box_link" %></li>
           <li>
           <%= link_to current_member do %>
             <%= image_tag current_member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
@@ -65,6 +65,7 @@
         </li>
         <li><%= link_to new_recipe_path do %><%= image_tag("ic_action_new.png") %><% end %></li>
         <li><%= link_to "Feed", posts_path %></li>
+        <li><%= link_to "Cooks", members_path %></li>
       </ul>  
     </div>  
     <div class="action-links">
