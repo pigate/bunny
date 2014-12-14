@@ -1,4 +1,5 @@
 <div id="static_box">
+
 <span class="page_title">Meet the members</span><br>
 <div class="search">
   <%= form_tag members_path, :class => "search_form", :method => :get do %>
@@ -7,6 +8,15 @@
     </div>
   <% end %>
 </div>
+<div class="member_results" style="clear:both; padding-top: 10px;">
+    <% if params["search"] != nil%>
+      <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
+      <% if @members == [] %>
+        <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
+      <% end %>
+  <% else %>
+  Find your friendly fellow cook by user name, first and last name, or email.
+  <% end %>
 
 <table style="clear: both;">
   <tbody>
@@ -16,10 +26,13 @@
           <%= link_to member do %>
             <%= image_tag member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
             <span class="tiny_thumb_text"><%= member.user_name %></span>
+            <span class="tiny_thumb_text"><%= member.first %> <%= member.last %></span>
             <span class="tiny_thumb_text"><%= member.occupation %></span></td>
           <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
+
 </div>

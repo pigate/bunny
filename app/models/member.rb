@@ -73,7 +73,7 @@ class Member < ActiveRecord::Base
         query: {
           multi_match: {
             query: parse_params(query),
-            fields: ['user_name^2', 'email'],
+            fields: ['user_name^2', 'first', 'last', 'email'],
             operator: "and"
           }
         }

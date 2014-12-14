@@ -61,19 +61,14 @@
       <%= link_to recipes_path do %>
          <%= button_tag :class => "button_round_blue" do %>All Recipes<%end %>
       <% end %>
-
-
     <% elsif params["search"] != nil%>
       <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
-  
     <% end %>
   </div>
   <div class="new_recipe_link">
     <%= link_to new_recipe_path do %>
         <%= button_tag :class=> "button_round_blue" do %>Add Your Recipe<% end %>
       <% end %>
-
-
   </div>
   <div id="right_recipes_results">
     <% @recipes.each do |recipe| %>
