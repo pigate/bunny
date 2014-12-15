@@ -1,0 +1,25 @@
+<% if member_signed_in? %>
+  <% if !current_member.reviewed_recipes.include? recipe %>
+    <div id="new_review">
+    <%= form_for(recipe.reviews.build(:reviewed_recipe_id => recipe.id), remote: true) do |f| %>
+      <%= f.hidden_field :reviewer_id, :value => current_member.id %>
+      <%= f.hidden_field :reviewed_recipe_id, :value => recipe.id %>
+      <%= f.hidden_field :rating %>
+      <div class="rating">
+        <span onclick="set_rating(5)">☆</span><span onclick="set_rating(4)">☆</span><span onclick="set_rating(3)">☆</span><span onclick="set_rating(2)">☆</span><span onclick="set_rating(1)">☆</span>
+      </div>
+      <br><br>
+      Write your review:<br>
+      <%= f.text_area :rating_text %><br>
+      Suggestions/Notes/Tips:<br>
+      <%= f.text_area :suggestions %><br>
+      <%= f.submit "Submit", :class => "button_round_burnt_orange" %>
+    <% end %>
+    </div>
+  <% else %>
+  You have reviewed this recipe.
+  <% end %>
+
+<% else %>
+Please <%= link_to "sign in", member_login_path %> or <%= link_to "register", new_member_registration_path %> to review this recipe.
+<% end %>

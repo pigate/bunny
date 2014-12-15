@@ -25,9 +25,13 @@
   <%= link_to post do %>
   <%= image_tag post.photo.url(:cropped_square_thumb) %>
   <% end %><br>
-  <%= link_to post.author do %>
-    <%= image_tag post.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %><%= post.author.user_name %>
-  <% end %><br>
+  <% if post.author %>
+    <%= link_to post.author do %>
+      <%= image_tag post.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %><%= post.author.user_name %>
+    <% end %><br>
+  <% else %>
+    <%= image_tag("missing/tiny_thumb.png", class: "rounded_tiny_thumb") %>Anonymous
+  <% end %>
   <div id="show_tags">
   <% if post.s_tags != nil %>
     Tags:

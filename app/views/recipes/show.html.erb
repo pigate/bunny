@@ -65,12 +65,14 @@
   <%= link_to recipes_path do %>
      <%= button_tag :class => "button_round_blue" do%>Back to All Recipes<% end %>
   <% end %>
-  <div id="recipe_review">
-    Reviews (0)<br>
-    No reviews yet.
-        <div class="rating">
-          <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-        </div>
+  <div id="recipe_create_review">
+    <%= render partial: "recipes/review_build", locals: { recipe: @recipe} %>
+  </div>
+  Reviews (<%= @recipe.reviews.count %>)<br>
+  <div id="recipe_reviews">
+  <% @recipe.reviews.each do |review| %>
+    <%= render review %> 
+  <% end %>
   </div>
 </div>
 <div id="recipe_show_chat_body">
@@ -93,3 +95,21 @@
   <% end %>
 </div>
 </div>
+<script>
+function set_rating(index){
+  var rating_block = document.getElementsByClassName("rating")[0];
+  if (rating_block){
+    var stars = rating_block.getElementsByTagName("span");
+    var rating = index;
+    for(var i = 0; i < 5; i++){
+      stars[i].innerHTML ="\u2606";
+    }
+    for(var i = 1; i < index + 1; i++){
+      stars[5-i].innerHTML = "\u2605";
+    }
+  }
+  var form = document.getElementById("new_review");
+  var input_rating = document.getElementById("review_rating");
+  input_rating.value = index;
+}
+</script>

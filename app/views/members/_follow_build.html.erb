@@ -1,0 +1,19 @@
+<div id="follow_form<%=member.id%>">
+Followers: <%=member.followers.count %> Following: <%= member.following.count %>
+<br>
+<% if member_signed_in? && current_member != member%>
+ <% if !current_member.following.include? member %>
+  <%= form_for(current_member.active_relationships.build(followed_id: member.id), remote: true) do |f| %>
+    <%= f.hidden_field :followed_id, value: member.id %>
+    <%= f.hidden_field :follower_id, value: current_member.id %>
+    <%= f.submit "Follow", :class => "button_round_burnt_orange"%>
+  <% end %>
+ <% else %>
+  <%= form_for(current_member.active_relationships.find_by(:followed_id => member.id), method: "DELETE",action: "destroy", remote: true) do |f| %>
+    <%= f.hidden_field :followed_id, value: member.id %>
+    <%= f.hidden_field :follower_id, value: current_member.id %>
+    <%= f.submit "Unfollow", :class => "button_round_burnt_orange" %>
+  <% end %>
+ <% end %>
+<% end %>
+</div>

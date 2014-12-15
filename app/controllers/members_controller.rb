@@ -10,7 +10,7 @@ class MembersController < ApplicationController
     if (params[:search_members].present?)
       @members = Member.search(params[:search_members]).records.to_a
     else
-      @members = []
+      @members = Member.limit(8)
     end
 
   end
@@ -92,6 +92,6 @@ class MembersController < ApplicationController
       redirect_to new_member_session_path unless current_member  
     end
     def can_destroy
-      current_member.admin ^ current_member.id != params[:id]
+      current_member.admin && current_member.id != params[:id] || (!current_member.admin && current_member.id == params[:id])
     end
 end

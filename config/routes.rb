@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :hearts
+  resources :relationships
   resources :posts
   resources :comments
+  resources :reviews
   resources :convos
   resources :suggestions
   resources :tag_types

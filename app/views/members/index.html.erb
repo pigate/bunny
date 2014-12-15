@@ -9,14 +9,14 @@
   <% end %>
 </div>
 <div class="member_results" style="clear:both; padding-top: 10px;">
-    <% if params["search"] != nil%>
-      <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
-      <% if @members == [] %>
-        <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
-      <% end %>
-  <% else %>
-  Find your friendly fellow cook by user name, first and last name, or email.
-  <% end %>
+   <% if params["search"] != nil%>
+     <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
+     <% if @members == [] %>
+       <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
+     <% end %>
+ <% else %>
+ Find your friendly fellow cook by user name, first and last name, or email.
+ <% end %>
 
 <table style="clear: both;">
   <tbody>

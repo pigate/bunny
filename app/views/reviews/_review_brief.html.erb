@@ -1,0 +1,28 @@
+<div id="review_show<%=review.id%>" style="border: 1px #ddd solid; border-radius: 10px;">
+  Your review:
+  <div class="show_rating">
+    <% i = 0 %>
+    <% while i < review.rating %>
+      <span>&#x2605;</span>    
+      <% i += 1 %>
+    <% end %>
+    <% while i < 5 %>
+      <span>&#x2606;</span>
+      <% i += 1 %>
+    <% end %>
+  </div>
+  <%= raw review.rating_text %><br>
+  <button onclick="show_more(this)" class="show_more">...</button>
+  <div class="hidden" style="visibility:hidden;">
+  Your Suggestions/Notes:
+  <%= raw review.suggestions %><br>
+  <button onclick="hide(this)">Hide</button>
+  </div>
+  <%= link_to edit_review_path(review.id) do %>
+    <%= button_tag :class => "button_round_burnt_orange" do %>Edit<% end %>
+  <% end %>
+  |
+  <%= link_to review, method: "DELETE", action: "destroy", remote: true, data: { confirm: "Are you sure? This cannot be undone." } do %>
+    <%= button_tag :class => "button_round_burnt_orange" do %>Remove<% end %>
+  <% end %>
+</div>

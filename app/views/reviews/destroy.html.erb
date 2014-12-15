@@ -1,0 +1,5 @@
+var build_review_html = "<%= escape_javascript render partial: "recipes/review_build", locals: {recipe: @recipe} %>";
+$(function(){
+  $("#review_show<%=@review_id%>").hide();
+  $("#recipe_create_review").html(build_review_html);
+});

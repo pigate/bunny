@@ -1,3 +1,5 @@
+<div id="static_box">
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -6,7 +8,7 @@
   <strong><%= @member.user_name %></strong><br>
   <%= "#{@member.first} #{ @member.last}" %>
 </p>
-
+<%= render partial: "members/follow_build", locals: {member: @member} %>
 <p>
   Goes by <%= @member.occupation %> by day
 </p>
@@ -30,3 +32,5 @@ no recipes
     <%= link_to recipe.name, recipe %>
   </div>
 <% end %>
+
+</div>

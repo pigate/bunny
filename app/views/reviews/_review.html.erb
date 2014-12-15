@@ -1,0 +1,34 @@
+<% if review.id %>
+<div id="review_show<%=review.id%>" style="border: 1px #ddd solid; border-radius: 10px;">
+A review for <%= review.reviewed_recipe.name %><br>
+<div class="show_rating">
+  <% i = 0 %>
+  <% while i < review.rating %>
+    <span>&#x2605;</span>    
+    <% i += 1 %>
+  <% end %>
+  <% while i < 5 %>
+    <span>&#x2606;</span>
+    <% i += 1 %>
+  <% end %>
+</div>
+<%= raw review.rating_text %><br>
+<%= raw review.suggestions %><br>
+<% if review.reviewer %>
+  <%= link_to review.reviewer do %>
+    <%= image_tag review.reviewer.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %> <%= review.reviewer.user_name %>
+  <% end %><br>
+  <% if member_signed_in? && current_member == review.reviewer %>
+    <%= link_to edit_review_path(review.id) do %>
+      <%= button_tag :class => "button_round_burnt_orange" do %>Edit<% end %>
+    <% end %>
+    |
+    <%= link_to review, method: "DELETE", action: "destroy", remote: true, data: { confirm: "Are you sure? This cannot be undone." } do %>
+      <%= button_tag :class => "button_round_burnt_orange" do %>Remove<% end %>
+    <% end %>
+  <% end %>
+<% else %>
+   <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
+<% end %>
+</div>
+<% end %>
