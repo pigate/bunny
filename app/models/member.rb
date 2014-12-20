@@ -32,6 +32,11 @@ class Member < ActiveRecord::Base
                   foreign_key: "followed_id",
                   dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :follower
+  has_many :groups, foreign_key: "owner_id"
+  has_many :group_memberships
+  has_many :joined_groups, through: :group_memberships  
+
+
  
   has_attached_file :photo,
     :default_url => "missing/:style.png",

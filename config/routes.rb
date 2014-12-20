@@ -16,7 +16,17 @@ Rails.application.routes.draw do
   get 'not_found' => 'static_pages#not_found'
   get 'going_ons' => 'static_pages#going_ons'
   get 'box' => 'static_pages#box'
+  get 'search' => 'static_pages#generic_search'
+
+  get 'search/groups' => 'static_pages#group_search'
+  get 'search/members' => 'static_pages#member_search'
+  get 'search/posts' => 'static_pages#post_search'
+  get 'search/recipes' => 'static_pages#recipe_search'
+  
   resources :recipes
+  resources :groups
+  resources :group_memberships
+  resources :group_posts
 
   devise_for :members, :controllers => { :registrations => "registrations" }
   devise_scope :member do

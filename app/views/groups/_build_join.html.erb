@@ -1,0 +1,19 @@
+<div id="membership_form<%= group.id %>">
+Members: <%= group.members.count %><br>
+Group Posts: <%= group.posts.count %><br>
+<% if member_signed_in? %>
+  <% if current_member.joined_groups.include? group %>
+    <%= form_for(current_member.group_memberships.find_by(:joined_group_id => group.id), method: "DELETE", action: "destroy") do |f| %>
+      <%= f.submit "UNJOIN GROUP", :class => "button_round_burnt_orange" %>
+    <% end %>
+  <% else %>
+    <%= form_for(current_member.group_memberships.build(:joined_group_id => group.id)) do |f| %>
+      <%= f.hidden_field :joined_group_id, value: group.id %>
+      <%= f.hidden_field :member_id, value: current_member.id %>
+      <%= f.submit "JOIN GROUP", :class => "button_round_burnt_orange" %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= link_to "Sign in to join group!", members_login_path %>
+<% end %>
+</div>

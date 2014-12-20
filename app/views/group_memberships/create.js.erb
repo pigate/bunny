@@ -1,0 +1,6 @@
+var html = "<%= escape_javascript render partial: "groups/build_join", locals: { group: @group} %>";
+
+$(function(){
+  $("#membership_form<%= @group.id%>").replaceWith(html);
+});
+~    

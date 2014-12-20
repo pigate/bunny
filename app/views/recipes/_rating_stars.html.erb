@@ -1,0 +1,19 @@
+<style>
+img.stars_img {
+  width: 60px; height: 13px; position: relative; top: 0px; left: 0px;
+}
+div.rating_stars {
+  clear:both; 
+  position: relative;
+  background-color: #c7c7c7;
+  width: 60px;
+  height: 13px;
+}
+div.rating_grad {
+background: -moz-linear-gradient(center top, #d77835 0%, #f08727 40%, #f4a066 100%) repeat scroll 0% 0% transparent; position: absolute; top: 0px; left: 0px; height: 13px; 
+}
+</style>
+<div class="rating_stars">
+  <div class="rating_grad" style="width: <%= (recipe.cached_rating/5.0)*60%>px;"></div>
+  <%= image_tag("stars.png", :class => "stars_img") %>
+</div>

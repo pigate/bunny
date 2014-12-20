@@ -8,4 +8,10 @@ module RecipesHelper
       []
     end
   end
+  def round_float_2(some_float)
+    some_float.round(2)
+  end
+  def get_rating_px(some_float)
+    (some_float/5.0) * 69 #69 px
+  end
 end

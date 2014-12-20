@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141214173950) do
+ActiveRecord::Schema.define(version: 20141219211939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,39 @@ ActiveRecord::Schema.define(version: 20141214173950) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "group_memberships", force: true do |t|
+    t.integer  "joined_group_id"
+    t.integer  "member_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "group_memberships", ["joined_group_id"], name: "index_group_memberships_on_joined_group_id", using: :btree
+  add_index "group_memberships", ["member_id"], name: "index_group_memberships_on_member_id", using: :btree
+
+  create_table "group_posts", force: true do |t|
+    t.integer  "group_id"
+    t.integer  "post_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "group_posts", ["group_id"], name: "index_group_posts_on_group_id", using: :btree
+  add_index "group_posts", ["post_id"], name: "index_group_posts_on_post_id", using: :btree
+
+  create_table "groups", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "private",     default: false
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "groups", ["name"], name: "index_groups_on_name", using: :btree
+  add_index "groups", ["owner_id"], name: "index_groups_on_owner_id", using: :btree
+  add_index "groups", ["private"], name: "index_groups_on_private", using: :btree
 
   create_table "hearts", force: true do |t|
     t.integer  "liked_recipe_id"
@@ -130,7 +163,12 @@ ActiveRecord::Schema.define(version: 20141214173950) do
     t.integer  "main_photo_file_size"
     t.datetime "main_photo_updated_at"
     t.text     "s_tags",                  default: ""
+    t.float    "cached_rating",           default: 0.0
+    t.integer  "num_reviews",             default: 0
   end
+
+  add_index "recipes", ["cached_rating"], name: "index_recipes_on_cached_rating", using: :btree
+  add_index "recipes", ["num_reviews"], name: "index_recipes_on_num_reviews", using: :btree
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"

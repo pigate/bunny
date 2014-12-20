@@ -1,6 +1,8 @@
 var html = "<%= escape_javascript render(@review)%>";
+var rating_html = "<%= escape_javascript render partial: "recipes/rating_stars", locals: { recipe: @recipe} %>";
 var build_review_html = "<%= escape_javascript render partial: "recipes/review_build", locals: {recipe: @recipe} %>";
 $(function(){
   $("#recipe_reviews").prepend(html);
   $("#recipe_create_review").html(build_review_html);
+  $("div.rating_stars").html(rating_html);
 });

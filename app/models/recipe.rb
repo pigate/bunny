@@ -22,15 +22,7 @@ class Recipe < ActiveRecord::Base
     :convert_options => {
       :thumb => "-quality 75 -strip"
     },
-#    :storage => :s3,
     :bucket => ENV['AWS_BUCKET']
-#    :s3_credentials => {
-#      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-#      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-#      :bucket => ENV['AWS_BUCKET']
-#    },
-#    :url => ':s3_domain_url',
-#    :path => '/:class/:attachment/:id_partition/:style/:filename'
 
   validates_attachment_content_type :main_photo, :content_type => /\Aimage/
   validates_attachment_file_name :main_photo, :matches => [/png\Z/, /PNG\Z/, /jpe?g\Z/, /JPE?G\Z/]
@@ -45,8 +37,7 @@ class Recipe < ActiveRecord::Base
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
-#  include Tire::Model::Search
-#  include Tire::Model::Callbacks
+
   def self.parse_params(params)
     params 
   end
@@ -61,11 +52,9 @@ class Recipe < ActiveRecord::Base
         }
       }
     )
-    #tire.search(load: true) do
-    #  query { string params[:search] } if params[:query].present?
-    #end
   end
 end
+
 Recipe.__elasticsearch__.client.indices.delete index: Recipe.index_name rescue nil
 #
 Recipe.__elasticsearch__.client.indices.create index: Recipe.index_name,

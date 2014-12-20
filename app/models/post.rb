@@ -1,5 +1,9 @@
 class Post < ActiveRecord::Base
   has_one :convo, :as => :conversable, :dependent => :destroy
+  has_many :group_posts
+  has_many :groups, through: :group_posts
+
+
   has_attached_file :photo,
     :default_url => "missing-recipe/:style.png",
     :styles => {

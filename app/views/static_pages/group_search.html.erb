@@ -1,0 +1,15 @@
+<%= render 'search_form' %>
+
+<div id="generic_search_show_samples">
+
+<div style="clear: both;">
+<h1>Some Groups</h1>
+<% @groups.each do |group| %>
+  <%= link_to group.name, group %>
+<% end %>
+</div>
+
+</div>
+<script>
+choose_action('/search/groups', document.getElementById("search_action_choices").getElementsByTagName('a')[1])
+</script>

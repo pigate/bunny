@@ -9,7 +9,7 @@ Followers: <%=member.followers.count %> Following: <%= member.following.count %>
     <%= f.submit "Follow", :class => "button_round_burnt_orange"%>
   <% end %>
  <% else %>
-  <%= form_for(current_member.active_relationships.find_by(:followed_id => member.id), method: "DELETE",action: "destroy", remote: true) do |f| %>
+  <%= form_for(current_member.active_relationships.find_by(:followed_id => member.id), method: "DELETE",action: "destroy", remote: true, data: { confirm: "Are you sure?"}) do |f| %>
     <%= f.hidden_field :followed_id, value: member.id %>
     <%= f.hidden_field :follower_id, value: current_member.id %>
     <%= f.submit "Unfollow", :class => "button_round_burnt_orange" %>

@@ -1,0 +1,146 @@
+<style>
+div[id^="tag_pick"] {
+  width: 100px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 5px 10px 5px 10px;
+  float: left;
+  cursor: pointer;
+}
+div.tag_title > span {
+  margin-left: 8px;
+  font-weight: bold;
+  background-color: #e0f0ff;
+}
+span#picked_tag {
+  background-color: #e0f0ff;
+  margin: 5px 5px 5px 5px;
+  cursor: pointer;
+}
+div#dashboard {
+  font-family: Arial;
+  font-size: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+span[^id="picked_tag"] {
+  background-color: #e0f0ff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  float: left;
+}
+input#holder_tags {
+  border-style: none;
+}
+#dashboard_tags, #dashboard_discarded {
+clear: both;
+}
+.field_text_area > textarea {
+  width: 500px;
+  max-width: 80%;
+}
+</style>
+
+<%= form_for(@post) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= image_tag("ic_action_picture.png") %><br>
+    <%= f.file_field :photo %>
+  </div>
+  <div class="field_text_area">
+    <%= f.label "Tell us a little about this photo" %><br>
+    <%= f.text_area :post_text, :placeholder => "Somewhere across the world, an apple fell from a tree into a pot. The pot was moved under another tree and a lemon fell into it." %>
+  </div>
+  <br><br>
+  Click on groups to add post to group feed
+  <div id="dashboard">
+    <input id="holder_tags" placeholder="Groups">
+    </input>
+  </div>
+  <br><br>
+  Groups you are in:<br>
+  <div id="dashboard_tags">
+  </div>
+  <div style="clear: both;">-------</div>
+  <div id="dashboard_discarded_tags">
+  </div>
+  
+  <div class="field_tags">
+    <label>Feeds to include your post in.<br>Type feed names, separate with commas.</label><br>
+    <%= f.text_area :s_tags, :value => @post.s_tags || "public"  %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= javascript_tag do %>
+  var default_tags = {};
+  <% current_member.joined_groups.each do |group| %>
+    default_tags["<%=group.name %>"] = "<%= group.description %>";
+  <% end %>
+
+<% end %>
+<script type="text/javascript">
+
+function init_dashboard_tags(id_init_tags){
+  var dashboard = document.getElementById(id_init_tags);
+  var i = 0;
+  for(var key in default_tags){
+    if (default_tags.hasOwnProperty(key)){
+      var newNodeHTML = '<div id="tag_pick" onclick="choose_insert_and_delete(this)"><div class="tag_title"><span>'+key+'</span></div>'+default_tags[key]+'</div>';
+     dashboard.innerHTML = dashboard.innerHTML + newNodeHTML;
+      i+= 1;
+    }
+  }
+  /*
+    <div id="tag_pick1">
+      <div class="tag_title">
+          <span></span>
+      </div>
+      What did you eat for breakfast?
+    </div>
+  */
+}
+function dashboard_delete_parent(element){
+  var dashboard = document.getElementById("dashboard");
+  var parent = element.parentNode;
+  dashboard.removeChild(parent);
+}
+function choose_insert_and_delete(element){
+  //var element = event.srcElement;
+  var picked = document.getElementById("dashboard");
+  var dashboard = document.getElementById("dashboard_tags");
+  //add element to picked
+  var newNode = document.createElement("SPAN");
+  newNode.id = "picked_tag";
+  newNode.innerHTML = element.getElementsByClassName("tag_title")[0].getElementsByTagName('span')[0].innerHTML+'<button type="button" onclick="delete_from_picked(this)">x</button>';
+  //remove element from dashboard
+  element.style.display = "none";
+  picked.insertBefore(newNode, document.getElementById("holder_tags"));//appendChild(newNode);
+}
+function delete_from_picked(element){
+  var discarded_dashboard = document.getElementById("dashboard_discarded_tags");
+  //insert into discarded_dashboard. (Add the key:value value if in default_tags object
+  var key = element.parentNode.childNodes[0].nodeValue; //getElementsByTagName('span')[0].innerHTML;
+  if (default_tags.hasOwnProperty(key)){
+    var newNodeHTML = '<div id="tag_pick" onclick="choose_insert_and_delete(this)"><div class="tag_title"><span>'+key+'</span></div>'+default_tags[key]+'</div>';
+     discarded_dashboard.innerHTML = discarded_dashboard.innerHTML + newNodeHTML;
+    
+  }
+  //remove from picked div
+  document.getElementById("dashboard").removeChild(element.parentNode);
+}
+init_dashboard_tags("dashboard_tags");
+</script>
+

@@ -1,31 +1,9 @@
-<div id="post_index_page">
-<h1>Check out our groups!</h1>
-<h4>Join a group to combine their feed into yours, and to share your posts with the group:</h4>
+<%= render 'static_pages/search_form' %>
+<script>
+choose_action('/search/posts', document.getElementById("search_action_choices").getElementsByTagName('a')[2])
+</script>
 
-<h5>Posts are associated with groups by tags.</h5>
-
-
-
-<span style="font-size: 20px; font-weight: bold;">Popular Tags:</span>
-<%= link_to "/posts?utf8=✓&search=whatsforlunch" do %>
-  <%= button_tag :class => "button_round_burnt_orange" do%>whatsforlunch<% end %>
-<% end %>
-<%= link_to "/posts?utf8=✓&search=whatsfordinner" do %>
-  <%= button_tag :class => "button_round_burnt_orange" do %>whatsfordinner<% end %>
-<% end %>
-<%= link_to "/posts?utf8=✓&search=whatsforbreakfast" do %>
-  <%= button_tag :class => "button_round_burnt_orange" do %>whatsforbreakfast<% end %>
-<% end %>
-<%= link_to "/posts?utf8=✓&search=whatsfordinner" do %>
-  <%= button_tag :class => "button_round_burnt_orange" do %>public<% end %>
-<% end %>
-
-<br>
-
-<%= link_to new_post_path do %>
-  <%= button_tag :class=> "button_round_blue" do %>Share a post<% end %>
-<% end %>
-<br>
+<h1>Some Posts</h1>
 <% @posts.each do |post| %>
   <div class="post_indiv">
   <%= link_to post do %>
@@ -38,9 +16,9 @@
   <% else %>
     <%= image_tag("missing/tiny_thumb.png", class: "rounded_tiny_thumb") %>Anonymous
   <% end %>
-  <div id="show_tags">
+  <div id="show_tags"> 
   <% tags = destringify_tags(post.s_tags) %>
-  <% if tags != nil && tags != []%>
+  <% if tags != nil && tags != [] %>
     Tags:
     <% tags.each do |tag| %>
       <%= link_to tag, "/posts?utf8=✓&search=#{tag}", :class => "tag_search" %>
@@ -59,4 +37,7 @@
   <% end %>
   </div>
 <% end %>
+</div>
+
+
 </div>

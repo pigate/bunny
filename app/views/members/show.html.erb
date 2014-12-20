@@ -33,4 +33,8 @@ no recipes
   </div>
 <% end %>
 
+<h3>What groups <%=@member.user_name%> is in: </h3>
+<% @member.joined_groups.each do |group| %>
+  <%= link_to group.name, group %><br>
+<% end %>
 </div>

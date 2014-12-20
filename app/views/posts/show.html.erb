@@ -1,8 +1,8 @@
 <div id="post_whole_box">
-<span style="font-size: 20px; font-weight: bold">Feeds:</span>
 <div id="show_tags">
-  <% if @post.s_tags != nil %>
-    <% @post.s_tags.split(',').each do |tag| %>
+  <% tags = destringify_tags(@post.s_tags) %>
+  <% if tags != nil %>
+    <% tags.each do |tag| %>
       <%= link_to "/posts?utf8=✓&search=#{tag}" do %>
         <%= button_tag :class => "button_round_burnt_orange" do %>
          <%= "#{tag}" %>

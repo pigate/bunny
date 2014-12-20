@@ -12,6 +12,10 @@ class ReviewsController < ApplicationController
     @recipe = @review.reviewed_recipe
     respond_to do |format|
       if @review.save
+        #edit num_reviews and cached_rating
+        n = @recipe.num_reviews
+        new_cached_rating = (n * @recipe.cached_rating + @review.rating)/(n+1)
+        @recipe.update_attributes(:num_reviews => n+1, :cached_rating => new_cached_rating)
         format.json { render :json => { :status => "ok", :message => 'ok' } }
         format.js
       else
@@ -21,8 +25,19 @@ class ReviewsController < ApplicationController
   end
   #PATCH/PUT  /convos/1
   def update
+    @recipe = @review.reviewed_recipe
     respond_to do |format|
       if @review.update(review_params)
+        #update @recipe's cached_rating
+        curr_cached_rating = @recipe.cached_rating
+        n = @recipe.num_reviews
+        if (n > 0)
+          new_cached_rating = ((n-1)*curr_cached_rating + @review.rating)/n
+        else 
+          new_cached_rating = @review.rating 
+        end
+        @recipe.update_attributes(:cached_rating => new_cached_rating)
+ 
         format.html { redirect_to @review.reviewed_recipe }
         format.json { render :json => { :status => "ok", :message => 'ok' } }
       else
@@ -35,7 +50,18 @@ class ReviewsController < ApplicationController
   def destroy
     @recipe = @review.reviewed_recipe
     @review_id = @review.id
+    cached_rating = @recipe.cached_rating
+    n_old = @recipe.num_reviews - 1 
+    if (n_old > 0)
+      new_cached_rating = (@recipe.cached_rating * (n_old + 1) - @review.rating)/n_old
+    else
+      new_cached_rating = 0.00
+    end
+
     @review.destroy
+    @recipe.update_attributes(:num_reviews => @recipe.num_reviews - 1,
+       :cached_rating => new_cached_rating
+     )
     respond_to do |format|
       format.html { redirect_to @recipe }
       format.js
