@@ -6,7 +6,6 @@ class Group < ActiveRecord::Base
   has_many :group_posts
   has_many :posts, through: :group_posts
   validates :name, :uniqueness => true
-
   def slug
     name.downcase.gsub(" ","-")
   end

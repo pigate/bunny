@@ -29,7 +29,6 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
     if @group.save
-      @group.convo = Convo.new(:conversable_id => @group.id, :conversable_type => "Group", :owner_id => current_member.id)
     end
     respond_with(@group)
   end
