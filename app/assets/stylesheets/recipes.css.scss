@@ -101,6 +101,7 @@ form[id^="edit_recipe"], form#new_recipe, form#new_post, form[id^="edit_post"] {
     .listed_text_item {
       cursor: pointer;
      padding: 10px 20px 10px 30px;
+     position: relative;
     }
     textarea, .listed_text_item {
       max-width: 100%;
