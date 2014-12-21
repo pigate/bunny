@@ -18,7 +18,7 @@
 
         _touchStart: function( event ) {
             if ( event.originalEvent.targetTouches.length != 1 ) {
-                return false;
+                //return false;
             }
 
             this.element
@@ -30,7 +30,7 @@
             $( document ).trigger($.Event("mouseup")); //reset mouseHandled flag in ui.mouse
             this._mouseDown( event );
 
-            return false;           
+            //return false;           
         },
 
         _touchMove: function( event ) {
