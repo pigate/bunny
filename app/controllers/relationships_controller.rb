@@ -49,7 +49,7 @@ class RelationshipsController < ApplicationController
 
   def signed_in  
     if !member_signed_in?
-      render :js => "window.location.replace('#{new_member_session_path}');"
+      render :js => "window.location.replace('#{login_path}');"
     end
   end
 end

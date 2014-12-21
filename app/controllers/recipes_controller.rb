@@ -27,7 +27,7 @@ class RecipesController < ApplicationController
 
   def edit
     if !is_signed_in 
-      redirect_to members_login_path
+      redirect_to login_path
     elsif !can_destroy
       raise Exceptions::NotAuthorizedError
     end

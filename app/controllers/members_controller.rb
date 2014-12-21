@@ -88,7 +88,7 @@ class MembersController < ApplicationController
       current_member.admin || current_member.id == params[:id]
     end
     def is_signed_in
-      redirect_to new_member_session_path unless current_member  
+      redirect_to login_path unless current_member  
     end
     def can_destroy
       current_member.admin && current_member.id != params[:id] || (!current_member.admin && current_member.id == params[:id])

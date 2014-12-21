@@ -60,7 +60,7 @@ class GroupsController < ApplicationController
   end
   def signed_in
     if !member_signed_in?
-      redirect_to members_login_path
+      redirect_to login_path
     end
   end
   def can_edit

@@ -81,7 +81,7 @@ class ReviewsController < ApplicationController
 
   def signed_in
     if !member_signed_in?
-      redirect_to new_member_session_path
+      redirect_to login_path
     end
   end
   def can_edit
