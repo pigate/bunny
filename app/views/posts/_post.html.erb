@@ -1,0 +1,26 @@
+<div class="post_indiv">
+  <div class="post_img">
+    <%= link_to post do %>
+      <%= image_tag post.photo.url(:cropped_square_thumb) %>
+    <% end %>
+  </div>
+  <div id="show_tags">
+    <% tags = destringify_tags(post.s_tags) %>
+    <% if tags != nil && tags != []%>
+      <% tags.each do |tag| %>
+        <%= link_to tag, "/posts?utf8=✓&search=#{tag}", :class => "tag_search" %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="post_rest_of_content">
+  <% if post.author %>
+    <%= link_to post.author do %>
+      <%= image_tag post.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
+      <%= post.author.user_name %>
+    <% end %>
+  <% else %>
+    <%= image_tag("missing/tiny_thumb.png", class: "rounded_tiny_thumb") %>Anonymous
+  <% end %>
+  </div>
+</div>
+

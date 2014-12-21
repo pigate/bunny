@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'vision' => 'static_pages#vision'
   get 'help' => 'static_pages#help'
   get 'suggestion_added' => 'static_pages#suggestion_added'
+  get 'community' => 'static_pages#community'
   get 'not_found' => 'static_pages#not_found'
   get 'going_ons' => 'static_pages#going_ons'
   get 'box' => 'static_pages#box'
@@ -22,22 +23,23 @@ Rails.application.routes.draw do
   get 'search/members' => 'static_pages#member_search'
   get 'search/posts' => 'static_pages#post_search'
   get 'search/recipes' => 'static_pages#recipe_search'
+
   
   resources :recipes
   resources :groups
   resources :group_memberships
   resources :group_posts
+  resources :members
 
   devise_for :members, :controllers => { :registrations => "registrations" }
   devise_scope :member do
-    get '/members/logout' => 'devise/sessions#destroy'
-    get '/members/login' => 'devise/sessions#new'
-    get '/members/register' => 'devise/registrations#new'
-    get '/members/edit_account' => 'devise/registrations#edit'
-    get '/members/delete_account' => 'devise/registrations#destroy'
+    get 'logout' => 'devise/sessions#destroy'
+    get 'login' => 'devise/sessions#new'
+    get 'register' => 'devise/registrations#new'
+    get 'edit_account' => 'devise/registrations#edit'
+    get 'delete_account' => 'devise/registrations#destroy'
 
   end
-  resources :members
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

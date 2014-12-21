@@ -3,15 +3,6 @@
 #  if create == 1, we are on new page
 #  else if create == 0, we are on edit page
 %>
-<style>
-div#steps_list {
-  counter-reset: rows;
-}
-div#steps_list > div.listed_text_item:before{
-  counter-increment: rows;
-  content: counter(rows);
-}
-</style>
 <script>
 
 function post(node){
@@ -60,26 +51,6 @@ function post(node){
   hiddenSteps.setAttribute("value", steps_array);
   hiddenSteps.value = hiddenSteps.value.slice(1); //for the extra \" that is inserted when assigning value
   node.appendChild(hiddenSteps);
-
-  var s_tags = "";
-  var dashboard = document.getElementById("dashboard");
-  //get tags
-  var span_array = dashboard.getElementsByTagName("span");
-  var tag_array = "{\"tags\":[";
-  for(var i = 0; i < span_array.length - 1; i++){
-    tag_array += "\""+span_array[i].innerHTML.replace(/\"/g,"") + "\","
-  }
-  //do last one
-  tag_array += "\""+span_array[(span_array.length - 1)].innerHTML + "\"";
-  tag_array += "]}";
-  var hiddenTags = document.createElement("input");
-  hiddenTags.setAttribute("type", "hidden");
-  hiddenTags.setAttribute("id", "recipe_s_tags");
-  hiddenTags.setAttribute("name", "recipe[s_tags]");
-  hiddenTags.setAttribute("value", tag_array);
-  node.appendChild(hiddenTags);
-
-
   node.submit();
 
 }
@@ -93,10 +64,10 @@ function removeParentOf(e, list){
   if (list.id.search("step") != -1) { 
     //redo numbering for steps
     var list_items = list.getElementsByClassName('listed_text_item');
-    /*for(var i = 0; i < list_items.length; i++){
+    for(var i = 0; i < list_items.length; i++){
       //change numbering
       list_items[i].getElementsByClassName('round_number')[0].innerHTML = i + 1;
-    }*/
+    }
   } else {};
 };
 function test_addRow(id, defaultText){
@@ -111,7 +82,7 @@ function test_addRow(id, defaultText){
   var newNumRows = numSiblingRows + 1;
   if (id.search("ingred") == -1) {
     //adding steps
-    newChild.innerHTML = '<textarea class="text_element" placeholder="eg. Boil an egg" onkeyup="addBox(this, \''+id+'\')">'+defaultText+'</textarea><a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>';
+    newChild.innerHTML = '<div class="round_number">'+newNumRows+'</div><textarea class="text_element" placeholder="eg. Boil an egg" onkeyup="addBox(this, \''+id+'\')">'+defaultText+'</textarea><a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>';
   } else {
     newChild.innerHTML = '<textarea class="text_element" placeholder="eg. 2 tsp flakes" onkeyup="addBox(this, \''+id+'\')">'+defaultText+'</textarea><a onclick="removeParentOf(this, this.parentNode.parentNode)" class="round_button">x</a>';
   };
@@ -126,20 +97,6 @@ function addBox(e, i, defaultText){
     e.removeAttribute("onkeyup"); 
   return test_addRow(i, defaultText);
 };
-
-function init_tags(tag){
-  //var element = event.srcElement;
-  var picked = document.getElementById("dashboard");
-  var dashboard = document.getElementById("dashboard_tags");
-  //add element to picked
-  var newNode = document.createElement("DIV");
-  newNode.id = "picked_tag";
-  newNode.innerHTML = '<span>'+tag+'</span><button type="button" onclick="delete_from_picked(this)">x</button>';
-  //remove element from dashboard
-  picked.insertBefore(newNode, document.getElementById("holder_tags"));//appendChild(newNode);
-}
-
-
 </script>
 
 <%= form_for(@recipe) do |f| %>
@@ -154,81 +111,60 @@ function init_tags(tag){
       </ul>
     </div>
   <% end %>
-  <div class="position_80_top text_align_center">
-    <% if @recipe.id == nil %>
-      <span class="heading" style="color: #2c2c2c;">EDIT IN PROGRESS</span>
-    <% else %>
-      <span class="heading" style="color: #2c2c2c;">MAKING ROOM FOR A BRAND NEW RECIPE</span>
-    <% end %>
+  <div class="recipe_form_field">
+    <%= f.text_field :name, :placeholder => "TITLE", :class => "recipe_form_title_field" %>
   </div>
   <div class="recipe_form_field">
-    <span class="heading">TITLE<span> <%= f.text_field :name, :placeholder => "TITLE", :class => "recipe_form_simple_text_field" %>
+    <div class="section_header">DESCRIPTION
+    </div>
+    <%= f.text_area :about, :placeholder => "Introduce us to your creation. What inspired you? Who passed on the recipe to you? Suggestions, modifications? Add some hot sauce?" %>
   </div>
-  <div class="recipe_form_field">
-    <span class="heading">DESCRIPTION</span><br>
-    <%= f.text_area :about, :class => "note_book", :placeholder => "Introduce us to your creation. What inspired you? Who passed on the recipe to you? Suggestions, modifications? Add some hot sauce?" %>
-  </div>
-  <div class="recipe_add_photo" style="text-align: center;">
+  <div class="recipe_add_photo">
     <%= image_tag("ic_action_picture.png") %><br>
     <%= f.file_field :main_photo %>
   </div>
   <div class="recipe_form_field">
-    <div class="section_header">
-      <span class="heading">INGREDIENTS</span>
-      <span class="heading_secondary">Servings</span>
-      <%= f.text_field :servings, :value => 3, :class => "recipe_form_simple_text_field width_50"%>
+    <div class="section_header">INGREDIENTS</div>
+    <div class="section_header_right">Servings<%= f.text_field :servings, :value => 3 %>
     </div>
   </div>
   <div class="recipe_form_field">
-    <div id="ingred_list" class="sortable">
+    <div id="ingred_list">
     </div>
     <a onclick='test_addRow("ingred_list")' class="add_another"><img src="/assets/ic_action_new.png"/>Add new Ingred</a>
   </div>
   <div class="recipe_form_field">
-    <div class="section_header"><span class="heading">STEPS</span>
-      <div class="section_header_right">
-         <span class="heading_secondary">Prep Time (min)</span>
-         <%= f.text_field :prep_time, :class => "recipe_form_simple_text_field width_50" %> 
-         <span class="heading_secondary">Cook Time (min)</span>
-         <%= f.text_field :cook_time, :value => 0, :class => "recipe_form_simple_text_field width_50" %>
+    <div class="section_header">STEPS
+      <div class="section_header_right">Prep Time(min)<%= f.text_field :prep_time %> Cook Time(min)<%= f.text_field :cook_time, :value => 0 %>
       </div>
     </div>
-    <div id="steps_list" class="sortable">
+    <div id="steps_list">
     </div>
     <a onclick='test_addRow("steps_list")' class="add_another"><img src="/assets/ic_action_new.png"/>Add new step</a>
   </div>
 
   <div class="recipe_form_field">
-    <div class="section_header"><span class="heading_secondary">TAGS</span>
-      Type tags, separated by space:
-    </div>
-    <div id="dashboard">
-      <textarea id="holder_tags" placeholder="Tags" onkeypress="check_space(event)"></textarea>
-    </div>
-    <div style="clear: both;">
-    </div>
-    <div id="dashboard_tags">
+    <div class="section_header">TAGS
+      <span style="color: #585858; margin-left: 20px;"><em>Enter your tags seperated by commas</em></span>
+    </div> 
+    <div class="tag-editor validation-error" style="width: 666px; max-width: 90%; height: 35px; opacity: 1, z-index: 1, position: relative; cursor: text; background-color: #FFF; overflow: hidden; white-space: nowrap;">
+      <span style=""></span>
+      <%= f.text_field :s_tags, :class => "tag_input" %>
+      <span></span>
     </div>
   </div>
   <%= f.hidden_field :author_id, :value => current_member.id %>
   <div class="actions">
-    <button type="button" onclick="post(this.form)" class="button_round_blue">Submit</button>
+    <button type="button" onclick="post(this.form)" class="button_round_blue">Submit</button><br>
     <% if @recipe.id == nil %>
       <%= link_to root_url, data: { confirm: "Are you sure?" } do %>
         <%= button_tag :class=> "button_round_blue" do %>Cancel<% end %>
       <% end %>
-      <%= link_to recipes_path do %>
-        <%= button_tag :class => "button_round_blue" do %>View Other Recipes<% end %>
-      <% end %>
     <% else %>
-      <%= link_to @recipe do %>
-        <%= button_tag :class => "button_round_blue" do %>Cancel<% end %>
-      <% end %>
       <%= link_to @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } do %>
         <%= button_tag :class=> "button_round_blue" do %>Remove Recipe<% end %>
       <% end %>
     <% end %>
-
   </div>
 <% end %>
 
@@ -263,45 +199,5 @@ function init_tags(tag){
     <% end %>
     addBox(elem, id_steps_list);
   <% end %>
-  <% tags = destringify_tags(@recipe.s_tags) %>
-  <% tags.each do |tag| %>
-    init_tags('<%= tag %>');
-  <% end %>
 <% end %>
- <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<script>
-$(function(){
-  $(".sortable").sortable();
-});
-$("textarea").keyup(function(e){
-  while($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
-    $(this).height($(this).height() + 1);
-  };
-});
 
-function check_space(event){
-  var input = document.getElementById("holder_tags");
-  var dashboard = document.getElementById("dashboard");
-  var chCode = ('charCode' in event)? event.charCode : event.keyCode;
-  var chCode = event.keyCode || event.which;
-  if (chCode == 32 || chCode == 13){
-    var inputValue = input.value;
-    if (inputValue.match(/[A-Za-z]/g)){
-      var newNode = document.createElement("DIV");
-      newNode.id = "picked_tag";
-      newNode.innerHTML = '<span>'+inputValue+'</span><button type="button" onclick="delete_from_picked(this)" class="button_round_20">x</button>';
-      //remove element from dashboard
-      dashboard.insertBefore(newNode, input);//appendChild(newNode);
-      //input.value = "";
-    }
-    input.value = "";
-  } else if (chCode == 8 || chCode == 0){
-    var tag_array = dashboard.getElementsByTagName("div");
-    if (tag_array.length > 0  && input.value == ""){
-      var to_delete_node = tag_array[tag_array.length - 1];
-      dashboard.removeChild(to_delete_node);
-    }
-  }
-}
-
-</script>

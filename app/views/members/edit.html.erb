@@ -1,8 +1,8 @@
-<h1>Edit Your Profile</h1>
-
-<%= render 'form' %>
-
-(To delete account, go to Account)
-<%= link_to 'Account Settings', edit_member_registration_path %> |
-<%= link_to 'View your profile', @member %> |
-<%= link_to 'Back', members_path %>
+<div class="content_wrapper_main">
+  <h1>Edit Your Profile</h1>
+  <%= render 'form' %>
+  (To delete or edit account, go to Account Settings)
+  <%= link_to 'Account Settings', edit_account_path %> |
+  <%= link_to 'View your profile', @member %> |
+  <%= link_to 'Back', members_path %>
+</div>

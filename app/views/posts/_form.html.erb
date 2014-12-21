@@ -1,72 +1,11 @@
-<style>
-div[id^="tag_pick"] {
-  /*/width: 100px; */
-  border: 1px solid #ddd;
-  padding: 5px 5px 5px 5px;
-  border-radius: 10px;
-  margin: 5px 10px 5px 10px;
-  float: left;
-  cursor: pointer;
-}
-div.tag_title > span {
-  margin-left: 8px;
-  font-weight: bold;
-  background-color: #e0f0ff;
-}
-div#picked_tag {
-  background-color: #e0f0ff;
-  margin: 5px 5px 5px 5px;
-  cursor: pointer;
-  float: left;
-}
-div#picked_tag > button {
-  border-radius: 20px;
-}
-div#dashboard {
-  font-family: Arial;
-  font-size: 10px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  height: 40px;
-}
-span[^id="picked_tag"] {
-  background-color: #e0f0ff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  float: left;
-}
-textarea#holder_tags, input#holder_tags {
-  border-style: none;
-  float: left;
-  line-height: 35px;
-  height: 38px;
-  overflow: hidden;
-}
-#dashboard_tags, #dashboard_discarded {
-clear: both;
-}
-.field_text_area > textarea {
-  width: 500px;
-  max-width: 80%;
-}
-div[class^="group_tag"] {
-  width: 140px;
-  height: 70px;
-  cursor: pointer;
-  float: left;
-  padding: 5px 5px 5px 5px;
-  margin: 10px 10px 10px 10px;
-  border-radius: 10px;
-}
-div.group_tag_checked {
-  background-color: #CAD8E6;
-}
-div.group_tag_unchecked {
-  background-color: #e0f0ff;
-}
-</style>
-
 <%= form_for(@post) do |f| %>
+  <div class="position_80_top text_align_center">
+    <% if @post.id != nil %>
+      <span class="heading_dark">UPDATE YOUR POST</span>
+    <% else %>
+      <span class="heading_dark">POST IT!</span>
+    <% end %>
+  </div>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -78,13 +17,13 @@ div.group_tag_unchecked {
       </ul>
     </div>
   <% end %>
-  <div class="field">
+  <div class="field text_align_center">
     <%= image_tag("ic_action_picture.png") %><br>
     <%= f.file_field :photo %>
   </div>
   <div class="field_text_area">
     <%= f.label "Tell us a little about this photo" %><br>
-    <%= f.text_area :post_text, :placeholder => "Somewhere across the world, an apple fell from a tree into a pot. The pot was moved under another tree and a lemon fell into it." %>
+    <%= f.text_area :post_text, :class => "note_book", :placeholder => "Somewhere across the world, an apple fell from a tree into a pot. The pot was moved under another tree and a lemon fell into it." %>
   </div>
   <br><br>
   Click on tags to tag your post:
@@ -171,7 +110,9 @@ function form_submit(form){
   form.submit();
 }
 
+function crystallize_tags(form){
 
+}
 function check_space(event){
   var input = document.getElementById("holder_tags");
   var dashboard = document.getElementById("dashboard");
@@ -237,6 +178,7 @@ function choose_insert_and_delete(element){
   element.style.display = "none";
   picked.insertBefore(newNode, document.getElementById("holder_tags"));//appendChild(newNode);
 }
+
 function delete_from_picked(element){
   var discarded_dashboard = document.getElementById("dashboard_discarded_tags");
   //insert into discarded_dashboard. (Add the key:value value if in default_tags object

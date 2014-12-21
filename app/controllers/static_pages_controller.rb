@@ -11,7 +11,10 @@ class StaticPagesController < ApplicationController
   def vision
   end
 
-
+  def community
+    @groups = Group.last(4)
+    @members = Member.last(8).reverse
+  end
 
   def recipe_search
     if (params[:search_params].present?)

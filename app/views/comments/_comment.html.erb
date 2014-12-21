@@ -11,7 +11,7 @@
   </p>
   <div id="links">
   <% if member_signed_in? && (current_member == comment.commenter || current_member.try(:admin) == true) %>
-    <span class="bubble_link">edit</span> | <%= link_to "delete", comment, id: comment.id, method: :delete, data: { confirm: "Are you sure?"}, remote: true, :class => "bubble_link" %> 
+    <%= link_to "delete", comment, id: comment.id, method: :delete, data: { confirm: "Are you sure?"}, remote: true, :class => "bubble_link" %> 
   <% end %>
   </div>
 </div>

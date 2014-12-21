@@ -1,0 +1,35 @@
+<div class="search_result_recipe">
+  <div class="recipe_img">
+  <%= link_to recipe do %>
+    <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %>
+  <% end %>
+  </div>
+  <div class="recipe_info">
+    <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
+    <div style="clear: both;">
+    <%= render partial: "heart_build", locals: { recipe: recipe } %>
+    <%= render partial: "recipes/rating_stars", locals: { recipe: recipe } %>
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+      <%= "Prep (#{recipe.prep_time} min)" %>
+      <%= "Cook (#{recipe.cook_time} min)" %>
+      <div class="search_result_recipe_credit">
+        <% if recipe.author != nil %>
+          <%= link_to recipe.author do %>
+            <%= image_tag recipe.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
+          <% end %>
+          <span class="search_result_credit_text"><%= link_to recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %></span>
+        <% else %>
+          <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
+        <% end %>
+      </div>
+      <div id="show_tags">
+        <% tags = destringify_tags(recipe.s_tags) %>
+        <% tags.each do |tag| %>
+          <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

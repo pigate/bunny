@@ -4,15 +4,15 @@ class GroupsController < ApplicationController
   before_action :can_edit, only: [:edit, :update, :destroy]
   respond_to :html
 
-#  def index
-#    @groups = Group.all
-#    if (params[:search].present?)
-#      @groups = Group.search(params[:search]).records.to_a
-#    else
-#      @groups = Group.all.reverse
-#      respond_with(@groups)
-#    end
-#  end
+  def index
+    @groups = Group.all
+    if (params[:search].present?)
+      @groups = Group.search(params[:search]).records.to_a
+    else
+      @groups = Group.all.reverse
+      respond_with(@groups)
+    end
+  end
 
   def show
     respond_with(@group)

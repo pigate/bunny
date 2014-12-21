@@ -12,6 +12,12 @@ form#recipe_form_page {
   }
 }
 
+div.recipe_form {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 10px 10px 10px;
+}
 textarea#recipe_about {
     width: 590px;
 }
@@ -20,7 +26,6 @@ textarea#recipe_about {
 }
 .listed_text_item > textarea {
   border-style: none;
-  width: 530px;
   margin: 0px 0px 0px 5px;
   color: #383838;
   font-size: 14px;
@@ -34,39 +39,87 @@ textarea#recipe_about {
 div.listed_text_item {
   width: 590px;
   backface-visibility: hidden;
-  background: none repeat scroll 0% 0% #C2E066;
+  background: none repeat scroll 0% 0% #e0f0ff;
   opacity: 1;
   transition: all 0.4s cubic-bezier(0.215, .61, .355, 1) 0s;
   transform: perspective(250px);
   transform-origin: center top 0px;
+  border-radius: 5px;
+  margin: 5px 5px 5px 5px;
 }
 .listed_text_item:nth-child(2n) {
-  background: none repeat scroll 0% 0% #FFFFC2;
+  background: none repeat scroll 0% 0% #f1f1f1;
 }
-#steps_list > div > textarea {
-  height: 150px;
-  line-height: 20px;
-  padding-top: 14px;
-  padding-bottom: 5px;
-}
-div.recipe_form_field { 
-  line-height: 40px;
-  a.add_another {
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    cursor: hand;
-    img {
-      height: 15px;
+textarea.note_book {
+ /*    #steps_list > div > textarea, textarea#recipe_about { */
+      border-style: none;
+      height: 80px;
+      line-height: 20px;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2) 1px,
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 0, 0, 0) 20px);
+      margin: 5px 15px 5px !important;
     }
+
+form[id^="edit_recipe"], form#new_recipe, form#new_post, form[id^="edit_post"] {
+  width: 650px;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+
+  div.recipe_form_field, div.post_form_field { 
+    line-height: 40px;
+    #steps_list > div > textarea, textarea.note_book {
+      width: 640px; 
+      max-width: 85%; 
+      border-style: none;
+      height: 80px;
+      line-height: 20px;
+      background: repeating-linear-gradient(
+        0deg, 
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2) 1px, 
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 0, 0, 0) 20px);
+      margin: 5px 15px 5px !important;
+    }
+    a.add_another {
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      cursor: hand;
+      img {
+        height: 15px;
+      }
+    }
+    a.add_another:hover {
+      color: red;
+    }
+    .listed_text_item {
+      cursor: pointer;
+     padding: 10px 20px 10px 30px;
+    }
+    textarea, .listed_text_item {
+      max-width: 100%;
+    }
+    input.recipe_form_simple_text_field {
+      border-style: none;
+      border-bottom: 2px solid #ddd;
+      text-align: center;
+    }
+    input.width_50 {
+      margin-left: 10px;
+      width: 50px;
+    } 
   }
-  a.add_another:hover {
-    color: red;
-  }
-  textarea, .listed_text_item {
-    max-width: 100%;
-  }
-  
+}
+span.heading {
+  font-size: 20px;
+  color: #9b9b9b;
+  font-weight: bold;
 }
 .round_button {
     display: inline-block;
@@ -163,25 +216,35 @@ a.search_result_recipe_author {
   color: black;
   padding-left: 5px;
 }
-a.search_result_recipe_author::before {
-  content: "✎";
-}
 
 
 div.search_result_recipe {
   padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 10px;
+  padding-bottom: 5px;
   float: left;
   width: 182px;
   height: 370px;
   overflow: hidden;
   word-wrap: break-word;
+  margin: 10px 10px 10px 10px;
+  border: 1px solid #ddd; 
+  border-radius: 5px;
+
+  div.recipe_info {
+    clear: both;
+    padding: 5px 5px 5px 5px;
+  } 
   span.search_result_credit_text { 
     position: relative;
     top: -13px;
   }
-  img.square_170 {
+  div.recipe_img {
+    width: 170px;
+    margin-left: auto;
+    margin-right: auto;
+    img.square_170 {
+      width: 100%;
+    }
   }
 }
 
@@ -246,8 +309,14 @@ div.new_recipe_link {
   }
 }
 /* heart vote */
-.width_20px {
-  width: 20px;
+.width_15px {
+  width: 15px;
+  height: 15px;
   position: relative;
-  top: 3px;
+  top: 6px;
+  float: left;
 }
+span.down_6 {
+position: relative; top: 6px; margin-left: 5px; font-weight: bold; color: #585858;
+}
+

@@ -1,62 +1,31 @@
-<div id="post_index_page">
-<h1>Check out our groups!</h1>
-<h4>Join a group to combine their feed into yours, and to share your posts with the group:</h4>
-
-<h5>Posts are associated with groups by tags.</h5>
-
-
-
-<span style="font-size: 20px; font-weight: bold;">Popular Tags:</span>
-<%= link_to "/posts?utf8=✓&search=whatsforlunch" do %>
-  <%= button_tag :class => "button_round_burnt_orange" do%>whatsforlunch<% end %>
-<% end %>
-<%= link_to "/posts?utf8=✓&search=whatsfordinner" do %>
-  <%= button_tag :class => "button_round_burnt_orange" do %>whatsfordinner<% end %>
-<% end %>
-<%= link_to "/posts?utf8=✓&search=whatsforbreakfast" do %>
-  <%= button_tag :class => "button_round_burnt_orange" do %>whatsforbreakfast<% end %>
-<% end %>
-<%= link_to "/posts?utf8=✓&search=whatsfordinner" do %>
-  <%= button_tag :class => "button_round_burnt_orange" do %>public<% end %>
-<% end %>
-
-<br>
-
-<%= link_to new_post_path do %>
-  <%= button_tag :class=> "button_round_blue" do %>Share a post<% end %>
-<% end %>
-<br>
-<% @posts.each do |post| %>
-  <div class="post_indiv">
-  <%= link_to post do %>
-  <%= image_tag post.photo.url(:cropped_square_thumb) %>
-  <% end %><br>
-  <% if post.author %>
-    <%= link_to post.author do %>
-      <%= image_tag post.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %><%= post.author.user_name %>
-    <% end %><br>
-  <% else %>
-    <%= image_tag("missing/tiny_thumb.png", class: "rounded_tiny_thumb") %>Anonymous
+<div class="content_wrapper_main">
+  <div class="spotlight">
+  <h1>Check out our groups!</h1>
+  <h4>Join a group to combine their feed into yours, and to share your posts with the group:</h4>
+  <h5>Posts are associated with groups by tags.</h5>
+  <span style="font-size: 20px; font-weight: bold;">Popular Tags:</span>
+  <%= link_to "/posts?utf8=✓&search=whatsforlunch" do %>
+    <%= button_tag :class => "button_round_burnt_orange" do%>whatsforlunch<% end %>
   <% end %>
-  <div id="show_tags">
-  <% tags = destringify_tags(post.s_tags) %>
-  <% if tags != nil && tags != []%>
-    Tags:
-    <% tags.each do |tag| %>
-      <%= link_to tag, "/posts?utf8=✓&search=#{tag}", :class => "tag_search" %>
-    <% end %>
+  <%= link_to "/posts?utf8=✓&search=whatsfordinner" do %>
+    <%= button_tag :class => "button_round_burnt_orange" do %>whatsfordinner<% end %>
+  <% end %>
+  <%= link_to "/posts?utf8=✓&search=whatsforbreakfast" do %>
+    <%= button_tag :class => "button_round_burnt_orange" do %>whatsforbreakfast<% end %>
+  <% end %>
+  <%= link_to "/posts?utf8=✓&search=whatsfordinner" do %>
+    <%= button_tag :class => "button_round_burnt_orange" do %>public<% end %>
+  <% end %>
+  <br>
+  <%= link_to new_post_path do %>
+    <%= button_tag :class=> "button_round_blue" do %>Share a post<% end %>
   <% end %>
   </div>
-
-  <%= post.post_text %><br>
-  <% if current_member.try(:id) == post.author_id %>
-    <%= link_to edit_post_path(post) do %>
-      <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
-    <% end %>
-    <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' } do %>
-      <%= button_tag :class => "button_round_blue" do %>Remove Post<% end %>
-    <% end %>
-  <% end %>
+  <div id="feed_results_list">
+    <%= render @posts %>
   </div>
-<% end %>
+</div>
+
+<div class="side_bar pull_right">
+  side_bar pull_right LOREM IPSUM
 </div>

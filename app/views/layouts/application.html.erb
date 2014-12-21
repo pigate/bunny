@@ -31,7 +31,7 @@
       <div class="nav_login">
         <ul>
           <% if member_signed_in? %>
-          <li><%= link_to "logout", members_logout_path %></li>
+          <li><%= link_to "logout", logout_path %></li>
           <li><%= link_to "box", box_path, :class => "box_link" %></li>
           <li>
           <%= link_to current_member do %>
@@ -39,8 +39,8 @@
           <% end %>
           </li>
           <% else %>
-          <li><%= link_to "*LOGIN", members_login_path %></li>
-          <li><%= link_to "Invites", members_register_path %></li>
+          <li><%= link_to "*LOGIN", login_path %></li>
+          <li><%= link_to "Invites", register_path %></li>
           <% end %>
         </ul>
       </div>
@@ -86,36 +86,23 @@
 
 <% if !member_signed_in? %>
 <div id="wanna_join">
-  Wanna join? <%= link_to "Sign up here!", members_register_path %> 
+  Wanna join? <%= link_to "Sign up here!", register_path %> 
 </div>
 <% end %>
   
   
-  <div class="main_content">
-    <%= yield %>
-  </div>
+<div class="content_wrapper_super">
+  <%= yield %>
+</div>
   
   
 <div id="footer">
-  <div class="site-map">
-    <div id="footer_box1">
-      <div id="footer_heading">About Us</div>
-      <ul id="footer_list">
-        <li><%= link_to "Vision", vision_path %></li>
-        <li><%= link_to "Company", about_path %></li>
-      </ul>
-    </div>
-    <div id="footer_box1">
-      <div id="footer_heading">Support</div>
       <ul id="footer_list">
         <li><%= link_to "Terms and Privacy"%></li>
         <li><%= link_to "Help", help_path %></li>
         <li><%= link_to "Suggestions", new_suggestion_path %></li>
       </ul>
     </div>
-    <div id="footer_box1"></div>
-    <div id="footer_box1">We're based in sunny Los Angeles!</div>
-  </div>
   <div class="copyrights">
     All rights reserved to Tuzi Chef LLC.
   </div>

@@ -2,6 +2,7 @@ require 'elasticsearch/model'
 class Recipe < ActiveRecord::Base
   belongs_to :author, :class_name => "Member"
   validates :name, presence: true
+  validates_length_of :name, :maximum => 80
   validates :j_ingreds, presence: true
   validates :j_steps, presence: true
   has_many :comments, :through => :convo

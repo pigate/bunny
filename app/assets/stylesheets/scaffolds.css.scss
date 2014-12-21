@@ -1,4 +1,8 @@
-
+span.heading_secondary {
+  font-weight: bold;
+  font-size: 15px;
+  color: #585858;
+}
 body {
   background-color: #fff;
   color: #000;
@@ -9,6 +13,17 @@ body {
   }
 }
 
+div.position_80_top {
+  padding: 80px;
+}
+div.text_align_center {
+  text-align: center;
+}
+span.heading_dark {
+  font-size: 20px;
+  color: #424242;
+  font-weight: bold;
+}
 div.main_logo {
   img {
     height: 80px;
@@ -249,3 +264,73 @@ div.comment_box_show {
    content: "\2605";
    position: absolute;
 }
+
+/* tags */
+
+div[id^="tag_pick"] {
+  border: 1px solid #ddd;
+  padding: 5px 5px 5px 5px;
+  border-radius: 10px;
+  margin: 5px 10px 5px 10px;
+  float: left;
+  cursor: pointer;
+}
+div.tag_title > span {
+  margin-left: 8px;
+  font-weight: bold;
+  background-color: #e0f0ff;
+}
+div#picked_tag {
+  background-color: #e0f0ff;
+  margin: 5px 5px 5px 5px;
+  cursor: pointer;
+  float: left;
+  border-radius: 5px;
+  padding-left: 5px;
+  button.button_round_20 {
+    border-radius: 20px;
+  }
+}
+div#dashboard {
+  font-family: Arial;
+  font-size: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  height: 40px;
+}
+span[id^="picked_tag"] {
+  background-color: #e0f0ff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  float: left;
+}
+textarea#holder_tags, input#holder_tags {
+  border-style: none;
+  float: left;
+  line-height: 35px;
+  height: 38px;
+  overflow: hidden;
+}
+#dashboard_tags, #dashboard_discarded {
+clear: both;
+}
+.field_text_area > textarea {
+  width: 500px;
+  max-width: 80%;
+}
+div[class^="group_tag"] {
+  width: 140px;
+  height: 70px;
+  cursor: pointer;
+  float: left;
+  padding: 5px 5px 5px 5px;
+  margin: 10px 10px 10px 10px;
+  border-radius: 10px;
+}
+div.group_tag_checked {
+  background-color: #CAD8E6;
+}
+div.group_tag_unchecked {
+  background-color: #e0f0ff;
+}
+

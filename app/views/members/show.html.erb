@@ -1,40 +1,48 @@
-<div id="static_box">
-
-<p id="notice"><%= notice %></p>
-
-<p>
-  <%= image_tag @member.photo.url(:original), :class => "rounded_original" %>
-</p>
-  <strong><%= @member.user_name %></strong><br>
-  <%= "#{@member.first} #{ @member.last}" %>
-</p>
-<%= render partial: "members/follow_build", locals: {member: @member} %>
-<p>
-  Goes by <%= @member.occupation %> by day
-</p>
-
-<% if member_signed_in? && (current_member == @member || current_member.admin) %>
-<%= link_to edit_member_path(@member) do %> 
-  <%= button_tag :class => "button_round_blue" do %>Edit<% end %>
-<% end %>
-<% end %>
-<%= link_to members_path do %> 
-  <%= button_tag :class => "button_round_blue" do %>View Other Members<% end %>
-<% end %>
-
-
-<h2>Recipes</h2>
-<% if @member.recipes.count == 0 %>
-no recipes
-<% end %>
-<% @member.recipes.each do |recipe| %>
-  <div>
-    <%= link_to recipe.name, recipe %>
+<div class="content_wrapper_main">
+  <div class="left_half">
+    <div id="user_info">
+      <p id="notice"><%= notice %></p>
+      <p>
+        <%= image_tag @member.photo.url(:original), :class => "rounded_original" %>
+      </p>
+        <strong><%= @member.user_name %></strong><br>
+        <%= "#{@member.first} #{ @member.last}" %>
+      </p>
+      <%= render partial: "members/follow_build", locals: {member: @member} %>
+      <p>
+        Goes by <%= @member.occupation %> by day
+      </p>
+      
+      <% if member_signed_in? && (current_member == @member || current_member.admin) %>
+        <%= link_to edit_member_path(@member) do %> 
+          <%= button_tag :class => "button_round_blue" do %>Edit<% end %>
+        <% end %>
+      <% end %>
+      <%= link_to members_path do %> 
+        <%= button_tag :class => "button_round_blue" do %>View Other Members<% end %>
+      <% end %>
+    </div>
+    <div id="user_groups">
+      <h3>What groups <%=@member.user_name%> is in: </h3>
+      <% @member.joined_groups.each do |group| %>
+        <%= link_to group.name, group %><br>
+      <% end %>
+    </div>
+    <div id="user_recipes">
+      <h2>Recipes</h2>
+      <% if @member.recipes.count == 0 %>
+        no recipes
+      <% end %>
+      <% @member.recipes.each do |recipe| %>
+        <div><%= link_to recipe.name, recipe %></div>
+      <% end %>
+    </div>
   </div>
-<% end %>
-
-<h3>What groups <%=@member.user_name%> is in: </h3>
-<% @member.joined_groups.each do |group| %>
-  <%= link_to group.name, group %><br>
-<% end %>
+  <div class="right_half">  
+    <div id="user_activity">
+      <h4>User Activity</h4>
+      posts and activity such as rating and comments, liking something,
+      joining a new group
+    </div>
+  </div>
 </div>

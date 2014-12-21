@@ -1,38 +1,36 @@
 <%= render 'search_form' %>
-<div id="generic_search_show_samples">
+<div class="content_wrapper_main">
+
 <script>
 choose_action('/search/members', document.getElementById("search_action_choices").getElementsByTagName('a')[3])
 </script>
 
-
-
 <div style="clear: both;">
-<h1>Some new members</h1>
-<div class="member_results" style="clear:both; padding-top: 10px;">
-   <% if params["search"] != nil%>
-     <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
-     <% if @members == [] %>
-       <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
-     <% end %>
- <% else %>
- <% end %>
-
-<table style="clear: both;">
-  <tbody>
-    <% @members.each do |member| %>
-      <tr>
-        <td>
-          <%= link_to member do %>
-            <%= image_tag member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
-            <span class="tiny_thumb_text"><%= member.user_name %></span>
-            <span class="tiny_thumb_text"><%= member.first %> <%= member.last %></span>
-            <span class="tiny_thumb_text"><%= member.occupation %></span></td>
-          <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
+  <h1>Some new members</h1>
+  <div class="member_results" style="clear:both; padding-top: 10px;">
+     <% if params["search"] != nil%>
+       <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
+       <% if @members == [] %>
+         <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
+       <% end %>
+   <% else %>
+   <% end %>
+  <table style="clear: both;">
+    <tbody>
+      <% @members.each do |member| %>
+        <tr>
+          <td>
+            <%= link_to member do %>
+              <%= image_tag member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
+              <span class="tiny_thumb_text"><%= member.user_name %></span>
+              <span class="tiny_thumb_text"><%= member.first %> <%= member.last %></span>
+              <span class="tiny_thumb_text"><%= member.occupation %></span></td>
+            <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
 </div>
 
 </div>

@@ -1,11 +1,5 @@
-<div id="recipe_form_page">
-<div><span id="recipe_page_header">ADD NEW RECIPE</span></div>
-<% create_ingreds = 1 %>
-<% create_steps = 1 %>
-
-<%= render 'form' %>
-
-<%= link_to recipes_path do %>
-  <%= button_tag :class => "button_round_blue" do %>Back to All Recipes<% end %>
-<% end %>
+<div class="content_wrapper_main">
+  <% create_ingreds = 1 %>
+  <% create_steps = 1 %>
+  <%= render 'form' %>
 </div>

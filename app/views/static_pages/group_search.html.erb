@@ -1,13 +1,13 @@
 <%= render 'search_form' %>
 
-<div id="generic_search_show_samples">
+<div class="content_wrapper_main">
 
-<div style="clear: both;">
-<h1>Some Groups</h1>
-<% @groups.each do |group| %>
-  <%= link_to group.name, group %>
-<% end %>
-</div>
+  <div style="clear: both;">
+  <h1>Some Groups</h1>
+  <% @groups.each do |group| %>
+    <%= link_to group.name, group %>
+  <% end %>
+  </div>
 
 </div>
 <script>

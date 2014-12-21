@@ -2,42 +2,38 @@
 <script>
 choose_action('/search/posts', document.getElementById("search_action_choices").getElementsByTagName('a')[2])
 </script>
-
-<h1>Some Posts</h1>
-<% @posts.each do |post| %>
-  <div class="post_indiv">
-  <%= link_to post do %>
-  <%= image_tag post.photo.url(:cropped_square_thumb) %>
-  <% end %><br>
-  <% if post.author %>
-    <%= link_to post.author do %>
-      <%= image_tag post.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %><%= post.author.user_name %>
-    <% end %><br>
-  <% else %>
-    <%= image_tag("missing/tiny_thumb.png", class: "rounded_tiny_thumb") %>Anonymous
+<div class="content_wrapper_main">
+  <h1>Some Posts</h1>
+  <% @posts.each do |post| %>
+    <div class="post_indiv">
+      <%= link_to post do %>
+      <%= image_tag post.photo.url(:cropped_square_thumb) %>
+      <% end %><br>
+      <% if post.author %>
+        <%= link_to post.author do %>
+          <%= image_tag post.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %><%= post.author.user_name %>
+        <% end %><br>
+      <% else %>
+        <%= image_tag("missing/tiny_thumb.png", class: "rounded_tiny_thumb") %>Anonymous
+      <% end %>
+      <div id="show_tags"> 
+      <% tags = destringify_tags(post.s_tags) %>
+      <% if tags != nil && tags != [] %>
+        Tags:
+        <% tags.each do |tag| %>
+          <%= link_to tag, "/posts?utf8=✓&search=#{tag}", :class => "tag_search" %>
+        <% end %>
+      <% end %>
+      </div>
+      <%= post.post_text %><br>
+      <% if current_member.try(:id) == post.author_id %>
+        <%= link_to edit_post_path(post) do %>
+          <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
+        <% end %>
+        <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' } do %>
+          <%= button_tag :class => "button_round_blue" do %>Remove Post<% end %>
+        <% end %>
+      <% end %>
+    </div>
   <% end %>
-  <div id="show_tags"> 
-  <% tags = destringify_tags(post.s_tags) %>
-  <% if tags != nil && tags != [] %>
-    Tags:
-    <% tags.each do |tag| %>
-      <%= link_to tag, "/posts?utf8=✓&search=#{tag}", :class => "tag_search" %>
-    <% end %>
-  <% end %>
-  </div>
-
-  <%= post.post_text %><br>
-  <% if current_member.try(:id) == post.author_id %>
-    <%= link_to edit_post_path(post) do %>
-      <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
-    <% end %>
-    <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' } do %>
-      <%= button_tag :class => "button_round_blue" do %>Remove Post<% end %>
-    <% end %>
-  <% end %>
-  </div>
-<% end %>
-</div>
-
-
 </div>

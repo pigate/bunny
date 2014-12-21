@@ -1,40 +1,40 @@
-<div id="static_box">
+<div class="side_bar pull_left"> 
   <h1><%=@group.name %></h1>
   <h2><%= @group.description %></h2>
   <%= "want to join?" %><br>
   <%= render partial:'groups/build_join', :locals => {group: @group} %>
-  <br>
-<% @group.posts.each do |post| %>
-  <div class="post_indiv">
-  <%= link_to post do %>
-  <%= image_tag post.photo.url(:cropped_square_thumb) %>
-  <% end %><br>
-  <% if post.author %>
-    <%= link_to post.author do %>
-      <%= image_tag post.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %><%= post.author.user_name %>
+</div>
+<div class="content_wrapper_main">
+  <% @group.posts.each do |post| %>
+    <div class="post_indiv">
+    <%= link_to post do %>
+    <%= image_tag post.photo.url(:cropped_square_thumb) %>
     <% end %><br>
-  <% else %>
-    <%= image_tag("missing/tiny_thumb.png", class: "rounded_tiny_thumb") %>Anonymous
-  <% end %>
-  <div id="show_tags">
-  <% if post.s_tags != nil %>
-    Tags:
-    <% post.s_tags.split(',').each do |tag| %>
-      <%= link_to tag, "/posts?utf8=✓&search=#{tag}", :class => "tag_search" %>
+    <% if post.author %>
+      <%= link_to post.author do %>
+        <%= image_tag post.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
+          <%= post.author.user_name %>
+      <% end %><br>
+    <% else %>
+      <%= image_tag("missing/tiny_thumb.png", class: "rounded_tiny_thumb") %>Anonymous
     <% end %>
-  <% end %>
-  </div>
-
-  <%= post.post_text %><br>
-  <% if current_member.try(:id) == post.author_id %>
-    <%= link_to edit_post_path(post) do %>
-      <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
+    <div id="show_tags">
+    <% if post.s_tags != nil %>
+      Tags:
+      <% post.s_tags.split(',').each do |tag| %>
+        <%= link_to tag, "/posts?utf8=✓&search=#{tag}", :class => "tag_search" %>
+      <% end %>
     <% end %>
-    <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' } do %>
-      <%= button_tag :class => "button_round_blue" do %>Remove Post<% end %>
+    </div>
+    <%= post.post_text %><br>
+    <% if current_member.try(:id) == post.author_id %>
+      <%= link_to edit_post_path(post) do %>
+        <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
+      <% end %>
+      <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' } do %>
+        <%= button_tag :class => "button_round_blue" do %>Remove Post<% end %>
+      <% end %>
     <% end %>
+    </div>
   <% end %>
-  </div>
-<% end %>
-
 </div>

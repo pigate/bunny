@@ -1,125 +1,112 @@
 <%= render 'search_form' %>
 
-<div id="generic_search_show_samples">
-
-<div style="clear: both;">
-<h1>Some Groups</h1>
-<% @groups.each do |group| %>
-  <%= link_to group.name, group %>
-<% end %>
-</div>
-
-<div style="clear: both;">
-<h1>Some Tags</h1>
-<% @tags.each do |tag| %>
-  <%= link_to "/posts?utf8=✓&search=#{tag}" do %>
-    <%= button_tag :class => "button_round_burnt_orange" do%><% tag %><% end %>
+<div class="content_wrapper_main">
+  <h1>Some Groups</h1>
+  <% @groups.each do |group| %>
+    <%= link_to group.name, group %>
   <% end %>
-<% end %>
-</div>
-
-<div style="clear: both;">
-<h1>Some Posts</h1>
-<% @posts.each do |post| %>
-  <div class="post_indiv">
-  <%= link_to post do %>
-  <%= image_tag post.photo.url(:cropped_square_thumb) %>
-  <% end %><br>
-  <% if post.author %>
-    <%= link_to post.author do %>
-      <%= image_tag post.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %><%= post.author.user_name %>
-    <% end %><br>
-  <% else %>
-    <%= image_tag("missing/tiny_thumb.png", class: "rounded_tiny_thumb") %>Anonymous
-  <% end %>
-  <div id="show_tags">
-  <% tags = destringify_tags(post.s_tags) %>
-  <% if tags != nil && tags != [] %>
-    Tags:
-    <% tags.each do |tag| %>
-      <%= link_to tag, "/posts?utf8=✓&search=#{tag}", :class => "tag_search" %>
+  
+  <h1>Some Tags</h1>
+  <% @tags.each do |tag| %>
+    <%= link_to "/posts?utf8=✓&search=#{tag}" do %>
+      <%= button_tag :class => "button_round_burnt_orange" do%><% tag %><% end %>
     <% end %>
   <% end %>
-  </div>
-
-
-  <%= post.post_text %><br>
-  <% if current_member.try(:id) == post.author_id %>
-    <%= link_to edit_post_path(post) do %>
-      <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
-    <% end %>
-    <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' } do %>
-      <%= button_tag :class => "button_round_blue" do %>Remove Post<% end %>
-    <% end %>
-  <% end %>
-  </div>
-<% end %>
-</div>
-
-<div style="clear: both;">
-<h1>Some Recipes</h1>
-<% @recipes.each do |recipe| %>
-  <div class="search_result_recipe">
-    <%= link_to recipe do %>
-    <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
-    <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
-    <% end %>
-    <%= render partial: "recipes/rating_stars", locals: { recipe: recipe } %>
-    <%= render partial: "heart_build", locals: { recipe: recipe } %>
-    <%= "Servings: #{recipe.servings}" %><br>
-    <%= "Prep time: #{recipe.prep_time}" %>min<br>
-    <%= " Cook time: #{recipe.cook_time} min" %>
-    <br>
-    <div class="search_result_recipe_credit">
-      <% if recipe.author != nil %>
-        <%= link_to recipe.author do %>
-          <%= image_tag recipe.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
-        <% end %>
-        <span class="search_result_credit_text"><%= link_to recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %></span>
+  
+  <h1>Some Posts</h1>
+  <% @posts.each do |post| %>
+    <div class="post_indiv">
+      <%= link_to post do %>
+      <%= image_tag post.photo.url(:cropped_square_thumb) %>
+      <% end %><br>
+      <% if post.author %>
+        <%= link_to post.author do %>
+          <%= image_tag post.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %><%= post.author.user_name %>
+        <% end %><br>
       <% else %>
-        <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
+        <%= image_tag("missing/tiny_thumb.png", class: "rounded_tiny_thumb") %>Anonymous
+      <% end %>
+      <div id="show_tags">
+      <% tags = destringify_tags(post.s_tags) %>
+      <% if tags != nil && tags != [] %>
+        Tags:
+        <% tags.each do |tag| %>
+          <%= link_to tag, "/posts?utf8=✓&search=#{tag}", :class => "tag_search" %>
+        <% end %>
+      <% end %>
+      </div>
+      <%= post.post_text %><br>
+      <% if current_member.try(:id) == post.author_id %>
+        <%= link_to edit_post_path(post) do %>
+          <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
+        <% end %>
+        <%= link_to post, method: :delete, data: { confirm: 'Are you sure?' } do %>
+          <%= button_tag :class => "button_round_blue" do %>Remove Post<% end %>
+        <% end %>
       <% end %>
     </div>
-    <div id="show_tags">
-    <% if recipe.s_tags != nil %>
-      Tags:
-      <% recipe.s_tags.split(',').each do |tag| %>
-        <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
+  <% end %>
+  
+  <h1>Some Recipes</h1>
+  <% @recipes.each do |recipe| %>
+    <div class="search_result_recipe">
+      <%= link_to recipe do %>
+      <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
+      <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
       <% end %>
-    <% end %>
-    </div>
-  </div>
-<% end %>
-</div>
-
-
-<div style="clear: both;">
-<h1>Some new members</h1>
-<div class="member_results" style="clear:both; padding-top: 10px;">
-   <% if params["search"] != nil%>
-     <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
-     <% if @members == [] %>
-       <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
-     <% end %>
- <% else %>
- <% end %>
-
-<table style="clear: both;">
-  <tbody>
-    <% @members.each do |member| %>
-      <tr>
-        <td>
-          <%= link_to member do %>
-            <%= image_tag member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
-            <span class="tiny_thumb_text"><%= member.user_name %></span>
-            <span class="tiny_thumb_text"><%= member.first %> <%= member.last %></span>
-            <span class="tiny_thumb_text"><%= member.occupation %></span></td>
+      <%= render partial: "recipes/rating_stars", locals: { recipe: recipe } %>
+      <%= render partial: "heart_build", locals: { recipe: recipe } %>
+      <%= "Servings: #{recipe.servings}" %><br>
+      <%= "Prep time: #{recipe.prep_time}" %>min<br>
+      <%= " Cook time: #{recipe.cook_time} min" %>
+      <br>
+      <div class="search_result_recipe_credit">
+        <% if recipe.author != nil %>
+          <%= link_to recipe.author do %>
+            <%= image_tag recipe.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
           <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
-</div>
+          <span class="search_result_credit_text"><%= link_to recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %></span>
+        <% else %>
+          <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
+        <% end %>
+      </div>
+      <div id="show_tags">
+      <% if recipe.s_tags != nil %>
+        Tags:
+        <% recipe.s_tags.split(',').each do |tag| %>
+          <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
+  
+  
+  <h1>Some new members</h1>
+  <div class="member_results" style="clear:both; padding-top: 10px;">
+     <% if params["search"] != nil%>
+       <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
+       <% if @members == [] %>
+         <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
+       <% end %>
+     <% else %>
+     <% end %>
+  
+    <table style="clear: both;">
+      <tbody>
+        <% @members.each do |member| %>
+          <tr>
+            <td>
+              <%= link_to member do %>
+                <%= image_tag member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
+                <span class="tiny_thumb_text"><%= member.user_name %></span>
+                <span class="tiny_thumb_text"><%= member.first %> <%= member.last %></span>
+                <span class="tiny_thumb_text"><%= member.occupation %></span></td>
+              <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
 </div>
