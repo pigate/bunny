@@ -18,3 +18,5 @@
 //= require json_parse.js
 //= require json_parse_state.js
 //= require jquery-ui.js
+//= require patch-jquery-ui.js
+

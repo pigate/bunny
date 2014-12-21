@@ -139,7 +139,9 @@ function init_tags(tag){
   picked.insertBefore(newNode, document.getElementById("holder_tags"));//appendChild(newNode);
 }
 
-
+function delete_from_picked(element){
+  document.getElementById("dashboard").removeChild(element.parentNode);
+}
 </script>
 
 <%= form_for(@recipe) do |f| %>
