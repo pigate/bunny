@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   private
     def not_signed_in
      #render :text => "What are you trying to do? Sign in!", status: :not_found
-     redirect_to members_login_path, status: 403
+     redirect_to login_path, status: 403
      
     end
     def not_authorized
