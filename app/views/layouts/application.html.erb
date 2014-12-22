@@ -161,5 +161,17 @@ $(document).on('click', function(event) {
   <div class="content_wrapper_super">
     <%=  yield %>
   </div>
+
+<div id="footer">
+  <ul id="footer_list">
+    <li><%= link_to "Terms and Privacy"%></li>
+    <li><%= link_to "Help", help_path %></li>
+    <li><%= link_to "Suggestions", new_suggestion_path %></li>
+  </ul>
+  <div class="copyrights">
+    All rights reserved to Tuzi Chef LLC.
+  </div>
+</div>
+
 </body>
 </html>
