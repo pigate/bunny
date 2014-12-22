@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tuzi Chef</title>
+</head>
+<body>
+  <header>
+    <a href="#" id="menu_bttn"></a>
+    <a href="#"  class="home_link">
+      <p class="logo_title">Tuzi Chef</p>
+    </a>
+    <nav class="main_nav">
+        <ul>
+        <li id="home_link_mobile"><a href="#">Home</a></li>
+        <li class="dropdown-reveal">
+          <a href="#">Recipes</a>
+          <div class="dropdown">
+            <ul>
+            <li><a href="#">Category #1</a></li>
+            <li><a href="#">Category #1</a></li>
+            <li><a href="#">Category #1</a></li>
+            <li><a href="#">View All Recipes</a></li>
+            </ul>
+          </div>
+        </li>
+        <li><%= link_to "Feed", posts_path %></li>
+        <li><%= link_to "Community", community_path %></li>
+        <li><%= link_to "Search", search_path %></li>
+        </ul>  
+        <a href="" id="exit-menu-bttn">X</a>
+    </nav>  
+    
+    
+    <div class="right_links">
+      <div class="action_bttns_block">
+        <%= link_to search_path, :class => "search_link"%>
+        <%= link_to box_path, :class => "treasure_box_link" %>
+        <a href="#" class="upload_link"></a>
+      </div>
+      
+      <div class="profile_block">
+        <% if member_signed_in? %>
+          <div class="profile_pic">
+            <%= link_to current_member do %>
+              <%= image_tag current_member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
+            <% end %>
+          </div>
+          <div class="user_name">
+            <%= link_to current_member do %>
+              <%= current_member.user_name, current_member %>
+            <% end %>
+          </div>
+        <% else %>
+
+        <% end %>
+      </div>
+    </div>
+  </header>
+  <div class="search">
+      <form accept-charset="UTF-8" action="/recipes" class="search-form" method="get">
+      <input class="search_box" name="search" placeholder="Type Recipe or Ingredient" type="text" />
+      <button name="button" type="search_submit_recipe" class="search_bttn"></button>
+      </form>    
+  </div>
+</body>
+</html>

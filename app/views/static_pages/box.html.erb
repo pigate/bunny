@@ -95,26 +95,7 @@ function getHash(url){
     <div>
       <h2>Your Recipes</h2>
       <% if member_signed_in? %>
-       <% current_member.recipes.each do |recipe| %>
-         <div id="recipe_list">
-           <%= link_to recipe do %>
-           <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
-           <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
-           <% end %>
-           <%= render partial: "heart_build", locals: { recipe: recipe } %>
-           <%= "Servings: #{recipe.servings}" %><br>
-           <%= "Prep time: #{recipe.prep_time}" %>min<br>
-           <%= " Cook time: #{recipe.cook_time} min" %>
-           <div id="show_tags">
-           <% if recipe.s_tags != nil %>
-             Tags:
-             <% recipe.s_tags.split(',').each do |tag| %>
-               <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
-             <% end %>
-           <% end %>
-           </div>
-         </div> 
-       <% end %>
+       <%= render current_member.recipes %>
       <% end %>
     </div>
   </div>
@@ -123,37 +104,7 @@ function getHash(url){
     <div>
       <h2>Liked Recipes</h2>
       <% if member_signed_in? %>
-        <% current_member.liked_recipes.each do |recipe| %>
-          <div id="recipe_list">
-            <%= link_to recipe do %>
-            <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
-            <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
-            <% end %>
-            <%= render partial: "recipes/heart_build", locals: { recipe: recipe } %>
-            <%= "Servings: #{recipe.servings}" %><br>
-            <%= "Prep time: #{recipe.prep_time}" %>min<br>
-            <%= " Cook time: #{recipe.cook_time} min" %>
-            <div class="search_result_recipe_credit">
-              <% if recipe.author != nil %>
-                <%= link_to recipe.author do %>
-                  <%= image_tag recipe.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
-                <% end %>
-                <span class="search_result_credit_text"><%= link_to recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %></span>
-              <% else %>
-                <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
-              <% end %>
-            </div>
-    
-            <div id="show_tags">
-            <% if recipe.s_tags != nil %>
-              Tags:
-              <% recipe.s_tags.split(',').each do |tag| %>
-                <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
-              <% end %>
-            <% end %>
-            </div>
-          </div>
-        <% end %>
+        <%= render current_member.liked_recipes %>
       <% end %>
     </div>
   </div>
@@ -162,37 +113,7 @@ function getHash(url){
     <div>
       <h2>Reviewed Recipes</h2>
       <% if member_signed_in? %>
-        <% current_member.reviewed_recipes.each do |recipe| %>
-          <div id="recipe_list">
-            <%= link_to recipe do %>
-            <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
-            <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
-            <% end %>
-            <%= render partial: "recipes/heart_build", locals: { recipe: recipe } %>
-            <%= "Servings: #{recipe.servings}" %><br>
-            <%= "Prep time: #{recipe.prep_time}" %>min<br>
-            <%= " Cook time: #{recipe.cook_time} min" %>
-            <div class="search_result_recipe_credit">
-              <% if recipe.author != nil %>
-                <%= link_to recipe.author do %>
-                  <%= image_tag recipe.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
-                <% end %>
-                <span class="search_result_credit_text"><%= link_to recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %></span>
-              <% else %>
-                <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
-              <% end %>
-            </div>
-            <%= render partial: "reviews/review_brief", locals: { review: current_member.reviews.find_by(:reviewed_recipe_id => recipe) }%>
-            <div id="show_tags">
-            <% if recipe.s_tags != nil %>
-              Tags:
-              <% recipe.s_tags.split(',').each do |tag| %>
-                <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
-              <% end %>
-            <% end %>
-            </div>
-          </div>
-        <% end %>
+        <%= render partial: "reviews/review_brief", :as  => :review, :collection => current_member.reviews %>
       <% end %>
     </div>
   </div>

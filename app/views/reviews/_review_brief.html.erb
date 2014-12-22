@@ -1,5 +1,28 @@
 <div id="review_show<%=review.id%>" style="border: 1px #ddd solid; border-radius: 10px;">
-  Your review:
+  <% recipe = review.reviewed_recipe %>
+  Your review for:
+  <div class="recipe_img">
+  <%= link_to recipe do %>
+    <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %>
+  <% end %>
+  </div>
+  <div class="recipe_info">
+    <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
+    <div style="clear: both;">
+    <%= render partial: "heart_build", locals: { recipe: recipe } %>
+    <%= render partial: "recipes/rating_stars", locals: { recipe: recipe } %>
+    </div>
+    <div class="search_result_recipe_credit">
+     <% if recipe.author != nil %>
+       <%= link_to recipe.author do %>
+         <%= image_tag recipe.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
+       <% end %>
+       <span class="search_result_credit_text"><%= link_to recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %></span>
+     <% else %>
+       <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
+     <% end %>
+    </div>
+  </div>
   <div class="show_rating">
     <% i = 0 %>
     <% while i < review.rating %>

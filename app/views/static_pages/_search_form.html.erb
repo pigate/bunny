@@ -22,14 +22,12 @@ form#static_search_form {
   
   <br>
   <div class="search" style="clear: both;"> 
-    <form id="static_search_form" class="search_form" method="get" action="/search/groups" accept-charset="UTF-8">
+    <form id="static_search_form" class="search-form" method="get" action="/search/groups" accept-charset="UTF-8">
       <div style="display:none">
         <input type="hidden" value="✓" name="utf8"></input>
       </div>
-      <div class="search-box" style="border: 1px solid red;">
         <input id="search_params" type="text" placeholder="Something awesome!" name="search_params"></input>
-        <button type="submit" name="button"></button>
-      </div>
+        <button type="submit" class="search_bttn"><%= image_tag("search_black.png") %></button>
     </form>
   </div> 
   </div>

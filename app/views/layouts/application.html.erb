@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<% drop_down = false %>
 <html>
 <head>
   <title>Tuzi Chef</title>
@@ -7,105 +6,160 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
+
 </head>
 <body>
-<div class="navbar">
-  <div class="logo">
-    <%= link_to root_url do %>
-     <div id="logo"><%= image_tag("white_bunny.png") %> </div>
-     <div class="logo-title">Tuzi Chef</div>
-    <% end  %>
-  </div>
-  <div class="nav_top_row">
-    <div class="nav_secondary_links">
-      <ul class="nav_sec_menu">
-        <li id="leaf_link"><%= link_to "it's" %></li>
-        <li id="leaf_link"><%= link_to "pouring" %></li>
-        <li id="leaf_link"><%= link_to "rabbits" %></li>
-        <li id="leaf_link"><%= link_to "*" %></li>
-        <li id="leaf_link"><%= link_to "**" %></li>
-        <li id="leaf_link"><%= link_to "Community", members_path %></li>
-      </ul>
-    </div>
-    <div class="nav_util">
-      <div class="nav_login">
-        <ul>
-          <% if member_signed_in? %>
-          <li><%= link_to "logout", logout_path %></li>
-          <li><%= link_to "box", box_path, :class => "box_link" %></li>
-          <li>
-          <%= link_to current_member do %>
-            <%= image_tag current_member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
-          <% end %>
-          </li>
-          <% else %>
-          <li><%= link_to "*LOGIN", login_path %></li>
-          <li><%= link_to "Invites", register_path %></li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  </div>
-  
-  <div class="mid-bar">
-    <div class="navbar-links">
-      <ul>
-        <li class="dropdown-reveal"><%= link_to "Recipes", recipes_path %>
-          <% if drop_down %>
-          <div class="dropdown">
-            <ul>
-              <li><%= link_to "All Recipes", recipes_path %></li>
-              <li><%= link_to "New Recipe", new_recipe_path %></li>
-              <li><a href="/recipes?utf8=✓&search=Chinese">Chinese</a></li>
-              <li><a href="/recipes?utf8=✓&search=dim+sum">Dim Sum/Snacks</a></li>
-              <li><a href="/recipes?utf8=✓&search=easy">Easy</a></li>
-            </ul>
-          </div>
-          <% end %>
-        </li>
-        <li><%= link_to new_recipe_path do %><%= image_tag("ic_action_new.png") %><% end %></li>
+  <header>
+    <a href="#" id="menu_bttn" onclick="toggle_small_nav()"><%= image_tag("menu_bttn.png") %></a>
+    <%= link_to root_url, :class => "home_link" do %>
+      <%= image_tag("white_bunny.png", :class => "logo_img") %>
+      <p class="logo_title">Tuzi Chef</p>
+    <% end %>
+    <nav class="main_nav">
+      <ul id="main_nav_small_screen" style="display: none;">
+        <li id="home_link_mobile"><a href="#">Home <%= image_tag("white_bunny.png", :class => "link_logo_img") %></a></li>
+        <li><%= link_to "Recipes", recipes_path %></li>
         <li><%= link_to "Feed", posts_path %></li>
+        <li><%= link_to "Community", community_path %></li>
+        <li><%= link_to "Search", search_path %></li>
+        <a href="#" id="exit-menu-bttn" onclick="toggle_small_nav()">X</a>
+      </ul>
+      <ul id="main_nav_big_screen">
+        <li><%= link_to "Recipes", recipes_path %></li>
+        <li><%= link_to "Feed", posts_path %></li>
+        <li><%= link_to "Community", community_path %></li>
         <li><%= link_to "Search", search_path %></li>
       </ul>  
-    </div>  
-    <div class="action-links">
-    <%= link_to new_post_path do %>
-      <%= button_tag :class => "button_round_blue" do %>UPLOAD+<% end %>
-    <% end %>
-    </div>
-    <div class="search">
-      <%= form_tag recipes_path, :class => "search_form", :method => :get do %>
-        <div class="search-box"><%= text_field_tag :search, params[:search], :placeholder => "Something Awesome!"%>
-        <%= button_tag name="" %>
-        </div>
-      <% end %>
-    </div>
+    </nav>  
+   
+<script>
+function toggle_small_nav(){
+  nav = document.getElementById("main_nav_small_screen"); 
+  if (nav.style.display == "none"){
+    nav.style.display = "block";
+  }
+  else {
+    nav.style.display = "none";
+  }
+}
+window.onresize = function(){
+  function viewPortWidth(){
+    var w = window.innerWidth 
+    || document.documentElement.clientWidth
+    || document.getElementsByTagName('body')[0].clientWidth;
+    return w;
+  }
+  var w = viewPortWidth();
+  if (w >= 648){
+    nav = document.getElementById("main_nav_small_screen");
+    nav.style.display = "none";
+  }
+}
+$(document).on('click', function(event) {
+  if (!$(event.target).is('#menu_bttn') && !$(event.target).parents('#menu_bttn').is('#menu_bttn')  && !$(event.target).is('#main_nav_small_screen') && !$(event.target).parents('#main_nav_small_screen').is('#main_nav_small_screen')) {
+    // Hide the menus.
+    var small_menu =  document.getElementById('main_nav_small_screen');
+    if (small_menu.style.display != "none")
+       small_menu.style.display = "none";
+  }
+  if (!$(event.target).is('.user_name') && !$(event.target).parents('.user_name').is('.user_name')  && !$(event.target).is('#member_options') && !$(event.target).parents('#member_options').is('#member_options')) {
+    // Hide the menus.
+    var member_menu =  document.getElementById('member_options');
+    if (member_menu.style.display != "none")
+       member_menu.style.display = "none";
+  }
+  if (!$(event.target).is('.search') 
+       && !$(event.target).parents('.search').is('.search')  
+       && !$(event.target).is('.search_link')
+       && !$(event.target).parents('.search_link').is('.search_link')   
+       && !$(event.target).is('.search-form') 
+       && !$(event.target).parents('.search_form').is('.search_form')) {
+    // Hide the menus.
+    var search =  document.getElementsByClassName('search')[0];
+    if (search.style.display != "none")
+       search.style.display = "none";
+  }
 
-  </div>    
-</div>
+});
 
-<% if !member_signed_in? %>
-<div id="wanna_join">
-  Wanna join? <%= link_to "Sign up here!", register_path %> 
-</div>
-<% end %>
-  
-  
-<div class="content_wrapper_super">
-  <%= yield %>
-</div>
-  
-  
-<div id="footer">
-      <ul id="footer_list">
-        <li><%= link_to "Terms and Privacy"%></li>
-        <li><%= link_to "Help", help_path %></li>
-        <li><%= link_to "Suggestions", new_suggestion_path %></li>
-      </ul>
+</script> 
+    
+    <div class="right_links">
+      <div class="action_bttns_block">
+        <a href="#" class= "search_link" onclick="toggle_search()"><%= image_tag("search_black.png")%></a>
+        <%= link_to box_path, :class => "treasure_box_link" do %><%= image_tag("treasure_box_orange.png") %><% end %>
+        <%= link_to posts_path, :class => "upload_link" do  %><%= image_tag("upload_orange_lite.png") %><% end %>
+      </div>
+      
+      <div class="profile_block">
+        <% if member_signed_in? %>
+          <div class="profile_pic">
+            <%= link_to current_member do %>
+              <%= image_tag current_member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
+            <% end %>
+          </div>
+          <div class="user_name">
+              <a href="#" onclick="toggle_member_options()"><span class="user_name_name"><%= current_member.user_name%> </span>▾</a> 
+          </div>
+        <% else %>
+          <div class="user_name">
+            <%= link_to "Login", login_path %>
+            <%= link_to "Register", register_path %>
+          </div>
+        <% end %>
+      </div>
     </div>
-  <div class="copyrights">
-    All rights reserved to Tuzi Chef LLC.
+  </header>
+  <div id="member_options" style="display: none;">
+    <ul>
+      <li><%= link_to "logout", logout_path %></li>
+      <li><%= link_to "profile", current_member %></li>
+      <li><%= link_to "account", edit_account_path %></li>
+    </ul>
   </div>
-</div>
+  <script>
+  function toggle_member_options(){
+    var member_options = document.getElementById("member_options");
+    if (member_options.style.display == "none")
+      member_options.style.display = "block";
+    else member_options.style.display = "none";
+  }
+  </script>
+  <div class="search" style="display: none;">
+    <form accept-charset="UTF-8" action="/recipes" class="search-form" method="get">
+    <input class="search_box" name="search" placeholder="Type Recipe or Ingredient" type="text" />
+    <button type="search_submit_recipe" class="search_bttn"><%= image_tag("search_black.png")%></button>
+    </form> 
+    <ul id="search_action_choices">
+      <span id="hide_search" onclick="toggle_search()">hide</span>
+      <li><a href="#" onclick="choose_action('/search/recipes', this)">Recipes</a></li> |
+      <li><a href="#" onclick="choose_action('/search/groups', this)" style="font-weight: bold;">Groups</a></li> |
+      <li><a href="#" onclick="choose_action('/search/posts', this)">Posts</a></li> |
+      <li><a href="#" onclick="choose_action('/search/members', this)">Members</a></li>
+    </ul>
+  </div>
+
+  <script>
+  function toggle_search(){
+    search = document.getElementsByClassName("search")[0];
+    if (search.style.display == "block"){
+      search.style.display = "none";
+    } else search.style.display = "block";
+
+  }
+  function choose_action(action, element){
+    var a = document.getElementById("search_action_choices").getElementsByTagName("a");
+    for(var i = 0; i < a.length; i++){
+      a[i].style.fontWeight= "normal";
+    }
+    element.style.fontWeight= "bold";
+    var form = document.getElementById("search-form");
+    form.action=action;
+  }
+  </script>
+
+  <div class="content_wrapper_super">
+    <%=  yield %>
+  </div>
 </body>
 </html>

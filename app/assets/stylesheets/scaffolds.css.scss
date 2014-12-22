@@ -113,6 +113,7 @@ Images image
 img[class^="rounded_tiny_thumb"] {
   border: 2px solid #dddddd;
   border-radius: 32px;
+  width: 33px;
   -moz-border-radius: 32px;
   -khtml-border-radius: 32px;
   -webkit-border-radius: 32px;
@@ -334,3 +335,7 @@ div.group_tag_unchecked {
   background-color: #e0f0ff;
 }
 
+img.width_20px {
+  width: 20px;
+  height: 20px;
+}

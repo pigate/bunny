@@ -158,28 +158,16 @@ div.static_box {
 #footer {
   clear: both;
   padding-top: 2em;
-  padding-bottom: .8em;
-}
-#footer_box1 {
-  width: 20%;
-  display: block;
-  float: left;
-  margin-left: 2%;
-  margin-right: 2%;
+  padding-bottom: 8px;
   text-align: center;
 }
-#footer_heading {
-  clear: both;
-  text-align: center;
-}
-#footer_box1 ul {
+ul#footer_list {
   padding-left: 0px;
-}
-#footer_box1 ul li {
-  list-style-type: none;
-}
-#footer_box1 ul li a {
-  text-decoration: none;
+  li {
+    list-style-type: none;
+    display: inline-block;
+    margin: 0 10px 0 10px;
+  }
 }
 /* end footer stuff */
 
