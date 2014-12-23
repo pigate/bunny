@@ -1,11 +1,15 @@
 <style>
 ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0;}
 ul#tabs li { display: inline; }
-ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
+ul#tabs li a { color: #42454a; background-color: #dedbde; padding: 1.2em 1em 2em !important; border-radius: 8px;  text-decoration: none; }
 ul#tabs li a:hover { background-color: #f1f0ee; }
-ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight:bold; padding: 0.7em 0.3em 0.38em 0.3em; }
-div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
+ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight:bold; padding: 0.7em 0.3em 0.38em 0.3em; z-index: 1;}
+div.tabContent { display: block; float: left; width: 100%; background-color: #f1f0ee; position: relative; top: -2px;}
 div.tabContent.hide { display: none; }
+div.tabContent > div {
+  padding: 3em;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -122,37 +126,7 @@ function getHash(url){
     <div>
       <h2>Recommended Recipes</h2>
       <% if member_signed_in? %>
-        <% @recommended.each do |recipe| %>
-          <div id="recipe_list">
-            <%= link_to recipe do %>
-            <%= image_tag recipe.main_photo.url(:cropped_square_thumb), :class => "square_170" %><br>
-            <%= link_to recipe.name, recipe, class: "search_result_recipe_name" %><br>
-            <% end %>
-            <%= render partial: "recipes/heart_build", locals: { recipe: recipe } %>
-            <%= "Servings: #{recipe.servings}" %><br>
-            <%= "Prep time: #{recipe.prep_time}" %>min<br>
-            <%= " Cook time: #{recipe.cook_time} min" %>
-            <div class="search_result_recipe_credit">
-              <% if recipe.author != nil %>
-                <%= link_to recipe.author do %>
-                  <%= image_tag recipe.author.photo.url(:tiny_thumb), class: "rounded_tiny_thumb" %>
-                <% end %>
-                <span class="search_result_credit_text"><%= link_to recipe.author.user_name, recipe.author, class: "search_result_recipe_author" %></span>
-              <% else %>
-                <%= image_tag("missing/tiny_thumb.png") %> <span class="search_result_credit_text">anonymous</span>
-              <% end %>
-            </div>
-    
-            <div id="show_tags">
-            <% if recipe.s_tags != nil %>
-              Tags:
-              <% recipe.s_tags.split(',').each do |tag| %>
-                <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
-              <% end %>
-            <% end %>
-            </div>
-          </div>
-        <% end %>
+        <%= render @recommended %>
       <% end %>
     </div>
   </div>
