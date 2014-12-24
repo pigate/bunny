@@ -10,6 +10,28 @@ class GroupMembershipsController < ApplicationController
     respond_to do |format|
       if @group_membership.save
         @group = @group_membership.joined_group
+
+        xml_builder = ::Builder::XmlMarkup.new
+        mass_str = xml_builder.p { |xml|
+          xml.a(current_member.user_name, 'href' => member_path(current_member))
+          xml.em(" became a new member of ")
+          xml.a(@group.name, 'href' => group_path(@group))
+        }
+        if @group.owner
+          Rails.logger.debug("ExceptFeedWorker from group_membership#create: "+mass_str)
+          ExceptFeedWorker.perform_async(current_member.id, mass_str, @group.owner.id)
+
+          xml_builder = ::Builder::XmlMarkup.new
+          single_str = xml_builder.p { |xml|
+            xml.a(current_member.user_name, 'href' => member_path(current_member))
+            xml.em(" just joined your group ")
+            xml.a(@group.name, 'href' => group_path(@group))
+          }
+          SingleFeedWorker.perform_async(@target.id, @group.owner.id)
+        else
+          MassFeedWorker.perform_async(current_member.id, mass_str)
+        end
+
         format.js
         format.json { render :json => { :status => "ok", :message => 'ok' } }
         #render :json { :success => false }

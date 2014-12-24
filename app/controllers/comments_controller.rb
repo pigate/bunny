@@ -19,6 +19,42 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     respond_to do |format|
       if @comment.save
+        xml_builder = ::Builder::XmlMarkup.new
+        single_str = ""
+        convo = @comment.commentable 
+        topic = convo.conversable
+        type = convo.conversable_type
+        if topic.author != current_member
+          case convo.conversable_type
+            when "Recipe"
+            if topic.author 
+              single_str = xml_builder.p { |xml|
+                xml.a(current_member.user_name, 'href' => member_path(current_member))
+                xml.em(" just commented on your Recipe! ") 
+                xml.a(topic.name, 'href' => recipe_path(topic))
+              }
+              SingleFeedWorker.perform_async(topic.author.id, single_str)
+            end
+            when "Post"
+            if topic.author
+              single_str = xml_builder.p { |xml|
+                xml.a(current_member.user_name, 'href' => member_path(current_member))
+                xml.em(" just commented on your") #post or recipe??
+                xml.a("Post!", 'href' => post_path(topic))
+              }
+              SingleFeedWorker.perform_async(topic.author.id, single_str)
+            end
+            when "Group"
+            if topic.owner
+              single_str = xml_builder.p { |xml|
+                xml.a(current_member.user_name, 'href' => member_path(current_member))
+                xml.em(" just commented on your ") #post or recipe??
+                xml.a("group wall!", 'href' => group_path(topic))
+              }
+              SingleFeedWorker.perform_async(topic.owner.id, single_str)
+            end
+          end
+        end
         format.json { render :json => { :status => "ok", :message => 'ok' } }
         format.js
         #render :json { :success => false }

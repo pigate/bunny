@@ -13,6 +13,27 @@ class ReviewsController < ApplicationController
     respond_to do |format|
       if @review.save
         #edit num_reviews and cached_rating
+        @recipe_author = @recipe.author
+        if @recipe_author
+          xml_builder = ::Builder::XmlMarkup.new
+          single_str = xml_builder.p { |xml|
+            xml.a(current_member.user_name, 'href' => member_path(current_member))
+            xml.em(" just reviewed your recipe with a #{@review.rating}! ")
+            xml.a(@recipe.name, 'href' => recipe_path(@recipe))
+          }
+          SingleFeedWorker.perform_async(@recipe.author.id, single_str)
+        end
+        xml_builder = ::Builder::XmlMarkup.new
+        mass_str = xml_builder.p { |xml|
+          xml.a(current_member.user_name, 'href' => member_path(current_member))
+          xml.em(" just gave a #{@review.rating} to the recipe: ")
+          xml.a(@recipe.name, 'href' => recipe_path(@recipe))
+        }
+        if @recipe_author
+          ExceptFeedWorker.perform_async(current_member.id, mass_str, @recipe_author.id)
+        else
+          MassFeedWorker.perform_async(current_member.id, mass_str)
+        end
         n = @recipe.num_reviews
         new_cached_rating = (n * @recipe.cached_rating + @review.rating)/(n+1)
         @recipe.update_attributes(:num_reviews => n+1, :cached_rating => new_cached_rating)

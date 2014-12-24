@@ -1,0 +1,7 @@
+<div class="content_wrapper_main">
+<% if member_signed_in? %>
+  <%= render partial: "members/grid_item", :as => :member, :collection => current_member.following %>
+<% else %>
+  This is where the members you will follow are listed.
+<% end %>
+</div>

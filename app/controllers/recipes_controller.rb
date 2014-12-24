@@ -38,6 +38,15 @@ class RecipesController < ApplicationController
       @recipe = Recipe.new(recipe_params)
       if @recipe.save
         @recipe.convo = Convo.new(:owner_id => current_member.id)
+        #TODO news_feed current_member's followers
+        xml_builder = ::Builder::XmlMarkup.new
+        str = xml_builder.p { |xml|
+          xml.a(current_member.user_name, 'href' => member_path(current_member))
+          xml.em(" just created a new recipe! ")
+          xml.a(@recipe.name, 'href' => recipe_path(@recipe))
+        }
+        Rails.logger.debug("from recipe controller NewsFeedsWorker/Recipe Creation start. Trying to input the following string to user's followers feeds: "+str)
+        MassFeedWorker.perform_async(current_member.id, str)
         respond_with(@recipe)
       else
         render json: {status: "fail" }

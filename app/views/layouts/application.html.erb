@@ -19,16 +19,14 @@
       <ul id="main_nav_small_screen" style="display: none;">
         <li id="home_link_mobile"><a href="#">Home <%= image_tag("white_bunny.png", :class => "link_logo_img") %></a></li>
         <li><%= link_to "Recipes", recipes_path %></li>
-        <li><%= link_to "Feed", posts_path %></li>
+        <li><%= link_to "Feed", feed_path %></li>
         <li><%= link_to "Community", community_path %></li>
-        <li><%= link_to "Search", search_path %></li>
         <a href="#" id="exit-menu-bttn" onclick="toggle_small_nav()">X</a>
       </ul>
       <ul id="main_nav_big_screen">
         <li><%= link_to "Recipes", recipes_path %></li>
-        <li><%= link_to "Feed", posts_path %></li>
+        <li><%= link_to "Feed", feed_path %></li>
         <li><%= link_to "Community", community_path %></li>
-        <li><%= link_to "Search", search_path %></li>
       </ul>  
     </nav>  
    

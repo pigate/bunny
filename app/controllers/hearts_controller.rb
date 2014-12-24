@@ -17,6 +17,24 @@ class HeartsController < ApplicationController
     respond_to do |format|
       if @heart.save
         @recipe = Recipe.find(@heart.liked_recipe_id)
+        if @recipe.author != current_member
+          if @recipe.author 
+            xml_builder = ::Builder::XmlMarkup.new
+            single_str = xml_builder.p { |xml|
+              xml.a(current_member.user_name, 'href' => member_path(current_member))
+              xml.em(" just 'hearted' your recipe! ")
+              xml.a(@recipe.name, 'href' => recipe_path(@recipe))
+            }
+            SingleFeedWorker.perform_async(@recipe.author.id, single_str)
+          end
+          xml_builder = ::Builder::XmlMarkup.new
+          mass_str = xml_builder.p { |xml|
+            xml.a(current_member.user_name, 'href' => member_path(current_member))
+            xml.em(" just 'hearted' the recipe: ")
+            xml.a(@recipe.name+"!", 'href' => recipe_path(@recipe))
+          }
+          ExceptFeedWorker.perform_async(current_member.id, mass_str, @recipe.author.id)
+        end
         format.json { render :json => { :status => "ok", :message => 'ok' } }
         format.js
         #render :json { :success => false }

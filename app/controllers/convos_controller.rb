@@ -28,10 +28,11 @@ class ConvosController < ApplicationController
     if current_member.try(:admin?)
       if @convo.update(convo_params)
        
-        format.json { status: :ok }
+        render json: { status: "ok" }
+
       end
     else
-       format.json { status: :unprocessable_entity }
+       render json: { status: :unprocessable_entity }
     end
   end
 

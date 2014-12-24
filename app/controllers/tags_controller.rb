@@ -22,10 +22,10 @@ class TagsController < ApplicationController
     if current_member.try(:admin?)
       if @tag.update(tag_prams)
        
-        format.json { status: :ok }
+        render json: { status: :ok }
       end
     else
-       format.json { status: :unprocessable_entity }
+       render json: { status: :unprocessable_entity }
     end
   end
 

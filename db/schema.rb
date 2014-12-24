@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141219211939) do
+ActiveRecord::Schema.define(version: 20141223221015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20141219211939) do
   create_table "members", force: true do |t|
     t.string   "first"
     t.string   "last"
-    t.string   "user_name"
+    t.string   "user_name",              default: "LOL"
     t.string   "occupation"
     t.boolean  "admin",                  default: false
     t.datetime "created_at"
@@ -122,6 +122,16 @@ ActiveRecord::Schema.define(version: 20141219211939) do
   add_index "members", ["email"], name: "index_members_on_email", unique: true, using: :btree
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
   add_index "members", ["slug"], name: "index_members_on_slug", using: :btree
+
+  create_table "news_feeds", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "write_level", default: 7
+    t.text     "updates",     default: ""
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "news_feeds", ["member_id"], name: "index_news_feeds_on_member_id", using: :btree
 
   create_table "pending_friend_requests", force: true do |t|
     t.integer  "member_id"

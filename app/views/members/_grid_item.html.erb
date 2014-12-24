@@ -1,0 +1,5 @@
+<div class="member_grid">
+<%= image_tag member.photo.url(:original), :class => "rounded_original" %>
+<br><strong><%= member.user_name %></strong><br>
+<%= render partial: "members/follow_build", locals: {member: member} %>
+</div>

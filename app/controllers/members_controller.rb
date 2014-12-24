@@ -21,9 +21,6 @@ class MembersController < ApplicationController
   end
 
   # GET /members/new
-  #def new
-  #  @member = Member.new
-  #end
 
   # GET /members/1/edit
   def edit
@@ -33,11 +30,23 @@ class MembersController < ApplicationController
   # POST /members.json
   def create
     @member = Member.new(member_params)
+    i = rand(30000000)
+    n = "ChiliBean"
+    n_s = "ChiliBean"+i.to_s
+    Rails.logger.debug("RegistrationsController: #{n_s}")
+    anoth = Member.find_by_user_name(n)
+    while(anoth != nil)
+      i = rand(30000000)
+      anoth = Member.find_by_user_name(n+i.to_s)
+      Rails.logger.debug("RegistrationsController: #{n+i.to_s}")
+    end
+    @member.update_attributes("user_name" => n+i.to_s, "slug" => "#{n+i.to_s}".downcase.gsub(" ","-"))
+
     respond_to do |format|
       if @member.save
-        member.box = Box.new
-        format.html { redirect_to @member, notice: 'Member was successfully created.' }
-        format.json { render :show, status: :created, location: @member }
+        @member.news_feed = NewsFeed.new(:member_id => @member.id)
+        format.html { redirect_to edit_member_path(@member), notice: 'Member was successfully created.' }
+        format.json { render :show, status: :created, location: edit_member_path(@member) }
       else
         format.html { render :new }
         format.json { render json: @member.errors, status: :unprocessable_entity }
@@ -82,7 +91,7 @@ class MembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
-      params.require(:member).permit(:first, :last, :user_name, :occupation, :email, :photo)
+      params.require(:member).permit(:first, :last, :user_name, :occupation, :email, :photo, :password, :password_confirmation, :slug)
     end
     def can_edit
       current_member.admin || current_member.id == params[:id]

@@ -30,16 +30,16 @@
     <p>
       <%= @post.post_text %>
     </p>
-    
-    <% if member_signed_in? && (current_member.id == @post.author.id || current_member.admin) %>
-      <%= link_to edit_post_path(@post) do %>
-        <%= button_tag :class => "button_round_blue" do %>Edit<% end %>
-      <% end %> 
-      <%= link_to @post, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } do %>
-        <%= button_tag :class => "button_round_blue" do %>Delete Post<% end %>
+    <% if @post.author %>    
+      <% if member_signed_in? && (current_member.id == @post.author.id || current_member.admin) %>
+        <%= link_to edit_post_path(@post) do %>
+          <%= button_tag :class => "button_round_blue" do %>Edit<% end %>
+        <% end %> 
+        <%= link_to @post, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } do %>
+          <%= button_tag :class => "button_round_blue" do %>Delete Post<% end %>
+        <% end %>
       <% end %>
     <% end %>
-    
     <div id="recipe_discuss_board">
       <% if @post.convo %>
         <%= render @post.convo %>

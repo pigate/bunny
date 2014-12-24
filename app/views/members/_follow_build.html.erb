@@ -1,5 +1,5 @@
 <div id="follow_form<%=member.id%>">
-Followers: <%=member.followers.count %> Following: <%= member.following.count %>
+<%= link_to "Followers: #{member.followers.count}", followers_path %> <%= link_to "Following: #{member.following.count}", following_path %>
 <br>
 <% if member_signed_in? && current_member != member%>
  <% if !current_member.following.include? member %>

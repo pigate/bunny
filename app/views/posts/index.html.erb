@@ -27,5 +27,9 @@
 </div>
 
 <div class="side_bar pull_right">
-  side_bar pull_right LOREM IPSUM
+  <% if member_signed_in? %>
+    <%= render current_member.news_feed %>
+  <% else %>
+    side_bar pull_right LOREM IPSUM
+  <% end %>
 </div>

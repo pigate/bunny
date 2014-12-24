@@ -34,7 +34,10 @@
 <div id="group_list">
   <h1>Some Groups</h1>
   <% @groups.each do |group| %>
-    <%= link_to group.name, group %>
+    <%= link_to group.name, group %><br>
+  <% end %>
+  <%= link_to new_group_path do %>
+    <%= button_tag :class => "button_round_burnt_orange" do %>Create a new group!<% end %>
   <% end %>
 </div>
 

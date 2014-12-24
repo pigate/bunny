@@ -1,6 +1,7 @@
 == README
 
 Need to have elasticsearch installed
+Redis
 
 To deploy:
 
@@ -13,3 +14,5 @@ bundle install
 To do:
 
 Add some more functionality to users and recipes.
+
+Fix devise controller. When invalid email, somehow user is still able to access member profile creation. 

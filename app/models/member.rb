@@ -9,15 +9,14 @@ class Member < ActiveRecord::Base
   has_many :comments, :foreign_key => :commenter_id
   validates :first, :presence => true
   validates :last, :presence => true
-  validates :user_name, :presence => true, uniqueness: { case_sensitive: false }
+  validates :user_name, :presence => true, length: { minimum: 1, maximum: 30}, uniqueness: { case_sensitive: false }
   validates_format_of :user_name, :with => /[A-Za-z]/
   #devise checks email and password/
 
   has_many :comments, :as => :commenter
   has_many :posts, :as => :author
-  has_many :hearts, :foreign_key => :liker_id
+  has_many :hearts, :foreign_key => :liker_id, dependent: :destroy
   has_many :liked_recipes, through: :hearts
-  has_one :box
   has_many :reviews, :foreign_key => :reviewer_id
   has_many :reviewed_recipes, :through => :reviews
 
@@ -33,12 +32,13 @@ class Member < ActiveRecord::Base
                   dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :follower
   has_many :groups, foreign_key: "owner_id"
-  has_many :group_memberships
+  has_many :group_memberships, dependent: :destroy
   has_many :joined_groups, through: :group_memberships  
 
-
+  has_one :news_feed, dependent: :destroy
  
   has_attached_file :photo,
+    :dependent => :destroy,
     :default_url => "missing/:style.png",
     :styles => {
       :original => "140x140#",
