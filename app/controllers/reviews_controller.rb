@@ -21,7 +21,7 @@ class ReviewsController < ApplicationController
             xml.em(" just reviewed your recipe with a #{@review.rating}! ")
             xml.a(@recipe.name, 'href' => recipe_path(@recipe))
           }
-          SingleFeedWorker.perform_async(@recipe.author.id, single_str)
+          #SingleFeedWorker.perform_async(@recipe.author.id, single_str)
         end
         xml_builder = ::Builder::XmlMarkup.new
         mass_str = xml_builder.p { |xml|
@@ -30,9 +30,9 @@ class ReviewsController < ApplicationController
           xml.a(@recipe.name, 'href' => recipe_path(@recipe))
         }
         if @recipe_author
-          ExceptFeedWorker.perform_async(current_member.id, mass_str, @recipe_author.id)
+          #ExceptFeedWorker.perform_async(current_member.id, mass_str, @recipe_author.id)
         else
-          MassFeedWorker.perform_async(current_member.id, mass_str)
+          #MassFeedWorker.perform_async(current_member.id, mass_str)
         end
         n = @recipe.num_reviews
         new_cached_rating = (n * @recipe.cached_rating + @review.rating)/(n+1)

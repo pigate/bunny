@@ -173,6 +173,25 @@ div#left_filter_options {
 div#right_recipes_results {
 }
 
+/*side bar (filter for recipes)*/
+
+.side_bar.pull_left
+{
+  width: 20%;
+  height: 100vh;
+  float: left;
+  min-width: 222px;
+  background: #FFA347;
+  box-shadow: 3px 3px 3px 2px #ddd;
+  box-sizing: border-box;
+  padding: 21px;
+  font-size: 14px;
+  color: #181818;
+  margin-right: 1em;
+}
+
+/*start of recipe index*/
+
 div#recipes_index {
 
   div#left_filter_options {

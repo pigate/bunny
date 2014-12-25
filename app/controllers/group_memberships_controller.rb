@@ -19,7 +19,7 @@ class GroupMembershipsController < ApplicationController
         }
         if @group.owner
           Rails.logger.debug("ExceptFeedWorker from group_membership#create: "+mass_str)
-          ExceptFeedWorker.perform_async(current_member.id, mass_str, @group.owner.id)
+          #ExceptFeedWorker.perform_async(current_member.id, mass_str, @group.owner.id)
 
           xml_builder = ::Builder::XmlMarkup.new
           single_str = xml_builder.p { |xml|
@@ -27,9 +27,9 @@ class GroupMembershipsController < ApplicationController
             xml.em(" just joined your group ")
             xml.a(@group.name, 'href' => group_path(@group))
           }
-          SingleFeedWorker.perform_async(@target.id, @group.owner.id)
+          #SingleFeedWorker.perform_async(@target.id, @group.owner.id)
         else
-          MassFeedWorker.perform_async(current_member.id, mass_str)
+          #MassFeedWorker.perform_async(current_member.id, mass_str)
         end
 
         format.js

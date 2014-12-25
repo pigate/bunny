@@ -1,4 +1,4 @@
-<div class="content_wrapper_main">
+<div class="content_wrapper_main left_side">
   <div class="spotlight">
   <h1>Check out our groups!</h1>
   <h4>Join a group to combine their feed into yours, and to share your posts with the group:</h4>
@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<div class="side_bar pull_right">
+<div class="side_bar pull_right" id="news_feed">
   <% if member_signed_in? %>
     <%= render current_member.news_feed %>
   <% else %>

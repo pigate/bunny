@@ -33,7 +33,7 @@ class CommentsController < ApplicationController
                 xml.em(" just commented on your Recipe! ") 
                 xml.a(topic.name, 'href' => recipe_path(topic))
               }
-              SingleFeedWorker.perform_async(topic.author.id, single_str)
+              #SingleFeedWorker.perform_async(topic.author.id, single_str)
             end
             when "Post"
             if topic.author
@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
                 xml.em(" just commented on your") #post or recipe??
                 xml.a("Post!", 'href' => post_path(topic))
               }
-              SingleFeedWorker.perform_async(topic.author.id, single_str)
+              #SingleFeedWorker.perform_async(topic.author.id, single_str)
             end
             when "Group"
             if topic.owner
@@ -51,7 +51,7 @@ class CommentsController < ApplicationController
                 xml.em(" just commented on your ") #post or recipe??
                 xml.a("group wall!", 'href' => group_path(topic))
               }
-              SingleFeedWorker.perform_async(topic.owner.id, single_str)
+              #SingleFeedWorker.perform_async(topic.owner.id, single_str)
             end
           end
         end

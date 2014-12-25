@@ -157,19 +157,19 @@ header
     .action_bttns_block
     {
       height: 28px;
-      width: 164px;
+      width: 108px;
       float: left;
     
       a.search_link, a.upload_link, a.treasure_box_link
       {
-        padding-top: 5px;
         width: 31px;
         height: 28px;
         float: left;
-        margin-right: 2px;
-        img {
+        margin-right: 5px;
+       
+         img {
           width: 32px;
-        } 
+         } 
       }
     }
     
@@ -351,16 +351,21 @@ div#member_options {
       top: 0px;
       .action_bttns_block
       {
-        padding-top: 3px;
         height: 45px;
-        
+      	width: 133px;
+  
         a.search_link, a.upload_link, a.treasure_box_link
         {
           width: 40px;
           height: 45px;
           margin-right: 4px;
-          background-position: 100% 50%;
-        }
+        
+	  img
+	  {
+	    padding-top: 8px;
+	  }	
+
+	}
         
         a.treasure_box_link
         {
@@ -372,18 +377,23 @@ div#member_options {
       {
 
         margin-left: 0px;
-        
+ 	height: 45px;       
+ 
         .profile_pic
         {
+	
+	  height: 45px;
+
           a
           {
             width: 39px;
-            margin: 7px;
+	    height: 45px;
             
             img
             {
               width: 33px;
               border-radius: 50%;
+	      margin-top: 9px;
             }
           }
         }
@@ -415,9 +425,6 @@ div#member_options {
         display: none;
       }
     }
-  }
-  .action_bttns_block {
-    padding-top: 3px;
   }
 }
 /** 40.5em = 648px **/    
@@ -455,7 +462,8 @@ div#member_options {
       float: left;
       margin-left: 1.5em;
 
-      ul#main_nav_big_screen {
+      ul#main_nav_big_screen 
+      {
         display: block;
       }            
 
@@ -499,33 +507,42 @@ div#member_options {
     {
       .action_bttns_block
       {
-        padding-top: 6px; 
-        a.search_link, a.upload_link, a.treasure_box_link
+        width: 163px;
+
+	a.search_link, a.upload_link, a.treasure_box_link
         {
           width: 40px;
           height: 45px;
           margin-right: 14px;
           background-position: 100% 50%;
-        }
+        
+	  img
+	  {
+		padding-top: 10px;
+	  }
+
+	}
       }
 
-      .profile_block {
+      .profile_block 
+      {
         display: block;
         padding-top: 0px;
-      }
       
-      span.user_name_name {
-        top: 8px;
-      }  
+	.user_name
+	{
+	  top: 7px;
+	  
+	}
+      
     }
-  }  
-
+   }
   .search, div#member_options {
     top: 45px;
   }
 
 }
-
+}
 /** 47em = 752px**/  
 @media (min-width: 53em) 
 {
