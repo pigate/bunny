@@ -1,4 +1,4 @@
-<div class="content_wrapper_main">
+<div class="content_wrapper_main centered_60">
   <p id="notice"><%= notice %></p>
   <div id="recipe_show_body">
     <div class="recipe_main_photo">
@@ -7,9 +7,9 @@
          <%= @recipe.name %><br>
       </div>
     </div>
-    <%= render partial: "recipes/rating_stars", locals: { recipe: @recipe } %>
     <%= render partial: 'recipes/heart_build', locals: { recipe: @recipe } %>
-    <div id="recipe_author_info">
+    <%= render partial: "recipes/rating_stars", locals: { recipe: @recipe } %>
+    <div id="recipe_author_info" style="clear: both;">
       Cooked up by:  
       <% if @recipe.author %>
         <%= link_to @recipe.author do %>
@@ -21,6 +21,14 @@
         anonymous 
       <% end %>
     </div>
+    <% if member_signed_in? && current_member == @recipe.author %>
+      <%= link_to edit_recipe_path(@recipe) do %>
+        <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
+      <% end %>
+      <%= link_to @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } do %>
+        <%= button_tag :class=> "button_round_blue" do %>Cancel<% end %>
+      <% end %>
+    <% end %>
     <div id="show_tags">
     <% tags = destringify_tags(@recipe.s_tags) %>
     <% tags.each do |tag| %>
@@ -51,14 +59,6 @@
        <% i+= 1 %>
       <% end %>
     </p>
-    <% if member_signed_in? && current_member == @recipe.author %>
-      <%= link_to edit_recipe_path(@recipe) do %> 
-        <%= button_tag :class=> "button_round_blue" do %>Edit<% end %>
-      <% end %>
-      <%= link_to @recipe, method: "DELETE", action: "destroy", data: { confirm: "Are you sure? This cannot be undone." } do %>
-        <%= button_tag :class=> "button_round_blue" do %>Cancel<% end %>
-      <% end %>
-    <% end %>
     <%= link_to recipes_path do %>
        <%= button_tag :class => "button_round_blue" do%>Back to All Recipes<% end %>
     <% end %>
@@ -73,7 +73,11 @@
     </div>
   </div>
 </div>
-<div class="side_bar pull_right">
+<div class="side_bar_menu">
+  <a onclick="toggle_chat()" href="#"><%= image_tag("ic_action_chat.png", :class => "side_menu_icon") %></a>
+</div>
+<div class="side_bar pull_right" style="display: none;">
+  <a href="#" onclick="toggle_chat()" style="padding: 1em;">X<br></a>
   <span class="left_margin_10">Discuss, chat, leave a message!</span>
   <div id="recipe_discuss_board">
     <% if @recipe.convo %>
@@ -86,7 +90,7 @@
     <%= f.hidden_field :commentable_id, value: @recipe.convo.id %>
     <%= f.hidden_field :commentable_type, value: "Convo" %>
     <%= f.hidden_field :commenter_id, value: current_member.try(:id) %>
-    <%= f.text_area :comment_text, :placeholder => "Leave a comment. Ratings go in rating section elsewhere" %>
+    <%= f.text_area :comment_text, :placeholder => "Leave a comment. Ratings go in rating section elsewhere" %><br>
     <%= button_tag :type => :submit, :class => "button_round_blue" do %>
      Send <%= image_tag("ic_action_fly.png", :class => "button_img") %>
     <% end %>
@@ -94,6 +98,12 @@
 </div>
 
 <script>
+function toggle_chat(){
+  chat = document.getElementsByClassName("pull_right")[0];
+  if (chat.style.display == "none") {
+    chat.style.display = "block";
+  } else chat.style.display = "none";
+}
 function set_rating(index){
   var rating_block = document.getElementsByClassName("rating")[0];
   if (rating_block){

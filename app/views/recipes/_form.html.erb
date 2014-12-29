@@ -66,11 +66,13 @@ function post(node){
   //get tags
   var span_array = dashboard.getElementsByTagName("span");
   var tag_array = "{\"tags\":[";
-  for(var i = 0; i < span_array.length - 1; i++){
-    tag_array += "\""+span_array[i].innerHTML.replace(/\"/g,"") + "\","
+  if (span_array.length > 0) {
+    for(var i = 0; i < span_array.length - 1; i++){
+      tag_array += "\""+span_array[i].innerHTML.replace(/\"/g,"") + "\","
+    }
+    //do last one
+    tag_array += "\""+span_array[(span_array.length - 1)].innerHTML + "\"";
   }
-  //do last one
-  tag_array += "\""+span_array[(span_array.length - 1)].innerHTML + "\"";
   tag_array += "]}";
   var hiddenTags = document.createElement("input");
   hiddenTags.setAttribute("type", "hidden");

@@ -1,4 +1,6 @@
 class RecipesController < ApplicationController
+  include NewsFeedHelper
+
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
   respond_to :html, :json
 
@@ -46,6 +48,7 @@ class RecipesController < ApplicationController
           xml.a(@recipe.name, 'href' => recipe_path(@recipe))
         }
         Rails.logger.debug("from recipe controller NewsFeedsWorker/Recipe Creation start. Trying to input the following string to user's followers feeds: "+str)
+        mass_feed_push(current_member.id, str)
         #MassFeedWorker.perform_async(current_member.id, str)
         respond_with(@recipe)
       else

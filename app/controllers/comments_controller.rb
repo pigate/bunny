@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  include NewsFeedHelper
+
   before_action :set_comment, only: [:edit, :update, :destroy]
 
   before_action :signed_in, only: [:create, :edit, :update, :destroy]
@@ -33,6 +35,7 @@ class CommentsController < ApplicationController
                 xml.em(" just commented on your Recipe! ") 
                 xml.a(topic.name, 'href' => recipe_path(topic))
               }
+              single_feed_push(topic.author.id, single_str)
               #SingleFeedWorker.perform_async(topic.author.id, single_str)
             end
             when "Post"
@@ -42,6 +45,7 @@ class CommentsController < ApplicationController
                 xml.em(" just commented on your") #post or recipe??
                 xml.a("Post!", 'href' => post_path(topic))
               }
+              single_feed_push(topic.author.id, single_str)
               #SingleFeedWorker.perform_async(topic.author.id, single_str)
             end
             when "Group"
@@ -51,6 +55,7 @@ class CommentsController < ApplicationController
                 xml.em(" just commented on your ") #post or recipe??
                 xml.a("group wall!", 'href' => group_path(topic))
               }
+              single_feed_push(topic.author.id, single_str)
               #SingleFeedWorker.perform_async(topic.owner.id, single_str)
             end
           end

@@ -1,4 +1,6 @@
 class HeartsController < ApplicationController
+  include NewsFeedHelper
+
   before_action :set_heart, only: [:destroy]
 
   before_action :signed_in, only: [:create, :destroy]
@@ -25,6 +27,7 @@ class HeartsController < ApplicationController
               xml.em(" just 'hearted' your recipe! ")
               xml.a(@recipe.name, 'href' => recipe_path(@recipe))
             }
+            single_feed_push(@recipe.author.id, single_str)
             #SingleFeedWorker.perform_async(@recipe.author.id, single_str)
           end
           xml_builder = ::Builder::XmlMarkup.new
@@ -33,6 +36,7 @@ class HeartsController < ApplicationController
             xml.em(" just 'hearted' the recipe: ")
             xml.a(@recipe.name+"!", 'href' => recipe_path(@recipe))
           }
+          except_feed_push(current_member.id, mass_str, @recipe.author.id)
           #ExceptFeedWorker.perform_async(current_member.id, mass_str, @recipe.author.id)
         end
         format.json { render :json => { :status => "ok", :message => 'ok' } }

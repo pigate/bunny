@@ -1,4 +1,5 @@
 class MembersController < ApplicationController
+  include NewsFeedHelper
   before_action :set_member, only: [:show, :edit, :update, :destroy]
   before_action :is_signed_in, only: [:edit, :update, :destroy]
   before_action :can_edit, only: [:edit, :update, :destroy]

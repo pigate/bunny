@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  include NewsFeedHelper
+
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :signed_in, only: [:new, :create, :edit, :update, :destroy]
   before_action :can_edit, only: [:edit, :update, :destroy]

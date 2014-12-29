@@ -1,4 +1,4 @@
-var html = "<%= escape_javascript render partial: "members/follow_build", locals: { member: @member} %>";
+var html = "<%= escape_javascript render partial: "members/follow_build", locals: { member: @target} %>";
 $(function(){
-  $("div#follow_form<%= @member.id%>").replaceWith(html);
+  $("div#follow_form<%= @target.id%>").replaceWith(html);
 });

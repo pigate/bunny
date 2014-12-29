@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  include NewsFeedHelper
+
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   before_action :signed_in, only: [:new, :create, :edit, :update, :destroy]
   before_action :can_edit, only: [:edit, :update, :destroy]
@@ -29,6 +31,13 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
     if @group.save
+      xml_builder = ::Builder::XmlMarkup.new
+      mass_str = xml_builder.p { |xml|
+        xml.a(current_member.user_name, 'href' => member_path(current_member))
+        xml.em(" just created the group ")
+        xml.a(@group.name, 'href' => group_path(@group))
+      }
+      mass_feed_push(current_member.id, mass_str)
     end
     respond_with(@group)
   end

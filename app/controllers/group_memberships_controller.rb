@@ -1,4 +1,6 @@
 class GroupMembershipsController < ApplicationController
+  include NewsFeedHelper
+
   before_action :set_group_membership, only: [:destroy]
 
   before_action :signed_in, only: [:create, :destroy]
@@ -19,6 +21,7 @@ class GroupMembershipsController < ApplicationController
         }
         if @group.owner
           Rails.logger.debug("ExceptFeedWorker from group_membership#create: "+mass_str)
+          except_feed_push(current_member.id, mass_str, @group.owner_id)
           #ExceptFeedWorker.perform_async(current_member.id, mass_str, @group.owner.id)
 
           xml_builder = ::Builder::XmlMarkup.new
@@ -27,8 +30,10 @@ class GroupMembershipsController < ApplicationController
             xml.em(" just joined your group ")
             xml.a(@group.name, 'href' => group_path(@group))
           }
+          single_feed_push(@target.id, @group.owner.id)
           #SingleFeedWorker.perform_async(@target.id, @group.owner.id)
         else
+          mass_feed_push(current_member.id, mass_str)
           #MassFeedWorker.perform_async(current_member.id, mass_str)
         end
 

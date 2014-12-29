@@ -1,4 +1,6 @@
 class ReviewsController < ApplicationController
+  include NewsFeedHelper
+
   before_action :set_review, only: [:show, :edit, :update, :destroy]
   before_action :signed_in, only: [:show, :edit, :update, :destroy]
   before_action :can_edit, only: [:edit, :update, :destroy]
@@ -21,6 +23,7 @@ class ReviewsController < ApplicationController
             xml.em(" just reviewed your recipe with a #{@review.rating}! ")
             xml.a(@recipe.name, 'href' => recipe_path(@recipe))
           }
+          single_feed_push(@recipe.author.id, single_str)
           #SingleFeedWorker.perform_async(@recipe.author.id, single_str)
         end
         xml_builder = ::Builder::XmlMarkup.new
@@ -30,8 +33,10 @@ class ReviewsController < ApplicationController
           xml.a(@recipe.name, 'href' => recipe_path(@recipe))
         }
         if @recipe_author
+          except_feed_push(current_member.id, mass_str, @recipe_author.id)
           #ExceptFeedWorker.perform_async(current_member.id, mass_str, @recipe_author.id)
         else
+          mass_feed_push(current_member.id, mass_str)
           #MassFeedWorker.perform_async(current_member.id, mass_str)
         end
         n = @recipe.num_reviews

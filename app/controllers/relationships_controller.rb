@@ -1,4 +1,6 @@
 class RelationshipsController < ApplicationController
+  include NewsFeedHelper
+
   before_action :set_relationship, only: [:destroy]
 
   before_action :signed_in, only: [:create, :destroy]
@@ -16,7 +18,7 @@ class RelationshipsController < ApplicationController
     @target = Member.find(@relationship.followed_id)
     respond_to do |format|
       if @relationship.save
-        @member = Member.find(@relationship.followed_id)
+        @member = @target #Member.find(@relationship.followed_id)
         xml_builder = ::Builder::XmlMarkup.new
         mass_str = xml_builder.p { |xml|
           xml.a(current_member.user_name, 'href' => member_path(current_member))
@@ -24,12 +26,14 @@ class RelationshipsController < ApplicationController
           xml.a(@target.user_name, 'href' => member_path(@target))
         }
         Rails.logger.debug("from relationships controller start. Trying to input the following string to user's followers feeds: "+mass_str)
+        except_feed_push(current_member.id, mass_str, @target.id)
         #ExceptFeedWorker.perform_async(current_member.id, mass_str, @target.id)
         xml_builder = ::Builder::XmlMarkup.new
         single_str = xml_builder.p { |xml|
           xml.a(current_member.user_name, 'href' => member_path(current_member))
           xml.em(" just followed you!")
         }
+        single_feed_push(@target.id, single_str)
         #SingleFeedWorker.perform_async(@target.id, single_str)
 
         format.json { render :json => { :status => "ok", :message => 'ok' } }
