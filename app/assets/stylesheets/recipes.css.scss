@@ -174,10 +174,14 @@ div.round_number {
     margin-right: 4px;
 }
 
-div#recipes_index {
-  width: 100%;
+.popular-recipe-categories {
+  padding-top: 78px;
 }
-
+#recipe_results_list {
+  width: 950px;
+  margin-right: auto;
+  margin-left: auto;
+}
 div#left_filter_options {
 }
 
@@ -250,11 +254,11 @@ a.search_result_recipe_author {
 
 
 div.search_result_recipe {
-  padding-top: 10px;
+/*   padding-top: 10px;*/
   padding-bottom: 5px;
   float: left;
-  width: 182px;
-  height: 370px;
+  width: 275px;
+  height: 450px;
   overflow: hidden;
   word-wrap: break-word;
   margin: 10px 10px 10px 10px;
@@ -264,17 +268,18 @@ div.search_result_recipe {
   div.recipe_info {
     clear: both;
     padding: 5px 5px 5px 5px;
+    font-size: 11px;
   } 
   span.search_result_credit_text { 
     position: relative;
     top: -13px;
   }
   div.recipe_img {
-    width: 170px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 275px;
+    height: 275px;
     img.square_170 {
       width: 100%;
+      height: 100%;
     }
   }
 }

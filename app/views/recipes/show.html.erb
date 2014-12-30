@@ -12,9 +12,6 @@
     <div id="recipe_author_info" style="clear: both;">
       Cooked up by:  
       <% if @recipe.author %>
-        <%= link_to @recipe.author do %>
-          <%=image_tag @recipe.author.photo(:tiny_thumb), :class => "rounded_tiny_thumb_lower" %>
-        <% end %>
         <%= link_to @recipe.author.user_name, @recipe.author %>
       <% else %> 
         <%= image_tag("missing/tiny_thumb.png", :class => "rounded_tiny_thumb_lower") %>

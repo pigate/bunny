@@ -19,9 +19,13 @@
   }
 </script>
 
-<div class="side_bar pull_left">
-  <div id="filter_title">
-    Filter for search
+<div class="side_bar menu_left">
+ <span onclick="toggle_filter()">Search Recipes</span>
+</div>
+<div class="side_bar pull_left" style="display: none;">
+  <div style="float:right; cursor: pointer;" onclick="toggle_filter()">Close</div>
+  <div id="filter_title" style="clear: both;">
+    Filters
   </div>
   <% @tag_types.each do |tag_type| %>
   <div class="filter_tag_type">
@@ -38,7 +42,7 @@
   <button type="button" class="button_round_blue" onclick="search_recipes_with_filters('left_filter_options')">Get Searching</button>
 </div>
 <div class="content_wrapper_main" id="recipe_index">
-  <div class=".spotlight">
+  <div id="recipe_results_list">
     <div class="popular-recipe-categories">
        Popular Categories: <br>
        <%= link_to "/recipes?utf8=✓&search=Chinese" do %>
@@ -50,6 +54,9 @@
        <%= link_to "/recipes?utf8=✓&search=Easy" do %>
          <%= button_tag :class => "button_round_burnt_orange" do %>Easy<%end %>
       <% end %>
+      <%= link_to new_recipe_path do %>
+        <%= button_tag :class=> "button_round_blue" do %>Add Your Recipe<% end %>
+      <% end %>
     </div>
     <% if @recipes == [] %>
       <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
@@ -60,13 +67,15 @@
     <% elsif params["search"] != nil%>
       <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
     <% end %>
-    <%= link_to new_recipe_path do %>
-        <%= button_tag :class=> "button_round_blue" do %>Add Your Recipe<% end %>
-      <% end %>
-  </div>
 
-  <div id="recipe_results_list">
     <%= render @recipes %>
   </div>
 </div>
-
+<script>
+function toggle_filter(){
+  filter = document.getElementsByClassName("pull_left")[0];
+  if (filter.style.display == "none") {
+    filter.style.display = "block";
+  } else filter.style.display = "none";
+}
+</script>
