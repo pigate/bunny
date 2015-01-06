@@ -30,7 +30,7 @@ namespace :recipes do
   def index_recipe(recipe)
     #need to create recipes_tags model file to access table like this
     obj = JSON.parse(recipe.s_tags)
-    obj["tags"].each do |tag|
+    obj["tags"].split(',').each do |tag|
       t = Tag.find_by_name(tag)
       if t != nil
         recipe.tags.push(t)

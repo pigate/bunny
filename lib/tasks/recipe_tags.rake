@@ -4,12 +4,14 @@ namespace :recipe_tags do
   desc "wipe tag_types"
   task :wipe_tag_types => :environment do
     TagType.destroy_all
-    ActiveRecord::Base.connection.execute("TRUNCATE TABLE tag_type;")
+    ActiveRecord::Base.connection.execute("TRUNCATE TABLE tag_types;")
   end
 
   desc "create default tag_types"
   task :setup_tag_types => :environment do
-    :wipe_tag_types
+    TagType.destroy_all
+    ActiveRecord::Base.connection.execute("TRUNCATE TABLE tag_types;")
+
     default_tag_types = ["culture", "level"]
     default_tag_types.each do |tag_type_name|
      TagType.create!(:name => tag_type_name)
