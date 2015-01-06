@@ -16,7 +16,7 @@ class ReviewsController < ApplicationController
     respond_to do |format|
       if @review.save
         #edit num_reviews and cached_rating
-        tags = destringify(@recipe.s_tags)["tags"]
+        tags = destringify(@recipe.s_tags)["tags"].split(',')
         add_to_analysis(tags, 3)
         @recipe_author = @recipe.author
         if @recipe_author
