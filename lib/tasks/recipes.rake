@@ -1,6 +1,19 @@
 require 'rake'
 
 namespace :recipes do
+
+  desc "retag recipes"
+  task :retag => :environment do
+    Recipe.all.each do |r|
+      s_tag = r.s_tags
+      if !s_tag.match(/^\"s_tags/)
+        s = Hash.new
+        s["tags"] = s_tag 
+        r.s_tags = s.to_json
+      end
+    end
+  end
+  
   desc "reindex recipes by tags"
   task :reindex => :environment do
     #RecipesTags.destroy_all
@@ -89,9 +102,9 @@ namespace :recipes do
   end
 
   desc "do all tasks"
-  task :all => [:lowercase_tags, :lowercase_recipe_tags, :reindex, :reset_trend_level]
+  task :all => [:retag, :lowercase_tags, :lowercase_recipe_tags, :reindex, :reset_trend_level]
 
   desc "remake tags and reindex"
-  task :reset => [:lowercase_tags, :lowercase_recipe_tags, :reindex]
+  task :reset => [:retag, :lowercase_tags, :lowercase_recipe_tags, :reindex]
     
 end
