@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :convos
   resources :suggestions
   resources :tag_types
+  resources :tags
 
   get 'categories' => 'tag_types#index'
   get 'about' => 'static_pages#about'
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
   resources :group_posts
 
   devise_for :members, :controllers => { :registrations => "registrations" }
+  resources :members
   devise_scope :member do
     get 'logout' => 'devise/sessions#destroy'
     get 'login' => 'devise/sessions#new'
@@ -46,7 +48,7 @@ Rails.application.routes.draw do
     get 'delete_account' => 'devise/registrations#destroy'
   end
 
-  resources :members
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

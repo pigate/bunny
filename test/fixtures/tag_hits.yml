@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  member_id: 1
+  chinese_count: 1
+  american_count: 1
+  hack_count: 1
+  easy_count: 1
+  average_count: 1
+  difficult_count: 1
+  lazy_count: 1
+
+two:
+  member_id: 1
+  chinese_count: 1
+  american_count: 1
+  hack_count: 1
+  easy_count: 1
+  average_count: 1
+  difficult_count: 1
+  lazy_count: 1

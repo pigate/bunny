@@ -173,8 +173,8 @@ function delete_from_picked(element){
     <%= f.text_area :about, :class => "note_book", :placeholder => "Introduce us to your creation. What inspired you? Who passed on the recipe to you? Suggestions, modifications? Add some hot sauce?" %>
   </div>
   <div class="recipe_add_photo" style="text-align: center;">
-    <%= image_tag("ic_action_picture.png") %><br>
-    <%= f.file_field :main_photo %>
+    <%= image_tag("ic_action_picture.png", :class => "recipe_test_photo") %><br>
+    <%= f.file_field :main_photo, :id => "imgInput" %>
   </div>
   <div class="recipe_form_field">
     <div class="section_header">
@@ -235,6 +235,22 @@ function delete_from_picked(element){
 
   </div>
 <% end %>
+
+<script>
+function readURL(input){
+  if (input.files && input.files[0]){
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $(".recipe_test_photo").attr('src', e.target.result);
+       
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+$("#imgInput").change(function(){
+  readURL(this);
+});
+</script>
 
 <%= javascript_tag do %>
   var id_ingred_list = "ingred_list";
@@ -308,3 +324,39 @@ function check_space(event){
 }
 
 </script>
+<%= javascript_tag do %>
+  var default_tags = <%= raw render(:template => 'tags/index.json', :locals => { :tags => Tag.all}) %>;
+<% end %>
+<script>
+
+function choose_insert_and_delete(element){
+  //var element = event.srcElement;
+  var picked = document.getElementById("dashboard");
+  var dashboard = document.getElementById("dashboard_tags");
+  //add element to picked
+  var newNode = document.createElement("DIV");
+  newNode.id = "picked_tag";
+  newNode.innerHTML = '<span>'+element.getElementsByClassName("tag_title")[0].getElementsByTagName('span')[0].innerHTML+'</span><button type="button" onclick="delete_from_picked(this)">x</button>';
+  //remove element from dashboard
+  element.style.display = "none";
+  picked.insertBefore(newNode, document.getElementById("holder_tags"));//appendChild(newNode);
+}
+
+
+function init_dashboard_tags(id_init_tags){
+  var dashboard = document.getElementById(id_init_tags);
+  var i = 0;
+  var default_tags_object = default_tags["tags"];
+  for(var key in default_tags_object){
+    if (default_tags_object.hasOwnProperty(key)){
+      var newNodeHTML = '<div id="tag_pick" onclick="choose_insert_and_delete(this)"><div class="tag_title"><span>'+default_tags_object[key]+'</span></div></div>';
+     dashboard.innerHTML = dashboard.innerHTML + newNodeHTML;
+      i+= 1;
+    }
+  }
+}
+
+init_dashboard_tags("dashboard_tags");
+
+</script>
+

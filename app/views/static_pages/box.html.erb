@@ -130,6 +130,14 @@ function getHash(url){
       <% end %>
     </div>
   </div>
+  <% if member_signed_in? %>
+  <div class="tabContent" id="page-6">
+    <div>
+      <h2>Recently Viewed Recipes</h2>
+<%= render @recent %>
+    </div>
+  </div>
+  <% end %>
 
 </div>
 

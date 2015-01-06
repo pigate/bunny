@@ -16,6 +16,7 @@
     <%= render partial: "heart_build", locals: { recipe: recipe } %>
     </div>
     <div style="clear: both; padding-top: 10px;">
+      Views: <%= recipe.global_views %>
       <%= "Prep (#{recipe.prep_time} min)" %>
       <%= "Cook (#{recipe.cook_time} min)" %>
     </div>

@@ -33,9 +33,9 @@ class RegistrationsController < Devise::RegistrationsController
         respond_with resource, location: after_inactive_sign_up_path_for(resource)
       end
     else
-#      clean_up_passwords resource
+      clean_up_passwords resource
       set_minimum_password_length
-      respond_with register_path
+      respond_with resource
     end
   end
 
@@ -73,6 +73,12 @@ class RegistrationsController < Devise::RegistrationsController
 
   def registration_params
     params.require(:member).permit(:email, :first, :last, :password, :password_confirmation, :user_name)
+  end
+
+  def set_minimum_password_length
+    if devise_mapping.validatable?
+      @minimum_password_length = resource_class.password_length.min
+    end
   end
 
 end

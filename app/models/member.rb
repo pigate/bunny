@@ -36,6 +36,11 @@ class Member < ActiveRecord::Base
   has_many :joined_groups, through: :group_memberships  
 
   has_one :news_feed, dependent: :destroy
+
+  #analytics
+  has_one :recently_viewed_recipes
+  has_one :tag_hits
+  has_one :recommendation
  
   has_attached_file :photo,
     :dependent => :destroy,

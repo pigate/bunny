@@ -9,7 +9,15 @@ Run
 
 gem install elasticsearch-model elasticsearch-rails
 
+set AWS S3 bucket keys
+
+rake secret
+
 bundle install
+
+rake db:migrate
+rake recipes:all
+rake members:all
 
 To do:
 

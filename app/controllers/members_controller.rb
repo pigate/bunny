@@ -45,6 +45,7 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @member.save
+        Recommendations.create!(:member_id => @member.id)
         @member.news_feed = NewsFeed.new(:member_id => @member.id)
         format.html { redirect_to edit_member_path(@member), notice: 'Member was successfully created.' }
         format.json { render :show, status: :created, location: edit_member_path(@member) }

@@ -9,6 +9,7 @@
     </div>
     <%= render partial: 'recipes/heart_build', locals: { recipe: @recipe } %>
     <%= render partial: "recipes/rating_stars", locals: { recipe: @recipe } %>
+    Views: <%= @recipe.global_views %>
     <div id="recipe_author_info" style="clear: both;">
       Cooked up by:  
       <% if @recipe.author %>

@@ -2,12 +2,28 @@
   <h1>Categories</h1>
   <% @tag_types.each do |tag_type| %>
   <div class="category">
-    <div class="tag_type_name"><%= tag_type.name %></div>
-    <div class="tag_type_description"><%= tag_type.description %></div>
+    <div class="tag_type_name">
+    <%= tag_type.name %>
+    <%= link_to "Edit", edit_tag_type_path(tag_type) %> |
+    <%= link_to tag_type, :method => "DELETE", :action => "destroy", data: { confirm: "Are you sure? This cannot be undone." } do %>
+          Delete
+        <% end %>
+
+    </div>
     <% tag_type.tags.each do |tag| %>
       <%= link_to tag.name %>
+      <% if current_member.try(:admin) %>
+        <%= link_to "Edit", edit_tag_path(tag) %> |
+        <%= link_to tag, :method => "DELETE", :action => "destroy", data: { confirm: "Are you sure? This cannot be undone." } do %>
+          Delete
+        <% end %>
+      <% end %>
+      <br>
     <% end %>
+    <br>
   </div>
   <% end %>
-  <%= link_to 'New Tag type', new_tag_type_path %>
+  <%  if current_member.try(:admin) %>
+    <%= link_to 'New Tag Type', new_tag_type_path %> | <%= link_to "New Tag", new_tag_path %>
+  <% end %>
 </div>

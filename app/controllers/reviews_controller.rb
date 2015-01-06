@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   include NewsFeedHelper
+  include RecipesHelper
 
   before_action :set_review, only: [:show, :edit, :update, :destroy]
   before_action :signed_in, only: [:show, :edit, :update, :destroy]
@@ -15,6 +16,8 @@ class ReviewsController < ApplicationController
     respond_to do |format|
       if @review.save
         #edit num_reviews and cached_rating
+        tags = destringify(@recipe.s_tags)["tags"]
+        add_to_analysis(tags, 3)
         @recipe_author = @recipe.author
         if @recipe_author
           xml_builder = ::Builder::XmlMarkup.new

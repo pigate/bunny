@@ -1,5 +1,6 @@
 class HeartsController < ApplicationController
   include NewsFeedHelper
+  include RecipesHelper
 
   before_action :set_heart, only: [:destroy]
 
@@ -19,6 +20,8 @@ class HeartsController < ApplicationController
     respond_to do |format|
       if @heart.save
         @recipe = Recipe.find(@heart.liked_recipe_id)
+        tags = destringify(@recipe.s_tags)["tags"]
+        add_to_analysis(tags, 1)
         if @recipe.author != current_member
           if @recipe.author 
             xml_builder = ::Builder::XmlMarkup.new

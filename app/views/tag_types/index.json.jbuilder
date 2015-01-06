@@ -1,4 +1,5 @@
-json.array!(@tag_types) do |tag_type|
-  json.extract! tag_type, :id, :name, :description
-  json.url tag_type_url(tag_type, format: :json)
+json.array! tag_types.each do |tag_type|
+  json.name tag_type.name 
+  json.id tag_type.id
 end
+

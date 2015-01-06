@@ -14,6 +14,8 @@ class Recipe < ActiveRecord::Base
   has_many :reviews, :foreign_key => :reviewed_recipe_id, dependent: :destroy
   has_many :reviewers, :through => :reviews
 
+  has_and_belongs_to_many :tags
+
   has_attached_file :main_photo,
     :default_url => "missing-recipe/:style.png",
     :styles => {

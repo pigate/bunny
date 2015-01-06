@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223221015) do
+ActiveRecord::Schema.define(version: 20150106033832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,15 @@ ActiveRecord::Schema.define(version: 20141223221015) do
     t.datetime "photo_updated_at"
   end
 
+  create_table "recently_viewed_recipes", force: true do |t|
+    t.integer  "member_id"
+    t.text     "recently_viewed_list", default: ""
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "recently_viewed_recipes", ["member_id"], name: "index_recently_viewed_recipes_on_member_id", using: :btree
+
   create_table "recipes", force: true do |t|
     t.string   "name"
     t.text     "about",                   default: ""
@@ -175,10 +184,33 @@ ActiveRecord::Schema.define(version: 20141223221015) do
     t.text     "s_tags",                  default: ""
     t.float    "cached_rating",           default: 0.0
     t.integer  "num_reviews",             default: 0
+    t.integer  "global_views",            default: 0
+    t.decimal  "trend_level",             default: 0.0
   end
 
   add_index "recipes", ["cached_rating"], name: "index_recipes_on_cached_rating", using: :btree
+  add_index "recipes", ["global_views"], name: "index_recipes_on_global_views", using: :btree
   add_index "recipes", ["num_reviews"], name: "index_recipes_on_num_reviews", using: :btree
+  add_index "recipes", ["trend_level"], name: "index_recipes_on_trend_level", using: :btree
+
+  create_table "recipes_tags", force: true do |t|
+    t.integer "recipe_id"
+    t.integer "tag_id"
+  end
+
+  add_index "recipes_tags", ["recipe_id", "tag_id"], name: "index_recipes_tags_on_recipe_id_and_tag_id", unique: true, using: :btree
+  add_index "recipes_tags", ["recipe_id"], name: "index_recipes_tags_on_recipe_id", using: :btree
+  add_index "recipes_tags", ["tag_id", "recipe_id"], name: "index_recipes_tags_on_tag_id_and_recipe_id", unique: true, using: :btree
+  add_index "recipes_tags", ["tag_id"], name: "index_recipes_tags_on_tag_id", using: :btree
+
+  create_table "recommendations", force: true do |t|
+    t.integer  "member_id"
+    t.text     "recs_list",  default: ""
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "recommendations", ["member_id"], name: "index_recommendations_on_member_id", using: :btree
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
@@ -213,11 +245,31 @@ ActiveRecord::Schema.define(version: 20141223221015) do
     t.datetime "updated_at"
   end
 
+  create_table "tag_hits", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "views",                   default: 0
+    t.integer  "chinese_count",           default: 0
+    t.integer  "american_count",          default: 0
+    t.integer  "hack_count",              default: 0
+    t.integer  "easy_count",              default: 0
+    t.integer  "average_count",           default: 0
+    t.integer  "difficult_count",         default: 0
+    t.integer  "lazy_count",              default: 0
+    t.decimal  "chinese_count_percent",   default: 0.0
+    t.decimal  "american_count_percent",  default: 0.0
+    t.decimal  "hack_count_percent",      default: 0.0
+    t.decimal  "easy_count_percent",      default: 0.0
+    t.decimal  "average_count_percent",   default: 0.0
+    t.decimal  "difficult_count_percent", default: 0.0
+    t.decimal  "lazy_count_percent",      default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tag_hits", ["member_id"], name: "index_tag_hits_on_member_id", using: :btree
+
   create_table "tag_types", force: true do |t|
     t.string   "name"
-    t.string   "description"
-    t.boolean  "approved",     default: false
-    t.integer  "submitter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

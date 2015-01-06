@@ -1,0 +1,57 @@
+<%= form_for(@tag) do |f| %>
+  <% if @tag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag_type from being saved:</h2>
+
+      <ul>
+      <% @tag.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <select id="select_tag_type_parent">
+  </select>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <button type="button" onclick="postNewTag(this.form)" class="button_round_blue">Submit</button>    
+  </div>
+<% end %>
+
+<%= javascript_tag do %>
+  var possible_tag_types = <%= raw render(:template => 'tag_types/index.json', :locals => { :tag_types => TagType.all }) %>;
+<% end %>
+
+<script>
+function fillOptions(){
+  var options = document.getElementById("select_tag_type_parent");
+  //fill with possible_tag_types
+  var tag_type_array = possible_tag_types;
+  for(var i = 0; i < tag_type_array.length; i++){
+    var node = document.createElement('option');
+    node.value = tag_type_array[i]["id"];
+    node.innerHTML = tag_type_array[i]["name"];
+    options.appendChild(node);
+  }
+}
+
+fillOptions();
+
+function postNewTag(node){
+  var hiddenTagType = document.createElement("input");
+  hiddenTagType.setAttribute("type", "hidden");
+  hiddenTagType.setAttribute("id", "tag_tag_type_id");
+  hiddenTagType.setAttribute("name", "tag[tag_type_id]");
+  //set value for tag_parent_id
+  var value = document.getElementById("select_tag_type_parent").value; 
+  hiddenTagType.setAttribute("value", value);
+
+  node.appendChild(hiddenTagType);
+  node.submit();
+}
+</script>

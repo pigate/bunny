@@ -1,4 +1,6 @@
 class StaticPagesController < ApplicationController
+  include MembersHelper
+
   def home
   end
 
@@ -57,12 +59,6 @@ class StaticPagesController < ApplicationController
     end
   end
 
-
-
-
-
-
-
   def suggestion_added
   end
 
@@ -76,7 +72,17 @@ class StaticPagesController < ApplicationController
   def box
     if !member_signed_in?
     else
-      @recommended = Recipe.where(:author_id != current_member.id, :limit => 25)
+      make_recommendation(current_member)
+      rec_list = Recommendations.find_by_member_id(current_member.id).recs_list.split(',').map { |e| e.to_i }
+      @recommended = []
+      rec_list.each do |r|
+        @recommended.push(Recipe.find(r))
+      end
+      @recent = []
+      @list = current_member.recently_viewed_recipes.recently_viewed_list.split(",").map {|e| e.to_i }
+      @list.each do |l|
+        @recent.push(Recipe.find(l))
+      end
     end
   end
 
