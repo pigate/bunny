@@ -5,11 +5,12 @@ namespace :recipes do
   desc "retag recipes"
   task :retag => :environment do
     Recipe.all.each do |r|
-      s_tag = r.s_tags
+      stag = r.s_tags
       if !s_tag.match(/^\"tags/)
         s = Hash.new
-        s["tags"] = s_tag 
-        r.s_tags = s.to_json
+        s["tags"] = stag 
+        s_tags = s.to_json
+        r.update_attribute(:s_tags => s_tags)
       end
     end
   end
