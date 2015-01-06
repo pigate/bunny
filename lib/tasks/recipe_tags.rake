@@ -19,7 +19,7 @@ namespace :recipe_tags do
   desc "wipe tags, set default"
   task :wipe_and_setup => [:environment, :setup_tag_types] do
     Tag.destroy_all
-    ActiveRecord::Base.connection.execute("TRUNCATE TABLE tag;")
+    ActiveRecord::Base.connection.execute("TRUNCATE TABLE tags;")
     default_culture = ["chinese", "american"]
     default_level = ["lazy", "easy", "average", "difficult"]
     default_culture.each do |tag_name|
