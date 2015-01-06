@@ -6,7 +6,7 @@ namespace :recipes do
   task :retag => :environment do
     Recipe.all.each do |r|
       stag = r.s_tags
-      if !s_tag.match(/^\"tags/)
+      if !stag.match(/^\"tags/)
         s = Hash.new
         s["tags"] = stag 
         s_tags = s.to_json
