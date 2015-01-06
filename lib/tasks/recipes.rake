@@ -10,7 +10,7 @@ namespace :recipes do
         s = Hash.new
         s["tags"] = stag 
         s_tags = s.to_json
-        r.update_attribute(:s_tags => s_tags)
+        r.update_attributes(:s_tags => s_tags)
       end
     end
   end
