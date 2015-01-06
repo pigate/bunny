@@ -17,10 +17,13 @@ bundle install
 
 rake db:migrate
 rake recipes:all
+rake recipe_tags:all
 rake members:all
 
 To do:
 
 Add some more functionality to users and recipes.
+
+Collaborative Filtering. Clustering to find similar users
 
 Fix devise controller. When invalid email, somehow user is still able to access member profile creation. 
