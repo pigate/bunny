@@ -29,7 +29,7 @@
     <% end %>
     <div id="show_tags">
     <% tags = destringify_tags(@recipe.s_tags) %>
-    <% tags.each do |tag| %>
+    <% tags.split(',').each do |tag| %>
       <%= link_to tag, "/recipes?utf8=✓&search=#{tag}", :class => "tag_search" %>
     <% end %>
     </div>

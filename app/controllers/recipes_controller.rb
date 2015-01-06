@@ -53,7 +53,7 @@ class RecipesController < ApplicationController
       arr = [@recipe.id.to_s] + arr
       row.update_attributes("recently_viewed_list" => arr.join(','))
       #analytics
-      tags = destringify(@recipe.s_tags)["tags"]
+      tags = destringify(@recipe.s_tags)["tags"].split(',')
       add_to_analysis(tags, 2)      
     end
     respond_with(@recipe)
@@ -81,7 +81,7 @@ class RecipesController < ApplicationController
       mass_feed_push(current_member.id, str)
       #MassFeedWorker.perform_async(current_member.id, str)
       index_recipe(@recipe)
-      tags = destringify(@recipe.s_tags)["tags"]
+      tags = destringify(@recipe.s_tags)["tags"].split(',')
       add_to_analysis(tags, 2)
       respond_with(@recipe)
     else
