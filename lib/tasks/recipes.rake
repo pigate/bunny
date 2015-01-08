@@ -99,7 +99,7 @@ namespace :recipes do
   end
 
   desc "do all tasks"
-  task :all => [:calc_avg_rating, :retag, :lowercase_tags, :lowercase_recipe_tags, :reindex, :reset_trend_level]
+  task :all => [:calc_avg_rating, :lowercase_tags, :lowercase_recipe_tags, :reindex, :reset_trend_level]
 
   desc "remake tags and reindex"
   task :reset => [:lowercase_tags, :lowercase_recipe_tags, :reindex]
