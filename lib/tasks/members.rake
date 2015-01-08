@@ -1,15 +1,6 @@
 require 'rake'
 
 namespace :members do
-  desc "member_analytics search_tags"
-  task :setup_tag_hits => :environment do
-    TagHits.destroy_all
-    ActiveRecord::Base.connection.execute("TRUNCATE TABLE tag_hits;")
-    Member.all.each do |m|
-      #create a row for each member
-      TagHits.create!(:member_id => m.id)
-    end
-  end
 
   desc "member_analytics recently_viewed_recipes"
   task :setup_recipe_views => :environment do
@@ -17,6 +8,16 @@ namespace :members do
     ActiveRecord::Base.connection.execute("TRUNCATE TABLE recently_viewed_recipes;")
     Member.all.each do |m|
       RecentlyViewedRecipes.create!(:member_id => m.id)
+    end
+  end
+
+  desc "member_analytics search_tags"
+  task :setup_tag_hits => [:environment, :setup_recipe_views] do
+    TagHits.destroy_all
+    ActiveRecord::Base.connection.execute("TRUNCATE TABLE tag_hits;")
+    Member.all.each do |m|
+      #create a row for each member
+      TagHits.create!(:member_id => m.id)
     end
   end
 
@@ -133,6 +134,6 @@ namespace :members do
 
 
   desc "do all tasks"
-  task :all => [:setup_tag_hits, :setup_recipe_views, :setup_rec_table, :recommend]
+  task :all => [:setup_tag_hits, :setup_rec_table, :recommend]
     
 end

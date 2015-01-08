@@ -2,19 +2,15 @@ require 'rake'
 
 namespace :recipes do
 
-  desc "retag recipes"
-  task :retag => :environment do
+  desc "setup tag_hits for each recipe"
+  task :setup_tag_hits => :environment do 
+    TagHits.destroy_all
+    ActiveRecord::Base.connection.execute("TRUNCATE TABLE tag_hits;") 
     Recipe.all.each do |r|
-      stag = r.s_tags
-      if !stag.match(/^\"tags/)
-        s = Hash.new
-        s["tags"] = stag 
-        s_tags = s.to_json
-        r.update_attributes(:s_tags => s_tags)
-      end
+      TagHits.create!(:recipe_id => r.id)
     end
   end
-  
+
   desc "reindex recipes by tags"
   task :reindex => :environment do
     #RecipesTags.destroy_all
@@ -106,6 +102,6 @@ namespace :recipes do
   task :all => [:calc_avg_rating, :retag, :lowercase_tags, :lowercase_recipe_tags, :reindex, :reset_trend_level]
 
   desc "remake tags and reindex"
-  task :reset => [:retag, :lowercase_tags, :lowercase_recipe_tags, :reindex]
+  task :reset => [:lowercase_tags, :lowercase_recipe_tags, :reindex]
     
 end

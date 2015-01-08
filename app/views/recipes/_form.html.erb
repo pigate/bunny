@@ -283,7 +283,7 @@ $("#imgInput").change(function(){
     <% end %>
     addBox(elem, id_steps_list);
   <% end %>
-  <% tags = destringify_tags(@recipe.s_tags) %>
+    <% tags = destringify(@recipe.s_tags)%>
   <% tags.each do |tag| %>
     init_tags('<%= tag %>');
   <% end %>

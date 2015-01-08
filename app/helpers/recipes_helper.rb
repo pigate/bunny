@@ -9,6 +9,7 @@ module RecipesHelper
       []
     end
   end
+
   def round_float_2(some_float)
     some_float.round(2)
   end
@@ -38,47 +39,47 @@ module RecipesHelper
   def add_to_analysis(filters, weight)
     if !member_signed_in?
       return
-    end
-    row = TagHits.find_by_member_id(current_member.id)
-    tag_was_hit = false
-    @filters = filters
-    @valid_filters = []
-    columns = TagHits.columns.map {|c| c.name}
-    base_columns = columns.select { |i| !i.match(/percent$/) && i.match(/count$/) }
+    else
+      row = TagHits.find_by_member_id(current_member.id)
+      tag_was_hit = false
+      @filters = filters
+      @valid_filters = []
+      columns = TagHits.columns.map {|c| c.name}
+      base_columns = columns.select { |i| !i.match(/percent$/) && i.match(/count$/) }
 
-    @filters.each do |f|
-      filter_count = "#{f}_count"
-      if base_columns.include? filter_count
-        @valid_filters.push(f)
-        if !tag_was_hit
-          row.update_attributes(:views => row.views + weight)
+      @filters.each do |f|
+        filter_count = "#{f}_count"
+        if base_columns.include? filter_count
+          @valid_filters.push(f)
+          if !tag_was_hit
+            row.update_attributes(:views => row.views + weight)
+          end
+          tag_was_hit = true
+          filter_count_sym = filter_count.to_sym
+          new_count = row.read_attribute(filter_count_sym) + weight
+          row.update_attributes(filter_count_sym => new_count)
         end
-        tag_was_hit = true
-        filter_count_sym = filter_count.to_sym
-        new_count = row.read_attribute(filter_count_sym) + weight
-        row.update_attributes(filter_count_sym => new_count)
+      end
+      total_views = row.views
+      if total_views >= @@num && tag_was_hit
+        base_columns.each do |f|
+          filter_count = f
+          filter_count_sym = filter_count.to_sym
+          #recalculate percentages
+          #for each filter_count, filter_count_percentage is calculated
+          filter_count_percent = "#{filter_count}_percent"
+          filter_count_percent_sym = "#{filter_count}_percent".to_sym
+          #reset each filter_count
+          #reset num views
+          old_filter_count_percent = row.read_attribute(filter_count_percent_sym)
+          if old_filter_count_percent == 0.0 #initialize attention at full span
+            row.update_attributes(filter_count_percent_sym => row.read_attribute(filter_count_sym)/(total_views*1.0), filter_count => 0, :views => 0)
+          else #attention span staggers off. use a weighted 'avg' interest
+             new_percent = 0.4*(old_filter_count_percent)+0.6*row.read_attribute(filter_count_sym)/(total_views*1.0)
+             row.update_attributes(filter_count_percent_sym => new_percent, filter_count => 0, :views => 0)
+          end
+       end
       end
     end
-    total_views = row.views
-    if total_views >= @@num && tag_was_hit
-      base_columns.each do |f|
-        filter_count = f
-        filter_count_sym = filter_count.to_sym
-        #recalculate percentages
-        #for each filter_count, filter_count_percentage is calculated
-        filter_count_percent = "#{filter_count}_percent"
-        filter_count_percent_sym = "#{filter_count}_percent".to_sym
-        #reset each filter_count
-        #reset num views
-        old_filter_count_percent = row.read_attribute(filter_count_percent_sym)
-        if old_filter_count_percent == 0.0 #initialize attention at full span
-          row.update_attributes(filter_count_percent_sym => row.read_attribute(filter_count_sym)/(total_views*1.0), filter_count => 0, :views => 0)
-        else #attention span staggers off. use a weighted 'avg' interest
-           new_percent = 0.4*(old_filter_count_percent)+0.6*row.read_attribute(filter_count_sym)/(total_views*1.0)
-           row.update_attributes(filter_count_percent_sym => new_percent, filter_count => 0, :views => 0)
-        end
-     end
-    end
   end
-
 end
