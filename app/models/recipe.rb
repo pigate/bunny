@@ -1,4 +1,3 @@
-require 'elasticsearch/model'
 class Recipe < ActiveRecord::Base
   belongs_to :author, :class_name => "Member"
   validates :name, presence: true
@@ -45,29 +44,9 @@ class Recipe < ActiveRecord::Base
   end
 
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
 
   def self.parse_params(params)
     params 
   end
-  def self.search(query)
-    __elasticsearch__.search(
-      {
-        query: {
-          multi_match: {
-            query: parse_params(query),
-            fields: ['name^2', 'j_ingreds', 's_tags']
-          }
-        }
-      }
-    )
-  end
 end
 
-Recipe.__elasticsearch__.client.indices.delete index: Recipe.index_name rescue nil
-#
-Recipe.__elasticsearch__.client.indices.create index: Recipe.index_name,
-  body: { settings: Recipe.settings.to_hash, mappings: Recipe.mappings.to_hash }
-
-Recipe.import #to auto sync model with elastic search

@@ -25,16 +25,17 @@ Rails.application.routes.draw do
   get 'box' => 'static_pages#box'
   get 'search' => 'static_pages#generic_search'
 
-  
-  get 'search/groups' => 'static_pages#group_search'
-  get 'search/members' => 'static_pages#member_search'
-  get 'search/posts' => 'static_pages#post_search'
-  get 'search/recipes' => 'static_pages#recipe_search'
+
+  #get 'search/members/:search' => 'members#index'  
+  #get 'search/groups' => 'static_pages#group_search'
+  #get 'search/members' => 'static_pages#member_search'
+  #get 'search/posts' => 'static_pages#post_search'
+  #get 'search/recipes' => 'static_pages#recipe_search'
   get 'following' => 'static_pages#following'
   get 'followers' => 'static_pages#followers'
   
-  resources :recipes
   resources :groups
+  resources :recipes
   resources :group_memberships
   resources :group_posts
 

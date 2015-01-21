@@ -9,7 +9,7 @@ class PostsController < ApplicationController
   def index
     @posts = Post.all
     if (params[:search].present?)
-      @posts = Post.search(params[:search]).records.to_a
+      @posts = [] #Post.search(params[:search]).records.to_a
     else
       @posts = Post.all.reverse
       respond_with(@posts)

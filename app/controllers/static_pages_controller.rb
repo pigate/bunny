@@ -1,5 +1,6 @@
 class StaticPagesController < ApplicationController
   include MembersHelper
+  include RecipesHelper #for add_to_analysis(...)
 
   def home
   end
@@ -19,25 +20,40 @@ class StaticPagesController < ApplicationController
   end
 
   def recipe_search
-    if (params[:search_params].present?)
-      @recipes = Recipe.search(params[:search_params]).records.to_a
+    @recipes = []
+    if (params[:search].present?)
+      tags = Tag.all
+      tokenized_tags = params[:search].split(' ')
+      tag_columns = tags.select { |e| tokenized_tags.include? e.name }
+      tag_columns.each do |t|
+       @recipes += t.recipes
+      end
+      @recipes = @recipes.uniq
+      #TODO user analysis
+      #columns = TagHits.columns.map {|c| c.name}
+      #base_columns = columns.select { |i| !i.match(/percent$/) && i.match(/count$/) }
+      #add_to_analysis(params[:search].split(' '), 2)
     else
       @recipes = []
     end
   end
 
   def post_search
-    if (params[:search_params].present?)
-      @posts = Post.search(params[:search_params]).records.to_a
+    if (params[:search].present?)
+      @posts = [] #Post.search(params[:search]).records.to_a
     else
-      @posts = []
+      @posts = Post.all.reverse
+      respond_with(@posts)
     end
-
   end
 
   def member_search
-    if (params[:search_params].present?)
-      @members = Member.search(params[:search_params]).records.to_a
+    if (params[:search].present?)
+      token = params[:search]
+      @members = []
+      @members += Member.where('user_name LIKE ?', "%"+token + "%")
+      @members += Member.where('email LIKE ?', "%"+token+"%")
+      @members = @members.uniq
     else
       @members = []
     end
@@ -52,8 +68,8 @@ class StaticPagesController < ApplicationController
   end
 
   def group_search
-    if (params[:search_params].present?)
-      @groups = Group.search(params[:search_params]).records.to_a
+    if (params[:search].present?)
+      @groups = Group.where('name LIKE ?', "%"+params[:search]+"%") #the percentages are postgres wildcards. O/w can do without but will exact match
     else
       @groups = []
     end

@@ -71,30 +71,9 @@ class Member < ActiveRecord::Base
   def to_param
     "#{slug}"
   end
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
   def self.parse_params(params)
     params
   end
-  def self.search(query)
-    __elasticsearch__.search(
-      {
-        query: {
-          multi_match: {
-            query: parse_params(query),
-            fields: ['user_name^2', 'first', 'last', 'email'],
-            operator: "and"
-          }
-        }
-      }
-    )
-  end
 end
 
-Member.__elasticsearch__.client.indices.delete index: Member.index_name rescue nil
-#
-Member.__elasticsearch__.client.indices.create index: Member.index_name,
-  body: { settings: Member.settings.to_hash, mappings: Member.mappings.to_hash }
-
-Member.import #to auto sync model with elastic search
 

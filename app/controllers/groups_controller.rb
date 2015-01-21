@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
   def index
     @groups = Group.all
     if (params[:search].present?)
-      @groups = Group.search(params[:search]).records.to_a
+      @groups = Group.where('name LIKE ?', "%"+params[:search]+"%") #the percentages are postgres wildcards. O/w can do without but will exact match
     else
       @groups = Group.all.reverse
       respond_with(@groups)

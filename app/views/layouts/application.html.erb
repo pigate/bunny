@@ -126,13 +126,13 @@ $(document).on('click', function(event) {
   <div class="search" style="display: none;">
     <ul id="search_action_choices">
       <span id="hide_search" onclick="toggle_search()">hide</span>
-      <li><a href="#" onclick="choose_action('/search/recipes', this)">Recipes</a></li> |
-      <li><a href="#" onclick="choose_action('/search/groups', this)" style="font-weight: bold;">Groups</a></li> |
-      <li><a href="#" onclick="choose_action('/search/posts', this)">Posts</a></li> |
-      <li><a href="#" onclick="choose_action('/search/members', this)">Members</a></li>
+      <li><a href="#" onclick="choose_action('/recipes', this)">Recipes</a></li> |
+      <li><a href="#" onclick="choose_action('/groups', this)" style="font-weight: bold;">Groups</a></li> |
+      <li><a href="#" onclick="choose_action('/posts', this)">Posts</a></li> |
+      <li><a href="#" onclick="choose_action('/members', this)">Members</a></li>
     </ul>
     <form accept-charset="UTF-8" action="/recipes" class="search-form" method="get">
-      <input class="search_box" name="search" placeholder="Type Recipe or Ingredient" type="text" />
+      <input class="search_box" name="search" placeholder="Query" type="text" />
       <button type="search_submit_recipe" class="search_bttn"><%= image_tag("search_black.png")%></button>
     </form> 
   </div>

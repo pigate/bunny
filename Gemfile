@@ -5,8 +5,6 @@ gem 'builder', '3.2.2'
 gem "aws-sdk"
 gem 'paperclip'
 #gem 'tire'
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
 gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.7'

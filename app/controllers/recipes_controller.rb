@@ -13,10 +13,17 @@ class RecipesController < ApplicationController
   def index
     @tag_types = TagType.all
     if (params[:search].present?)
-      @recipes = Recipe.search(params[:search]).records.to_a
-      #TODO need to replace above line with join of results from actual filter searches, combined with recs, and more relevant search results
       columns = TagHits.columns.map {|c| c.name}
       base_columns = columns.select { |i| !i.match(/percent$/) && i.match(/count$/) }
+      tags = Tag.all
+      tokenized_tags = params[:search].split(' ')
+      tag_columns = tags.select { |e| tokenized_tags.include? e.name }
+      @recipes = []
+      tag_columns.each do |t|
+       @recipes += t.recipes
+      end
+      @recipes = @recipes.uniq
+      #TODO need to replace above line with join of results from actual filter searches, combined with recs, and more relevant search results
       #user_analytics
       #for each filter chosen, if member_signed_in, increment tag_hit 
       add_to_analysis(params[:search].split(' '), 2)

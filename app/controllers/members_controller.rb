@@ -7,8 +7,12 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    if (params[:search_members].present?)
-      @members = Member.search(params[:search_members]).records.to_a
+    if (params[:search].present?)
+      token = params[:search]
+      @members = []
+      @members += Member.where('user_name LIKE ?', "%"+token + "%")
+      @members += Member.where('email LIKE ?', "%"+token+"%")
+      @members = @members.uniq
     else
       @members = Member.limit(8)
     end
