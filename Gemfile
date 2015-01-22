@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'puma'
 gem 'builder', '3.2.2'
 #gem "sidekiq"
 gem "aws-sdk"
