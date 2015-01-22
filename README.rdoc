@@ -1,13 +1,8 @@
 == README
 
-Need to have elasticsearch installed
-Redis
-
 To deploy:
 
 Run
-
-gem install elasticsearch-model elasticsearch-rails
 
 set AWS S3 bucket keys
 
@@ -27,3 +22,7 @@ Add some more functionality to users and recipes.
 Collaborative Filtering. Clustering to find similar users
 
 Fix devise controller. When invalid email, somehow user is still able to access member profile creation. 
+
+Let members make recipes private.
+When recipes become private, must lazy scrub from people's recs and recently viwed.
+
