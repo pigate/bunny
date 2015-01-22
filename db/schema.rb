@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106033832) do
+ActiveRecord::Schema.define(version: 20150122011833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,11 +186,13 @@ ActiveRecord::Schema.define(version: 20150106033832) do
     t.integer  "num_reviews",             default: 0
     t.integer  "global_views",            default: 0
     t.decimal  "trend_level",             default: 0.0
+    t.boolean  "private",                 default: false
   end
 
   add_index "recipes", ["cached_rating"], name: "index_recipes_on_cached_rating", using: :btree
   add_index "recipes", ["global_views"], name: "index_recipes_on_global_views", using: :btree
   add_index "recipes", ["num_reviews"], name: "index_recipes_on_num_reviews", using: :btree
+  add_index "recipes", ["private"], name: "index_recipes_on_private", where: "(private = false)", using: :btree
   add_index "recipes", ["trend_level"], name: "index_recipes_on_trend_level", using: :btree
 
   create_table "recipes_tags", force: true do |t|

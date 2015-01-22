@@ -6,7 +6,7 @@ namespace :recipes do
   task :setup_tag_hits => :environment do 
     TagHits.destroy_all
     ActiveRecord::Base.connection.execute("TRUNCATE TABLE tag_hits;") 
-    Recipe.all.each do |r|
+    Recipe.where('private = false').each do |r|
       TagHits.create!(:recipe_id => r.id)
     end
   end
@@ -18,7 +18,7 @@ namespace :recipes do
      r.tags.destroy_all
     end 
     ActiveRecord::Base.connection.execute("TRUNCATE TABLE recipes_tags;")
-    Recipe.all.each do |r|
+    Recipe.where('private = false').each do |r|
       index_recipe(r)
     end
   end

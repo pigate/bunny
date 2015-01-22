@@ -28,7 +28,7 @@ class RecipesController < ApplicationController
       #for each filter chosen, if member_signed_in, increment tag_hit 
       add_to_analysis(params[:search].split(' '), 2)
     else
-      @recipes = Recipe.all.reverse
+      @recipes = Recipe.where('private = false').reverse
       respond_with(@recipes.reverse)
     end
   end
@@ -132,11 +132,13 @@ class RecipesController < ApplicationController
   def index_recipe(recipe)
     #need to create recipes_tags model file to access table like this
     RecipesTags.where(:recipe_id => recipe.id).destroy_all
-    obj = JSON.parse(recipe.s_tags)
-    obj["tags"].each do |tag|
-      t = Tag.find_by_name(tag)
-      if t != nil
-        recipe.tags.push(t)
+    if !recipe.private
+      obj = JSON.parse(recipe.s_tags)
+      obj["tags"].each do |tag|
+        t = Tag.find_by_name(tag)
+        if t != nil
+          recipe.tags.push(t)
+        end
       end
     end
   end
