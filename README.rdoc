@@ -26,3 +26,4 @@ Fix devise controller. When invalid email, somehow user is still able to access 
 Let members make recipes private.
 When recipes become private, must lazy scrub from people's recs and recently viwed.
 
+Allow users to add recipes to lists.
