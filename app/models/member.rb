@@ -20,6 +20,9 @@ class Member < ActiveRecord::Base
   has_many :reviews, :foreign_key => :reviewer_id
   has_many :reviewed_recipes, :through => :reviews
 
+  has_many :lists, dependent: :destroy
+  has_many :listed_recipes, class_name: "Recipe", through: :lists
+
 #  has_many :pending_friend_requests
 #  has_many :initiators, through: :pending_friend_requests
   has_many :active_relationships, class_name: "Relationship",

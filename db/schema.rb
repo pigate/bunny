@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150122011833) do
+ActiveRecord::Schema.define(version: 20150122033629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,36 @@ ActiveRecord::Schema.define(version: 20150122011833) do
   end
 
   add_index "liked_rxps", ["liked_recipe_id"], name: "index_liked_rxps_on_liked_recipe_id", using: :btree
+
+  create_table "lists", force: true do |t|
+    t.boolean  "private",            default: true
+    t.integer  "member_id"
+    t.string   "name",               default: ""
+    t.string   "description",        default: ""
+    t.text     "list_text",          default: ""
+    t.integer  "view_counts",        default: 0
+    t.text     "recipe_order_array", default: ""
+    t.integer  "recipe_count",       default: 0
+    t.integer  "type",               default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lists", ["member_id"], name: "index_lists_on_member_id", using: :btree
+  add_index "lists", ["name"], name: "index_lists_on_name", using: :btree
+  add_index "lists", ["private"], name: "index_lists_on_private", where: "(private = false)", using: :btree
+  add_index "lists", ["view_counts"], name: "index_lists_on_view_counts", using: :btree
+
+  create_table "lists_recipes", force: true do |t|
+    t.integer  "list_id"
+    t.integer  "recipe_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lists_recipes", ["list_id", "recipe_id"], name: "index_lists_recipes_on_list_id_and_recipe_id", unique: true, using: :btree
+  add_index "lists_recipes", ["list_id"], name: "index_lists_recipes_on_list_id", using: :btree
+  add_index "lists_recipes", ["recipe_id"], name: "index_lists_recipes_on_recipe_id", using: :btree
 
   create_table "members", force: true do |t|
     t.string   "first"
