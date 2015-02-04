@@ -88,6 +88,7 @@ class StaticPagesController < ApplicationController
   def box
     if !member_signed_in?
     else
+      @starred_list = StarredRecipeList.find_by_member_id(current_member.id).saved_recipes_array.split(",").map { |e| e.to_i }
       make_recommendation(current_member)
       rec_list = Recommendations.find_by_member_id(current_member.id).recs_list.split(',').map { |e| e.to_i }
       @recommended = []
@@ -95,9 +96,13 @@ class StaticPagesController < ApplicationController
         @recommended.push(Recipe.find(r))
       end
       @recent = []
-      @list = current_member.recently_viewed_recipes.recently_viewed_list.split(",").map {|e| e.to_i }
-      @list.each do |l|
-        @recent.push(Recipe.find(l))
+      begin
+        @list = current_member.recently_viewed_recipes.recently_viewed_list.split(",").map {|e| e.to_i }
+        @list.each do |l|
+          @recent.push(Recipe.find(l))
+        end
+      rescue
+        logger.debug "StaticPages#box **Fatal: Could not find Member(#{current_member.id}).recently_viewed_recipes"
       end
     end
   end

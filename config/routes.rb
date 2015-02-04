@@ -35,7 +35,15 @@ Rails.application.routes.draw do
   get 'followers' => 'static_pages#followers'
   
   resources :groups
-  resources :recipes
+  resources :recipes do
+#    member do
+#      put 'star'
+      #put 'unstar'
+      put 'star', on: :member
+      put 'unstar', on: :member
+    #end
+  end
+
   resources :group_memberships
   resources :group_posts
 

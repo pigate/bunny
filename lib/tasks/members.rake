@@ -132,8 +132,28 @@ namespace :members do
     end
   end
 
+  desc "setup cached_member_data"
+  #do not delete those that correspond to existing members
+  #create for members that do not have one 
+  task :setup_cached_member_data => :environment do
+    Member.all.each do |m|
+      if !CachedMemberData.find_by_member_id(m.id) 
+        CachedMemberData.create!(:member_id => m.id)  
+      end
+    end
+  end
+
+  desc "setup member_starred_recipe_list"
+  #each member has a recipe_list with name "starred"
+  task :setup_starred_recipe_list => :environment do
+    Member.all.each do |m|
+      if !m.starred_recipe_list
+        StarredRecipeList.create!(:member_id => m.id)
+      end
+    end
+  end
 
   desc "do all tasks"
-  task :all => [:setup_tag_hits, :setup_rec_table, :recommend]
+  task :all => [:setup_tag_hits, :setup_rec_table, :setup_cached_member_data, :setup_starred_recipe_list, :recommend]
     
 end

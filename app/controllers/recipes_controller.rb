@@ -2,8 +2,8 @@ class RecipesController < ApplicationController
   include NewsFeedHelper
   include RecipesHelper
  
-  before_action :set_recipe, only: [:show, :edit, :update, :destroy]
-  before_action :is_signed_in, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_recipe, only: [:show, :edit, :update, :destroy, :star, :unstar]
+  before_action :is_signed_in, only: [:new, :create, :edit, :update, :destroy, :star, :unstar]
   before_action :can_destroy, only: [:edit, :update, :destroy]
 
   respond_to :html, :json
@@ -11,6 +11,12 @@ class RecipesController < ApplicationController
   @@n = 10 #max number recipes to keep on list
 
   def index
+    @starred_list
+    if member_signed_in?
+      @starred_list = StarredRecipeList.find_by_member_id(current_member.id).saved_recipes_array.split(',')
+    else
+      @starred_list = []
+    end
     @tag_types = TagType.all
     if (params[:search].present?)
       columns = TagHits.columns.map {|c| c.name}
@@ -109,6 +115,30 @@ class RecipesController < ApplicationController
   def destroy
     @recipe.destroy
     respond_with(@recipe)
+  end
+
+  def star
+    @list = StarredRecipeList.find_by_member_id(current_member.id)
+    @a = @list.saved_recipes_array.split(',')
+    if !@a.include? @recipe.id.to_s
+      @a << @recipe.id.to_s
+    end
+    respond_to do |format|  
+      if @list.update_attributes(:saved_recipes_array => @a.join(','))
+        format.js
+      end
+    end
+  end
+
+  def unstar
+    @list = StarredRecipeList.find_by_member_id(current_member.id)
+    @a = @list.saved_recipes_array.split(',')
+    @a.delete(@recipe.id.to_s)
+    respond_to do |format|
+      if @list.update_attributes(:saved_recipes_array => @a.join(','))
+         format.js
+      end
+    end
   end
 
   private

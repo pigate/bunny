@@ -1,18 +1,31 @@
-<div id="heart_form<%= recipe.id %>">
+<% ddway = false %>
+<div id="heart_form<%= recipe.id %>" style="float: left;">
 <% if member_signed_in? %>
-<% if current_member.liked_recipes.include? recipe %>
-  <% heart = current_member.hearts.select { |x| x.liked_recipe_id == recipe.id } %>
-  <%= link_to heart_path(heart), method: "DELETE", action: "destroy", remote: true do %>
-    <%= image_tag("liked.png", :class => "width_20px")%>
-  <% end %> <%= recipe.likers.count %>
-<% else %>
-  <%= form_for(current_member.hearts.build(liker_id: current_member.id), remote: true) do |f| %>
-    <%= f.hidden_field :liker_id, :value => current_member.id %>
-    <%= f.hidden_field :liked_recipe_id, :value => recipe.id %>
-    <%= image_submit_tag("empty_liked.png", :class => "width_20px") %><%= recipe.likers.count %>
+  <% if current_member.liked_recipes.include? recipe %>
+    <% heart = current_member.hearts.select { |x| x.liked_recipe_id == recipe.id } %>
+    <% if ddway ==  true  %>
+      <%= link_to heart_path(heart), method: "DELETE", action: "destroy", remote: true do %>
+        <%= image_tag("liked.png", :class => "width_15px")%><span class="down_6"><%= recipe.likers.count %></span>
+      <% end %> 
+    <% else %>
+      <%= link_to "[UNHEART]", heart_path(heart), method: "DELETE", action: "destroy", remote: true %>
+    <% end %>
+  <% else %>
+    <% if ddway == true %>
+      <%= form_for(current_member.hearts.build(liker_id: current_member.id), remote: true) do |f| %>
+        <%= f.hidden_field :liker_id, :value => current_member.id %>
+        <%= f.hidden_field :liked_recipe_id, :value => recipe.id %>
+        <%= image_submit_tag("empty_liked.png", :class => "width_15px") %><span class="down_6"><%= recipe.likers.count %></span>
+      <% end %>
+    <% else %>
+      <%= form_for(current_member.hearts.build(liker_id: current_member.id), remote: true) do |f| %>
+        <%= f.hidden_field :liker_id, :value => current_member.id %>
+        <%= f.hidden_field :liked_recipe_id, :value => recipe.id %>
+        <%= f.submit "[HEART]" %> <%= recipe.likers.count %>
+      <% end %>
+    <% end %>
   <% end %>
-<% end %>
 <% else %>
-<%= image_tag("liked.png", :class => "width_20px") %> <%= recipe.likers.count %>
+  <button>[HEART]</button><%= recipe.likers.count %>
 <% end %>
 </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150122033629) do
+ActiveRecord::Schema.define(version: 20150202234145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 20150122033629) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "cached_member_data", force: true do |t|
+    t.integer  "member_id"
+    t.text     "saved_recipes_array", default: ""
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cached_member_data", ["member_id"], name: "index_cached_member_data_on_member_id", using: :btree
 
   create_table "comments", force: true do |t|
     t.text     "comment_text"
@@ -94,20 +103,20 @@ ActiveRecord::Schema.define(version: 20150122033629) do
 
   create_table "lists", force: true do |t|
     t.boolean  "private",            default: true
-    t.integer  "member_id"
+    t.integer  "owner_id"
     t.string   "name",               default: ""
     t.string   "description",        default: ""
     t.text     "list_text",          default: ""
     t.integer  "view_counts",        default: 0
     t.text     "recipe_order_array", default: ""
     t.integer  "recipe_count",       default: 0
-    t.integer  "type",               default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "lists", ["member_id"], name: "index_lists_on_member_id", using: :btree
   add_index "lists", ["name"], name: "index_lists_on_name", using: :btree
+  add_index "lists", ["owner_id", "name"], name: "index_lists_on_owner_id_and_name", unique: true, using: :btree
+  add_index "lists", ["owner_id"], name: "index_lists_on_owner_id", using: :btree
   add_index "lists", ["private"], name: "index_lists_on_private", where: "(private = false)", using: :btree
   add_index "lists", ["view_counts"], name: "index_lists_on_view_counts", using: :btree
 
@@ -269,6 +278,15 @@ ActiveRecord::Schema.define(version: 20150122033629) do
 
   add_index "reviews", ["reviewed_recipe_id"], name: "index_reviews_on_reviewed_recipe_id", using: :btree
   add_index "reviews", ["reviewer_id"], name: "index_reviews_on_reviewer_id", using: :btree
+
+  create_table "starred_recipe_lists", force: true do |t|
+    t.integer  "member_id"
+    t.text     "saved_recipes_array", default: ""
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "starred_recipe_lists", ["member_id"], name: "index_starred_recipe_lists_on_member_id", using: :btree
 
   create_table "suggestions", force: true do |t|
     t.integer  "who_id"

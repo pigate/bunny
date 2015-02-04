@@ -15,7 +15,4 @@
 /log/*.log
 /tmp
 
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+/config/initializers/secret_token.rb

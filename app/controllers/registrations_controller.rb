@@ -23,6 +23,11 @@ class RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     if resource_saved
       resource.news_feed = NewsFeed.create!(:member_id => resource.id)
+      TagHits.create!(:member_id => @member.id)
+      Recommendations.create!(:member_id => @member.id)
+      CachedMemberData.create!(:member_id => @member.id)
+      StarredRecipeList.create!(:member_id => @member.id)
+      RecentlyViewedRecipes.create!(:member_id => m.id)
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_flashing_format?
         sign_up(resource_name, resource)
@@ -45,10 +50,6 @@ class RegistrationsController < Devise::RegistrationsController
   def after_sign_up_path_for(resource)
     edit_member_path(resource)
   end
-
-#  def after_inactive_sign_up_path_for(resource)
-#    edit_member_path(resource)
-#  end
 
   private
 

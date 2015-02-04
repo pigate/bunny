@@ -20,7 +20,7 @@ class Member < ActiveRecord::Base
   has_many :reviews, :foreign_key => :reviewer_id
   has_many :reviewed_recipes, :through => :reviews
 
-  has_many :lists, dependent: :destroy
+  has_many :lists, :foreign_key => "owner_id", dependent: :destroy
   has_many :listed_recipes, class_name: "Recipe", through: :lists
 
 #  has_many :pending_friend_requests
@@ -39,11 +39,13 @@ class Member < ActiveRecord::Base
   has_many :joined_groups, through: :group_memberships  
 
   has_one :news_feed, dependent: :destroy
+  has_one :cached_member_data, dependent: :destroy
 
   #analytics
   has_one :recently_viewed_recipes
+  has_one :starred_recipe_list, dependent: :destroy
   has_one :tag_hits
-  has_one :recommendation
+  has_one :recommendations, dependent: :destroy
  
   has_attached_file :photo,
     :dependent => :destroy,
