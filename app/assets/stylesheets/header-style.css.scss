@@ -4,279 +4,126 @@ body
 {
   margin: 0;
   padding: 0;
+  top: 0px;
+  bottom: 0px;
   width: 100%;
+  min-height: 595px;
+  height: 100%;
   font-family: 'Roboto', arial, tahoma;
+  font-size: 12px;
+  color: #585858;
   letter-spacing: .02em;
+}
+
+ul {
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  li {
+    list-style-type: none;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+div#main-dash {
+  position: fixed;
+  width: 100px;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  border-right: 1px black solid;
   
+  a#logo{
+     display: block;
+	 text-align: center;
+     padding: 15px 0 10px 0;
+  }
+  
+  ul#nav {
+    li {
+	  display: block;
+	  text-align: center;
+	  margin: 5px 0 5px 0;
+	  padding: 15px 0 15px 0;
+	}
+	li#user_lock_link {
+	  position: fixed;
+	  padding-bottom: 15px;
+	  margin-bottom: 0px;
+	  bottom: 0px;
+	  width: 100px;
+	  background-color: white;
+	}
+  }
+}
+
+div#main {
+  position: absolute;
+  left: 101px;
+  top: 0px;
+  bottom: 0px;
+  
+
 }
 
 .content_wrapper_super 
 {
   position: static;
   width: 100%;
-  padding-top: 80px;
 }
 
-.centered_60 {
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.content_wrapper_main.left_side {
-  padding-left: 10px;
-}
-
-ul 
-{
-  margin: 0;
-  padding: 0;
-  li 
-  {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+div#top-links {
+  ul {
+	li {
+	  display:inline-block;
+	  padding-top: 15px; /* match logo*/
+	  padding-left: 40px;
+	}
   }
 }
-a
-{
-  text-decoration: none;
+
+div#overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  opacity: .5;
+  background-color: black;
 }
 
-.side_bar.pull_right {
-  width: 100%;
-  max-width: 350px; 
+div#new_list_div {
   position: fixed;
-  top: 56px;
-  right: 0px;
-  background-color: #6CB5FF;
-  padding: 2em;
-  z-index: 2;
-  display: none;
+  top: 30%;
+  left: 40%;
+  z-index: 200;
 }
-.side_bar.pull_left {
-  width: 100%;
-  max-width: 350px;
-  position: fixed;
-  top: 56px;
-  left: 0px;
-  background-color: #6CB5FF;
-  padding: 2em;
-  z-index: 2;
-  display: none;
+
+div#extra_options {
+  position: absolute;
+  top: 30%;
+  left: 60%;
+  z-index: 200;  
+  width: 200px;
+  background-color: #bbbbbb;
+  color: white;
+  border-radius: 1px;
+  
+  ul {
+    li {
+	  display: block;
+	  padding: 10px 5px 10px 5px;
+	  border-bottom: 1px white solid;
+	  cursor: pointer;
+	}
+  }
+}
+
+a.link_extra_options {
   cursor: pointer;
 }
-
-
-.side_bar_menu {
-  position: fixed;
-  top: 56px;
-  right: 0px;
-  background-color: #6CB5FF;
-  padding: 0em 1em;
-  z-index: 1;
-}
-.side_bar.menu_left {
-  position: fixed;
-  top: 56px;
-  left: 0px;
-  background-color: #6CB5FF;
-  padding: 1em 1em;
-  z-index: 1;
-  cursor: pointer;
-}
-/**end of default styles**/
-
-/**start of navbar styles **/
-header
-{
-  background: white;
-  height: 35px;
-  width: 100%;
-  position: fixed;
-  box-shadow: 0 -1px 33px #B2B8BF;
-  top: 0px;
-  z-index: 2;
-   
-  a#menu_bttn
-  {
-    display: block;
-    height: 35px;
-    background-size: 100%;
-    float: left;
-    padding: 0px 10px 0px 10px;
-    background-repeat: no-repeat;
-    background-position: 100%;
-
-    img {
-      width: 32px;
-      padding-top: 8px;
-      margin-left: 8px;
-    } 
-  }
-
-  img.logo_img {
-   margin-top: 4px;
-   margin-left: 15px;
-   height: 46px;
-   width: auto;
-   float: left;
-   display: none;
-  }
-  
-  a.home_link
-  {
-    float: left;
-    width:110px;
-    height: 30px;
-    background-size: 20px;
-    background-position: 2% 50%;
-    background-repeat: no-repeat;
-    padding-top: 5px;
-    
-    .logo_title
-    {
-      text-transform: uppercase;
-      width: 83px;
-      float: right;
-      margin: 4px 0px 0 0;
-      padding: 0;
-      color: black;
-    }
-  
-  }
-  
-  nav.main_nav
-  {
-    background: white;
-    width: 80%;
-    min-width: 180px;
-    position: absolute;
-    z-index: 3;
-
-    ul#main_nav_big_screen {
-      display: none;
-    }
-
-    ul#main_nav_small_screen {
-      display: none;
-
-      img.link_logo_img {
-        margin-left: 15px;
-        height: 20px;
-        width: auto;
-      }
-    }
-    
-    ul
-    {
-      display: block;
-      
-      li
-      {
-        display: block;
-        
-        a
-        {
-          display: block;
-          padding: 12px 0px 12px 40px;
-          text-transform: uppercase;
-          color: black;
-          font-size: 17px;
-          letter-spacing: .1px;
-          font-weight: 500;
-        }
-      }
-    }
-    
-    a#exit-menu-bttn
-    {
-      position:absolute;
-      top: .5em;
-      right: 1em;
-      font-weight: bold;
-      font-size: 20px;
-      padding: 0px 10px 10px 10px;
-    }
-  }
-  
-  .right_links
-  {
-    float: right;
-    position: absolute;
-    right: 8px;
-    top: 3px;
-    
-    .action_bttns_block
-    {
-      height: 28px;
-      width: 108px;
-      float: left;
-    
-      a.search_link, a.upload_link, a.treasure_box_link
-      {
-        width: 31px;
-        height: 28px;
-        float: left;
-        margin-right: 5px;
-       
-         img {
-          width: 32px;
-         } 
-      }
-    }
-    
-    .profile_block
-    {
-      float: left;
-      height: 28px;
-      margin-left: 6px;
-      margin-right: 10px;
-      line-height: 32px;
- 
-      .profile_pic
-      {
-        float: left;
-        position: relative;
-        top: -6px;
-        
-        a
-        {
-          display: block;
-          width: 26px;
-          margin: 1px;
-          
-          img
-          {
-            width: 100%;
-            border-radius: 50%;
-          }
-        }
-      }
-      
-      .user_name
-      {
-        float: left;
-        margin-left: 4px;
-        position: relative;
-        top: 4px;
-        a
-        {
-          color: black;
-          font-size: 15px;
-          font-weight: 500;
-          padding-right: 8px;
-        }
-      }
-    }
-  }
-}
-
-.dropdown
-{
-  display: none;
-}
-
 
 .search
 {
@@ -346,381 +193,9 @@ header
 
 }
 
-div#member_options {
-  display: none;
-  position: absolute;
-  top: 35px;
-  right: 0px;
-  background-color: white;
-  z-index: 2;
- 
-  li {
-    display: block;
-    padding: 20px 40px 20px 40px;
-  }
-}
-/**end of navbar styles **/
+
+
  
  
-/** 25.4375em = 407px **/  
-@media (min-width: 25.4375em) 
-{
-  header
-  {
-    height: 45px;
 
-    ul#main_nav_big_screen {
-      display: none;
-    }
-
-
-    .content_wrapper_super {
-      position: relative;
-      top: 45px;
-    }
-    
-    a#menu_bttn
-    {
-      height: 45px;
-    }
-  
-    a.home_link
-    {
-      width: 124px;
-      height: 45px;
-      background-size: 26px;
-      background-position: 7% 50%;
-      padding-top: 0px;
-      
-      .logo_title
-      {
-        margin: 14px 0 0 0;
-      }
-
-    }
-    
-    .right_links
-    {
-      top: 0px;
-      .action_bttns_block
-      {
-        height: 45px;
-      	width: 133px;
-  
-        a.search_link, a.upload_link, a.treasure_box_link
-        {
-          width: 40px;
-          height: 45px;
-          margin-right: 4px;
-        
-	  img
-	  {
-	    padding-top: 8px;
-	  }	
-
-	}
-        
-        a.treasure_box_link
-        {
-          display: block;
-        }
-      }
-      
-      .profile_block
-      {
-
-        margin-left: 0px;
- 	height: 45px;       
- 
-        .profile_pic
-        {
-	
-	  height: 45px;
-
-          a
-          {
-            width: 39px;
-	    height: 45px;
-            
-            img
-            {
-              width: 33px;
-              border-radius: 50%;
-	      margin-top: 9px;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .search {
-    top: 45px;
-  }
-
-  div#member_options {
-    top: 45px;
-  }
-}  
-
-/** 32em ~= 497px **/
-@media (max-width: 32em) {
-  .profile_block {
-    display: none;
-   }
-  .user_name {
-
-    a {
-      padding-left: 10px;
-      padding-right: 10px;
-
-      span.user_name_name {
-        display: none;
-      }
-    }
-  }
-}
-/** 40.5em = 648px **/    
-@media (min-width: 45em) 
-{
-  header
-  {
-    height: 45px;
-
-    a#menu_bttn
-    {
-      display: none;
-    }
-
-    a.home_link
-    {
-      width: 51px;
-      background-position: 50% 50%;
-      
-      .logo_title
-      {
-        display: none;
-      }
-
-      .logo_img {
-        height: 38px;
-        display: block;
-      }
-    }
-    
-    nav.main_nav
-    {
-      width: auto;
-      position: relative;
-      float: left;
-      margin-left: 1.5em;
-
-      ul#main_nav_big_screen 
-      {
-        display: block;
-      }            
-
-      ul#main_nav_small_screen 
-      {
-        display: none;
-      }
-
-      ul
-      {
-        li
-        {
-          display: inline-block;
-        
-          a
-          {
-            padding: 0 5px 0 5px;
-            height: 45px;
-            line-height: 45px;
-            margin: 0 1px 0 1px;
-            font-size: 16px;
-            color: #f05a28;
-            letter-spacing: -.2px;
-            
-          }
-        }
-        li#home_link_mobile
-          {
-            display: none;
-          }
-      }
-      
-      a#exit-menu-bttn
-      {
-        display: none;
-      }
-    
-    }
-    
-    .right_links
-    {
-      .action_bttns_block
-      {
-        width: 163px;
-
-	a.search_link, a.upload_link, a.treasure_box_link
-        {
-          width: 40px;
-          height: 45px;
-          margin-right: 14px;
-          background-position: 100% 50%;
-        
-	  img
-	  {
-		padding-top: 10px;
-	  }
-
-	}
-      }
-
-      .profile_block 
-      {
-        display: block;
-        padding-top: 0px;
-      
-	.user_name
-	{
-	  top: 7px;
-	  
-	}
-      
-    }
-   }
-  .search, div#member_options {
-    top: 45px;
-  }
-
-}
-}
-/** 47em = 752px**/  
-@media (min-width: 53em) 
-{
-  header
-  {
-    height: 56px;
-
-   .content_wrapper_super {
-      position: relative;
-      top: 56px;
-    }
- 
-    a.home_link
-    {
-      width: 114px;
-      background-position: 15% 50%;
-      height: 56px;
-      background-size: 35px;
-      
-      
-      .logo_title
-      {
-        display: block;
-        width: 63px;
-        float: right;
-        position: relative;
-        top: -7px;
-        font-weight: 500;
-
-      }
-      .logo_img {
-        height: 38px;
-        display: block;
-      }
-
-    }
-    
-    nav.main_nav ul 
-    {
-      li 
-      {
-        a
-        {
-          height: 16px;
-          line-height: 16px;
-          font-size: 16px;
-          letter-spacing: -.3px;
-          border-right: 2px solid grey;
-          padding-right: 15px;
-          position: relative;
-          top: 18px;
-          
-        }
-      }
-      
-      li:last-child 
-      {
-        a
-        {
-          border: none;
-        }
-      }
-    }
-  }
-
-  .search, div#member_options {
-     top: 56px;
-  }
-}
-  
-  
-/** 55 = 880px**/  
-@media (min-width: 55em) 
-{
-  header 
-  {
-    height: 56px;
-
-    .right_links 
-    {
-      .action_bttns_block
-      {
-        width: 171px;
-        height: 56px;
-      
-        a.search_link, a.upload_link, a.treasure_box_link
-        {
-          width: 41px;
-          margin-right: 16px;
-          height: 61px;
-        }
-      }
-    
-      .profile_block 
-      {
-        height: 56px;
-        
-        .profile_pic a
-        {
-          width: 42px;
-        }
-        
-        .user_name
-        {
-          display: block;
-          margin: 0 4px 0 2px;
-          top: 0px;
-          height: 56px;
-          
-          a
-          {
-            line-height: 55px;
-          }
-        }
-      }
-    }
-  }
-
-  .search, div#member_options {
-    top: 56px;
-  }
-
-}
-
-/**start of other styles **/
-
-/**end of other styles **/
 

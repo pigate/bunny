@@ -6,40 +6,77 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
-
 </head>
 <body>
-  <header>
-    <a href="#" id="menu_bttn" onclick="toggle_small_nav()"><%= image_tag("menu_bttn.png") %></a>
-    <%= link_to root_url, :class => "home_link" do %>
-     <%= image_tag("white_bunny.png", :class => "logo_img") %>
-     <p class="logo_title">Nameless Chef</p>
-    <% end %>
-    <nav class="main_nav">
-      <ul id="main_nav_small_screen" style="display: none;">
-        <li id="home_link_mobile"><a href="#">Home <%= image_tag("white_bunny.png", :class => "link_logo_img") %></a></li>
-        <li><%= link_to "Recipes", recipes_path %></li>
-        <li><%= link_to "Feed", feed_path %></li>
-        <li><%= link_to "Community", community_path %></li>
-        <a href="#" id="exit-menu-bttn" onclick="toggle_small_nav()">X</a>
-      </ul>
-      <ul id="main_nav_big_screen">
-        <li><%= link_to "Recipes", recipes_path %></li>
-        <li><%= link_to "Feed", feed_path %></li>
-        <li><%= link_to "Community", community_path %></li>
-      </ul>  
-    </nav>  
-   
+
+<div id="main-dash">
+<a id="logo" class="logo">
+NAMELESS
+<br>COOK
+</a>
+<ul id="nav">
+  <li>[Search]</li>
+  <li><%= link_to "[Browse]", recipes_path %></li>
+  <% if member_signed_in? %>
+  <li><a id="new_list_link" href="#">[New List+]</a></li>
+  <li>[Reviewed]</li>
+  <% end %>
+  <li><%= link_to  "[Other Cooks]", community_path %></li>
+  <li id="user_lock_link">
+  <% if member_signed_in? %>
+    <li><%= link_to "[Your Recipes]", box_path %></li>
+    <%= image_tag current_member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb" %>
+	<br><%= current_member.user_name %>
+  <% else %>
+    <%= link_to "[Login/Register]", register_path %>
+  <% end %>
+  </li>
+</ul>
+</div>
+
 <script>
-function toggle_small_nav(){
-  nav = document.getElementById("main_nav_small_screen"); 
-  if (nav.style.display == "none"){
-    nav.style.display = "block";
-  }
-  else {
-    nav.style.display = "none";
-  }
-}
+$("#new_list_link").click(function(){
+  $('#overlay').toggle();
+  $('#new_list_div').toggle();
+});
+</script>
+
+<div id="main">
+  <div id="overlay" style="display: none;">
+  </div>
+    <div id="content_wrapper_super">
+    <%=  yield %>
+    </div>
+    <div id="footer">
+      <ul id="footer_list">
+        <li><%= link_to "Terms and Privacy"%></li>
+        <li><%= link_to "Help", help_path %></li>
+        <li><%= link_to "Suggestions", new_suggestion_path %></li>
+      </ul>
+      <div class="copyrights">
+      All rights reserved to Nameless Cook
+      </div>
+    </div>
+
+</div>
+
+<div id="new_list_div" style="display: none;">
+<% if member_signed_in? %>
+<%= form_for(current_member.lists.build(:owner_id => current_member.id), remote: true, :html => { :class => "overlay_new_list"}) do |f| %>
+  Create your new list:
+  <div id="new_list_error_explanation"></div>
+  Name: <%= f.text_field :name %>
+  <%= f.hidden_field :owner_id, value: current_member.id %>
+  <br><%= f.submit "Create +" %>
+<% end %>
+<% end %>
+</div>
+
+</body>
+<script>
+
+var rid = -1;
+
 window.onresize = function(){
   function viewPortWidth(){
     var w = window.innerWidth 
@@ -57,14 +94,16 @@ $(document).on('click', function(event) {
   if (!$(event.target).is('#menu_bttn') && !$(event.target).parents('#menu_bttn').is('#menu_bttn')  && !$(event.target).is('#main_nav_small_screen') && !$(event.target).parents('#main_nav_small_screen').is('#main_nav_small_screen')) {
     // Hide the menus.
     var small_menu =  document.getElementById('main_nav_small_screen');
-    if (small_menu.style.display != "none")
+	if (small_menu != null)
+      if (small_menu.style.display != "none")
        small_menu.style.display = "none";
   }
   if (!$(event.target).is('.user_name') && !$(event.target).parents('.user_name').is('.user_name')  && !$(event.target).is('#member_options') && !$(event.target).parents('#member_options').is('#member_options')) {
     // Hide the menus.
     var member_menu =  document.getElementById('member_options');
-    if (member_menu.style.display != "none")
-       member_menu.style.display = "none";
+	if (member_menu != null)
+      if (member_menu.style.display != "none")
+         member_menu.style.display = "none";
   }
   if (!$(event.target).is('.search') 
        && !$(event.target).parents('.search').is('.search')  
@@ -74,102 +113,49 @@ $(document).on('click', function(event) {
        && !$(event.target).parents('.search_form').is('.search_form')) {
     // Hide the menus.
     var search =  document.getElementsByClassName('search')[0];
-    if (search.style.display != "none")
-       search.style.display = "none";
+	if (search != null)
+      if (search.style.display != "none")
+         search.style.display = "none";
   }
-
+  if (!$(event.target).is('#new_list_div') && !$(event.target).parents('#new_list_div').is('#new_list_div')  && !$(event.target).is('#new_list_link')){
+    var new_list_form = document.getElementById('new_list_div');
+	if (new_list_form != null && new_list_form.display != "none"){
+	  new_list_form.style.display = "none";
+	  $("#overlay").hide();
+	}
+  }
+  if (!$(event.target).is('#extra_options') && !$(event.target).parents('#extra_options').is('#extra_options')  && !$(event.target).is('.to_save')){
+    var extra_options = document.getElementById('extra_options');
+	if (extra_options != null && extra_options.style.display != "none"){
+	  extra_options.style.display = "none";
+	}
+  }
 });
-
-</script> 
-    
-    <div class="right_links">
-      <div class="action_bttns_block">
-        <a href="#" class= "search_link" onclick="toggle_search()"><%= image_tag("search_black.png")%></a>
-        <%= link_to box_path, :class => "treasure_box_link" do %><%= image_tag("treasure_box_orange.png") %><% end %>
-        <%= link_to posts_path, :class => "upload_link" do  %><%= image_tag("upload_orange_lite.png") %><% end %>
-      </div>
-      
-      <div class="profile_block">
-        <% if member_signed_in? %>
-          <div class="profile_pic">
-            <%= link_to current_member do %>
-              <%= image_tag current_member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb"%>
-            <% end %>
-          </div>
-          <div class="user_name">
-              <a href="#" onclick="toggle_member_options()"><span class="user_name_name"><%= current_member.user_name%> </span>▾</a> 
-          </div>
-        <% else %>
-          <div class="user_name">
-            <%= link_to "Login", login_path %>
-            <%= link_to "Register", register_path %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </header>
-  <div id="member_options" style="display: none;">
-    <ul>
-      <li><%= link_to "logout", logout_path %></li>
-      <li><%= link_to "profile", current_member %></li>
-      <li><%= link_to "account", edit_account_path %></li>
-    </ul>
-  </div>
-  <script>
-  function toggle_member_options(){
-    var member_options = document.getElementById("member_options");
-    if (member_options.style.display == "none")
-      member_options.style.display = "block";
-    else member_options.style.display = "none";
-  }
-  </script>
-  <div class="search" style="display: none;">
-    <ul id="search_action_choices">
-      <span id="hide_search" onclick="toggle_search()">hide</span>
-      <li><a href="#" onclick="choose_action('/recipes', this)">Recipes</a></li> |
-      <li><a href="#" onclick="choose_action('/groups', this)" style="font-weight: bold;">Groups</a></li> |
-      <li><a href="#" onclick="choose_action('/posts', this)">Posts</a></li> |
-      <li><a href="#" onclick="choose_action('/members', this)">Members</a></li>
-    </ul>
-    <form accept-charset="UTF-8" action="/recipes" class="search-form" method="get">
-      <input class="search_box" name="search" placeholder="Query" type="text" />
-      <button type="search_submit_recipe" class="search_bttn"><%= image_tag("search_black.png")%></button>
-    </form> 
-  </div>
-
-  <script>
-  function toggle_search(){
+function toggle_search(){
     search = document.getElementsByClassName("search")[0];
     if (search.style.display == "block"){
       search.style.display = "none";
     } else search.style.display = "block";
 
-  }
-  function choose_action(action, element){
-    var a = document.getElementById("search_action_choices").getElementsByTagName("a");
-    for(var i = 0; i < a.length; i++){
-      a[i].style.fontWeight= "normal";
-    }
-    element.style.fontWeight= "bold";
-    var form = document.getElementsByClassName("search-form")[0];
-    form.action=action;
-  }
-  </script>
+}
 
-  <div class="content_wrapper_super">
-    <%=  yield %>
-  </div>
+$(".link_extra_options").click(function(event){ 
+  var x = event.pageX;
+  var y = event.pageY;
+  var node = event.target;
+  rid = $(event.target).attr('data-rid');
+  //var coords = event.getBoundingClientRect();
+  //alert("(" + x + ", " + y+")");
+  //alert(coords);
+  var extra_options = $('#extra_options');
+  $('#extra_options').toggle();
+  $('#extra_options').css({top: y, left: x});
+  event.stopPropagation();
+});
 
-<div id="footer">
-  <ul id="footer_list">
-    <li><%= link_to "Terms and Privacy"%></li>
-    <li><%= link_to "Help", help_path %></li>
-    <li><%= link_to "Suggestions", new_suggestion_path %></li>
-  </ul>
-  <div class="copyrights">
-    All rights reserved to Tuzi Chef LLC.
-  </div>
-</div>
 
-</body>
+</script>
 </html>
+
+
+

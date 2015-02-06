@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   resources :hearts
   resources :relationships
   resources :posts
-
+  resources :lists
+  resources :lists_recipes
   get 'feed' => 'posts#index'
 
   resources :comments
@@ -36,13 +37,10 @@ Rails.application.routes.draw do
   
   resources :groups
   resources :recipes do
-#    member do
-#      put 'star'
-      #put 'unstar'
-      put 'star', on: :member
-      put 'unstar', on: :member
-    #end
+    put 'star', on: :member
+    put 'unstar', on: :member
   end
+
 
   resources :group_memberships
   resources :group_posts

@@ -1,0 +1,19 @@
+$(function(){
+  <% if @errors == nil %>
+    //wipe new_list_div clean
+    $('input#list_name').val('');
+	$('#new_list_error_explanation').html("");
+	$('.new_list_error_explanation').html("");
+    $('div#new_list_div').hide();
+	$('div.overlay_new_list').hide();
+	$('div#extra_options').hide();
+	
+    //close overlay
+    $('#overlay').hide();
+  <% else %>
+    //display error message
+    $('#new_list_error_explanation').html("<%= @errors.join('<br>')%>");
+	$('.new_list_error_explanation').html("<%= @errors.join('<br>')%>");
+  <% end %>
+});
+

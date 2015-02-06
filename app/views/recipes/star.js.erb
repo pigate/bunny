@@ -1,6 +1,6 @@
 $(function(){
   var a = $("div#star_form<%= @recipe.id%>").find("a");
-  a.html("[SAVED]");
+  a.html("[STARRED]");
   alert(a.innerHTML);
   a.attr("href","/recipes/<%= @recipe.id %>/unstar");
 });

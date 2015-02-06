@@ -1,0 +1,12 @@
+$(function(){
+  $('#extra_options').hide();
+  <% if @dupe %>
+   alert('Already added to this list');  
+  <% elsif @list_not_found %>
+    alert('Error. Try again later');
+  <% else %>
+    alert('Added!');
+  <% end %>
+
+});
+

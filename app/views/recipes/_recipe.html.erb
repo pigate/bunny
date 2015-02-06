@@ -6,15 +6,12 @@
   </div>
   <div class="recipe_info">
     <%= link_to recipe.name, recipe, class: "float_left" %><br>
-    <% if recipe.author != nil %>
-      <%= link_to recipe.author.user_name, recipe.author, class: "float_right" %>
-    <% else %>
-      <span class="search_result_credit_text">anonymous</span>
-    <% end %>
+	<a class="link_extra_options" data-rid="<%= recipe.id %>">[ADD TO...]</a><br>
 
     <div style="clear: both;">
     <%= render partial: "heart_build", locals: { recipe: recipe } %>
     </div>
+	<span id="recipe_id" style="display: none;"><%= recipe.id %></span>
     <div style="clear: both;">
       Views: <%= recipe.global_views %>
       <%= "Prep (#{recipe.prep_time} min)" %>
@@ -26,7 +23,12 @@
     <div>
       <%= recipe.about %>
     </div>  
-    <%= render partial: "recipes/rating_stars", locals: { recipe: recipe } %>
+    <%= render partial: "recipes/rating_stars", locals: { recipe: recipe } %><br><br>
+	<% if recipe.author != nil %>
+      <%= link_to recipe.author.user_name, recipe.author, class: "float_right" %>
+    <% else %>
+      <span class="search_result_credit_text">anonymous</span>
+    <% end %>
   </div>
 </div>
 

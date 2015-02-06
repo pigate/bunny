@@ -1,80 +1,65 @@
-<script type="text/javascript">
-  function search_recipes_with_filters(id) {
-    var elem = document.getElementById(id);
-    var inputs = elem.getElementsByTagName("input");
-    var query_string = "";
-    var count = 0;
-    for(var i = 0; i < inputs.length; i++){
-      if (inputs[i].type == "checkbox") {
-        if (inputs[i].checked){
-          if (count > 0)
-            query_string += "+"+ inputs[i].name;
-          else
-            query_string += inputs[i].name;
-          count += 1;
-        }
-      }
-    }
-    window.location.href = "/recipes?utf8=✓&search="+query_string;
-  }
-</script>
-
-<div class="side_bar menu_left">
- <span onclick="toggle_filter()">Search Recipes</span>
-</div>
-<div class="side_bar pull_left" style="display: none;" id="left_filter_options">
-  <div style="float:right; cursor: pointer;" onclick="toggle_filter()">Close</div>
-  <div id="filter_title" style="clear: both;">
-    Filters
-  </div>
-  <% @tag_types.each do |tag_type| %>
-  <div class="filter_tag_type">
-    <div class="tag_type_name"><%= tag_type.name %></div>
-    <div class="child_tags">
-      <% tag_type.tags.each do |tag| %>
-        <%= check_box_tag tag.name %>
-        <%= tag.name %><br>
-      <% end %>
-    </div>
-  </div>
-  <% end %>
-  <button type="button" class="button_round_blue" onclick="search_recipes_with_filters('left_filter_options')">Get Searching</button>
-</div>
 <div class="content_wrapper_main" id="recipe_index">
-  <div id="recipe_results_list">
-    <div class="popular-recipe-categories">
-       Popular Categories: <br>
-       <%= link_to "/recipes?utf8=✓&search=Chinese" do %>
-         <%= button_tag :class => "button_round_burnt_orange" do %>Chinese<%end %>
-      <% end %>
-       <%= link_to "/recipes?utf8=✓&search=dim+sum" do %>
-         <%= button_tag :class => "button_round_burnt_orange" do %>Dim Sum<%end %>
-      <% end %>
-       <%= link_to "/recipes?utf8=✓&search=Easy" do %>
-         <%= button_tag :class => "button_round_burnt_orange" do %>Easy<%end %>
-      <% end %>
-      <%= link_to new_recipe_path do %>
-        <%= button_tag :class=> "button_round_blue" do %>Add Your Recipe<% end %>
-      <% end %>
-    </div>
-    <% if @recipes == [] %>
-      <span class="result_announcer">No results for <em><%= params["search"]%></em></span>
-      <br><br>
-      <%= link_to recipes_path do %>
-         <%= button_tag :class => "button_round_blue" do %>All Recipes<%end %>
-      <% end %>
-    <% elsif params["search"] != nil%>
-      <span class="result_announcer">Results for <em><%= params["search"]%></em></span>
-    <% end %>
+  <div id="top-links">
+    <ul>
+	  <li>[Popular]</li>
+	  <li>[Categories]</li>
+	  <li>[Recommended]</li>
+	</ul>
+  </div>
+  <%= render @recipes %>
+</div>
 
-    <%= render @recipes %>
+<div id="extra_options" style="display: none;">
+  <ul id="general">
+    <li><a id="link_to_add_to_option">Add to ...  ></a></li>
+	<li>Copy URL</li>
+	<li>Share</li>
+  </ul>
+  <ul id="general_lists_option" style="display: ;">
+    <li><a id="link_to_create_new_list_option">+New List</a></li>
+	<ul id="listed_lists_option">
+      <li>Starred</li>
+	  <% if member_signed_in? %>
+	    <% current_member.lists.each do |l| %>
+	      <li><a class="add_recipe_to_list" data-url="/lists_recipes?lists_recipes_param%5Blist_id%5D=<%= l.id%>&amp;lists_recipes_param%5Brecipe_id%5D=">  
+		  <%= l.name %>
+          </li>
+	    <% end %>
+	  <% end %>
+	</ul>
+  </ul>
+  <div id="create_new_list_option" style="display: none;">
+  [< New List]<br>
+  <% if member_signed_in? %>
+  <%= form_for(current_member.lists.build(:owner_id => current_member.id), remote: true) do |f| %>
+    <div class="new_list_error_explanation"></div>
+    Name: <%= f.text_field :name %>
+    <%= f.hidden_field :owner_id, value: current_member.id %>
+    <br><%= f.submit "Create +" %>
+  <% end %>
+  <% end %>
   </div>
 </div>
+
 <script>
-function toggle_filter(){
-  filter = document.getElementsByClassName("pull_left")[0];
-  if (filter.style.display == "none") {
-    filter.style.display = "block";
-  } else filter.style.display = "none";
-}
+var hello = "hi";
+
+$(".add_recipe_to_list").click(function(event){
+  var data_url = $(event.target).attr('data-url');
+  var data;
+  alert("ready to attempt");
+  $.ajax({
+    type: "POST",
+    url: data_url + rid,
+	/*success: function(data){
+	  //alert("added");
+	}*/
+  });
+  
+});
+
 </script>
+
+
+
+

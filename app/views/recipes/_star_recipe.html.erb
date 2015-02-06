@@ -1,9 +1,9 @@
 <div id="star_form<%= recipe.id %>">
 <% if member_signed_in? %>
   <% if @starred_list.include? recipe.id.to_s %>
-    <%= link_to "[SAVED]", unstar_recipe_path(recipe.id), method: "put", action: "PUT", remote: true %>
+    <%= link_to "[STARRED]", unstar_recipe_path(recipe.id), method: "put", action: "PUT", remote: true %>
   <% else %>
-    <%= link_to "[SAVE]", star_recipe_path(recipe.id), method: "put", remote: true
+    <%= link_to "[STAR]", star_recipe_path(recipe.id), method: "put", remote: true
   %>
   <% end %>
 <% end %>
