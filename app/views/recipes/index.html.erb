@@ -15,8 +15,9 @@
 	<li>Copy URL</li>
 	<li>Share</li>
   </ul>
-  <ul id="general_lists_option" style="display: ;">
-    <li><a id="link_to_create_new_list_option">+New List</a></li>
+  <ul id="general_lists_option" style="display: none;">
+    <li><a id="back_to_general">< ... Back </a></li>
+    <li><a id="link_to_add_new_list">+New List</a></li>
 	<ul id="listed_lists_option">
       <li>Starred</li>
 	  <% if member_signed_in? %>
@@ -28,21 +29,20 @@
 	  <% end %>
 	</ul>
   </ul>
-  <div id="create_new_list_option" style="display: none;">
-  [< New List]<br>
-  <% if member_signed_in? %>
-  <%= form_for(current_member.lists.build(:owner_id => current_member.id), remote: true) do |f| %>
-    <div class="new_list_error_explanation"></div>
-    Name: <%= f.text_field :name %>
-    <%= f.hidden_field :owner_id, value: current_member.id %>
-    <br><%= f.submit "Create +" %>
-  <% end %>
-  <% end %>
-  </div>
+  <ul id="create_new_list_option" style="display: none;">
+    <li><a id="back_to_lists_option">< ... New List</a></li>
+    <% if member_signed_in? %>
+    <%= form_for(current_member.lists.build(:owner_id => current_member.id), remote: true) do |f| %>
+      <div class="new_list_error_explanation"></div>
+      Name: <%= f.text_field :name %>
+      <%= f.hidden_field :owner_id, value: current_member.id %>
+      <br><%= f.submit "Create +" %>
+    <% end %>
+    <% end %>
+  </ul>
 </div>
 
 <script>
-var hello = "hi";
 $(".add_recipe_to_list").click(function(event){
   var data_url = $(event.target).attr('data-url');
   var data;
@@ -52,10 +52,36 @@ $(".add_recipe_to_list").click(function(event){
 	/*success: function(data){
 	  //alert("added");
 	}*/
-  });
-  
+  });  
 });
-
+//1 --> 2
+$('#link_to_add_to_option').click(function(){
+  //alert("1-->2");
+  $('ul#general').hide();
+  $('ul#general_lists_option').show();
+  $('ul#create_new_list_option').hide();
+});
+//2 --> 1
+$('#back_to_general').click(function(){
+  //alert('2-->1');
+  $('ul#general').show();
+  $('ul#general_lists_option').hide();
+  $('ul#create_new_list_option').hide();
+});
+//2 --> 3
+$('#link_to_add_new_list').click(function(){
+  //alert('2-->3');
+  $('ul#general').hide();
+  $('ul#general_lists_option').hide();
+  $('ul#create_new_list_option').show();
+});
+//3 --> 2
+$('#back_to_lists_option').click(function(){
+  //alert('3-->2');
+  $('ul#general').hide();
+  $('ul#general_lists_option').show();
+  $('ul#create_new_list_option').hide();
+});
 </script>
 
 

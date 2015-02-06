@@ -18,7 +18,7 @@ NAMELESS
   <li>[Search]</li>
   <li><%= link_to "[Browse]", recipes_path %></li>
   <% if member_signed_in? %>
-  <li><a id="new_list_link" href="#">[New List+]</a></li>
+  <li><a class="new_list_link" href="#">[New List+]</a></li>
   <% end %>
   <li><%= link_to  "[Other Cooks]", community_path %></li>
   <li id="user_lock_link">
@@ -36,12 +36,7 @@ NAMELESS
 </ul>
 </div>
 
-<script>
-$("#new_list_link").click(function(){
-  $('#overlay').toggle();
-  $('#new_list_div').toggle();
-});
-</script>
+
 
 <div id="main">
   <div id="overlay" style="display: none;">
@@ -119,9 +114,14 @@ $(document).on('click', function(event) {
       if (search.style.display != "none")
          search.style.display = "none";
   }
-  if (!$(event.target).is('#new_list_div') && !$(event.target).parents('#new_list_div').is('#new_list_div')  && !$(event.target).is('#new_list_link')){
+  if (
+	  !$(event.target).is('#new_list_div') 
+	  && !$(event.target).parents('#new_list_div').is('#new_list_div')  
+	  && !$(event.target).is('.new_list_link'))
+  {
     var new_list_form = document.getElementById('new_list_div');
-	if (new_list_form != null && new_list_form.display != "none"){
+	if (new_list_form != null && new_list_form.display != "none")
+	{
 	  new_list_form.style.display = "none";
 	  $("#overlay").hide();
 	}
@@ -129,6 +129,9 @@ $(document).on('click', function(event) {
   if (!$(event.target).is('#extra_options') && !$(event.target).parents('#extra_options').is('#extra_options')  && !$(event.target).is('.to_save')){
     var extra_options = document.getElementById('extra_options');
 	if (extra_options != null && extra_options.style.display != "none"){
+	  $('ul#general').show();
+      $('ul#general_lists_option').hide();
+      $('ul#create_new_list_option').hide();
 	  extra_options.style.display = "none";
 	}
   }
@@ -155,6 +158,11 @@ $(".link_extra_options").click(function(event){
   event.stopPropagation();
 });
 
+
+$(".new_list_link").click(function(){
+  $('#overlay').toggle();
+  $('#new_list_div').toggle();
+});
 
 </script>
 </html>

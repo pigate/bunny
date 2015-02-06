@@ -99,6 +99,9 @@ div#new_list_div {
   top: 30%;
   left: 40%;
   z-index: 200;
+  padding: 10px 10px 10px 10px;
+  background-color: white;
+  border-radius: 5px;
 }
 
 div#extra_options {
@@ -117,6 +120,9 @@ div#extra_options {
 	  padding: 10px 5px 10px 5px;
 	  border-bottom: 1px white solid;
 	  cursor: pointer;
+	  a {
+	    display: block;
+	  }
 	}
   }
 }
