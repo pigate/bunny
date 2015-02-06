@@ -1,11 +1,14 @@
 $(function(){
   $('#extra_options').hide();
   <% if @dupe %>
-   alert('Already added to this list');  
+   	$('body').append('<div class="notify">Duplicate. Already added</div>');
+	$('.notify').fadeOut(1100); 
   <% elsif @list_not_found %>
-    alert('Error. Try again later');
+	$('body').append('<div class="notify">Error. List was not found</div>');
+	$('.notify').fadeOut(1100);
   <% else %>
-    alert('Added!');
+	$('body').append('<div class="notify">Added to list</div>');
+	$('.notify').fadeOut(650);
   <% end %>
 
 });

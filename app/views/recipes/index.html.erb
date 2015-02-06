@@ -43,11 +43,9 @@
 
 <script>
 var hello = "hi";
-
 $(".add_recipe_to_list").click(function(event){
   var data_url = $(event.target).attr('data-url');
   var data;
-  alert("ready to attempt");
   $.ajax({
     type: "POST",
     url: data_url + rid,

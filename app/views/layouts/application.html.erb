@@ -19,14 +19,15 @@ NAMELESS
   <li><%= link_to "[Browse]", recipes_path %></li>
   <% if member_signed_in? %>
   <li><a id="new_list_link" href="#">[New List+]</a></li>
-  <li>[Reviewed]</li>
   <% end %>
   <li><%= link_to  "[Other Cooks]", community_path %></li>
   <li id="user_lock_link">
   <% if member_signed_in? %>
     <li><%= link_to "[Your Recipes]", box_path %></li>
+	<li>
     <%= image_tag current_member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb" %>
 	<br><%= current_member.user_name %>
+	</li>
   <% else %>
     <%= link_to "[Login/Register]", register_path %>
   <% end %>

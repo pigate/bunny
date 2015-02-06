@@ -10,6 +10,8 @@ $(function(){
 	
     //close overlay
     $('#overlay').hide();
+	$('body').append('<div class="notify">List created</div>');
+	$('.notify').fadeOut(650);
   <% else %>
     //display error message
     $('#new_list_error_explanation').html("<%= @errors.join('<br>')%>");

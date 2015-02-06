@@ -125,6 +125,16 @@ a.link_extra_options {
   cursor: pointer;
 }
 
+.notify {
+  position: fixed;
+  top: 30%;
+  left: 40%;
+  z-index: 300;
+  padding: 10px 10px 10px 10px;
+  background-color: black;
+  color: white;
+}
+
 .search
 {
   height: 300px;
