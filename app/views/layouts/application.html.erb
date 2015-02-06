@@ -27,9 +27,10 @@ NAMELESS
 	<li>
     <%= image_tag current_member.photo.url(:tiny_thumb), :class => "rounded_tiny_thumb" %>
 	<br><%= current_member.user_name %>
+	<%= link_to "sign out", logout_path %>
 	</li>
   <% else %>
-    <%= link_to "[Login/Register]", register_path %>
+    <li><%= link_to "[Login/Register]", register_path %></li>
   <% end %>
   </li>
 </ul>
