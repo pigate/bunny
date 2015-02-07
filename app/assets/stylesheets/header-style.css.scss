@@ -209,6 +209,27 @@ a.link_extra_options {
 
 }
 
+div#list_index_total_list {
+  ul#list_index_list {
+    li {
+	  display: block;
+	  
+      a#focused {
+	    color: red;
+      }
+	  a {
+	    display: block;
+	  }
+    }
+  }
+}
+
+div.list_index_recipe_list {
+  display:none;
+}
+div#focused_recipe_list {
+  display: block;
+}
 
 
  

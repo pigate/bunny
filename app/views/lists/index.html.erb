@@ -1,0 +1,54 @@
+<div id="list_index_total_list">
+<!-- li#focused is highlighted.  -->
+<ul id="list_index_list">
+  <li><a class="recipe_list" id="focused">Starred</a></li>
+    <% i = 0 %>
+    <% @lists.each do |l| %>
+      <li><a class="recipe_list_name" data-id="<%= i %>"><%= l.name %></a></li>
+      <% i += 1 %>
+    <% end %>
+</ul>
+</div>
+
+<!-- div#focused_recipe_list is showing. all others are not. -->
+<div id="list_index_recipe_dashboard">
+   STARRED
+  <div class="list_index_recipe_list" id="focused_recipe_list">
+      <%= render @starred  %>
+  </div>
+  <div style="clear: both"></div>
+  <br>OTHER
+  <div style="clear: both"></div>
+  <% i = 0 %>
+  <% @recipes_in_lists.each do |recipe_array| %>
+    <div id="ra_<%= i %>" data-id="<%= i %>" class="list_index_recipe_list">
+	  <%= render recipe_array %>
+	</div>
+    <div style="clear: both"></div>
+	ANOTHER <%= i %>
+	<% i += 1 %>
+	<div style="clear: both"></div>
+  <% end %>
+</div>
+
+<script>
+ $('a.recipe_list_name').click(function(event){
+   var id = $(event.target).attr("data-id");
+   //change focused li
+   $('#focused').removeAttr('id');
+   $(event.target).attr('id', "focused");
+   
+   //show recipe_array 
+   var curr_focus_list = $("div#focused_recipe_list");
+   var check_id = curr_focus_list.attr("data-id");
+   if (check_id != id){
+     //alert("change");
+	 curr_focus_list.removeAttr('id');
+	 var str = '#ra_' + id;
+	 $(str).attr('id', "focused_recipe_list");
+   }
+ });
+ 
+ //alert('Debug message for mimi: please change data-id to contain list id instead');
+</script>
+

@@ -1,5 +1,10 @@
 $(function(){
-  <% if @errors == nil %>
+  <% if @errors == nil || @errors == [] %>
+
+    $('ul#general').show();
+    $('ul#general_lists_option').hide();
+    $('ul#create_new_list_option').hide();
+
     //wipe new_list_div clean
     $('input#list_name').val('');
 	$('#new_list_error_explanation').html("");
@@ -12,6 +17,28 @@ $(function(){
     $('#overlay').hide();
 	$('body').append('<div class="notify">List created</div>');
 	$('.notify').fadeOut(650);
+
+	//li.append(a);
+    //var li = $("<li>").html("<li><a class="add_recipe_to_list" data-url="/lists_recipes?lists_recipes_param%5Blist_id%5D=<%= @list.id%>&amp;lists_recipes_param%5Brecipe_id%5D="><%= @list.name %></a>");
+	
+	//on recipes#index
+    $('#starred_list_option').after('<li><a class="add_recipe_to_list" data-url="/lists_recipes?lists_recipes_param%5Blist_id%5D=<%= @list.id%>&amp;lists_recipes_param%5Brecipe_id%5D="><%= @list.name %></a></li>');
+    
+	//on lists#index page
+	$('#list_index_starred_list').after('<li><a><%= @list.name %></a></li>');
+	
+	$('li#starred_list_option').next().click(function(event){
+      var data_url = $(event.target).attr('data-url');
+      var data;
+      $.ajax({
+        type: "POST",
+        url: data_url + rid,
+	    /*success: function(data){
+    	  //alert("added");
+	    }*/
+      });  
+    });
+	
   <% else %>
     //display error message
     $('#new_list_error_explanation').html("<%= @errors.join('<br>')%>");

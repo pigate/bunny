@@ -1,4 +1,5 @@
 <style>
+
 ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0;}
 ul#tabs li { display: inline; }
 ul#tabs li a { color: #42454a; background-color: #dedbde; padding: 1.2em 1em 2em !important; border-radius: 8px;  text-decoration: none; }
@@ -11,6 +12,8 @@ div.tabContent > div {
 }
 
 </style>
+
+<%= link_to "[LISTS]", member_lists_path(current_member.user_name) %>
 
 <script type="text/javascript">
 function show_more(element){

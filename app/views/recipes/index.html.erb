@@ -19,7 +19,7 @@
     <li><a id="back_to_general">< ... Back </a></li>
     <li><a id="link_to_add_new_list">+New List</a></li>
 	<ul id="listed_lists_option">
-      <li>Starred</li>
+      <li id="starred_list_option">Starred</li>
 	  <% if member_signed_in? %>
 	    <% current_member.lists.each do |l| %>
 	      <li><a class="add_recipe_to_list" data-url="/lists_recipes?lists_recipes_param%5Blist_id%5D=<%= l.id%>&amp;lists_recipes_param%5Brecipe_id%5D=">  

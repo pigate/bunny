@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   resources :hearts
   resources :relationships
   resources :posts
-  resources :lists
+  #resources :lists
   resources :lists_recipes
   get 'feed' => 'posts#index'
+
+  post 'lists' => 'lists#create'
 
   resources :comments
   resources :reviews
@@ -46,7 +48,15 @@ Rails.application.routes.draw do
   resources :group_posts
 
   devise_for :members, :controllers => { :registrations => "registrations" }
-  resources :members
+
+  #changed member to_param to use user_name slug instead
+  resources :members do   #|
+    #                V------
+    #GET members/:member_id/lists/*
+    #etc
+    resources :lists #in lists_controller, member_name passed as params[:member_id]
+  end
+
   devise_scope :member do
     get 'logout' => 'devise/sessions#destroy'
     get 'login' => 'devise/sessions#new'
