@@ -27,7 +27,7 @@ class RegistrationsController < Devise::RegistrationsController
       Recommendations.create!(:member_id => @member.id)
       CachedMemberData.create!(:member_id => @member.id)
       StarredRecipeList.create!(:member_id => @member.id)
-      RecentlyViewedRecipes.create!(:member_id => m.id)
+      RecentlyViewedRecipes.create!(:member_id => @member.id)
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_flashing_format?
         sign_up(resource_name, resource)

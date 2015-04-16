@@ -16,12 +16,6 @@ ActiveRecord::Schema.define(version: 20150202234145) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "boxes", force: true do |t|
-    t.integer  "member_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "cached_member_data", force: true do |t|
     t.integer  "member_id"
     t.text     "saved_recipes_array", default: ""
@@ -171,16 +165,6 @@ ActiveRecord::Schema.define(version: 20150202234145) do
   end
 
   add_index "news_feeds", ["member_id"], name: "index_news_feeds_on_member_id", using: :btree
-
-  create_table "pending_friend_requests", force: true do |t|
-    t.integer  "member_id"
-    t.integer  "initiator_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "pending_friend_requests", ["initiator_id"], name: "index_pending_friend_requests_on_initiator_id", using: :btree
-  add_index "pending_friend_requests", ["member_id"], name: "index_pending_friend_requests_on_member_id", using: :btree
 
   create_table "posts", force: true do |t|
     t.integer  "author_id"
